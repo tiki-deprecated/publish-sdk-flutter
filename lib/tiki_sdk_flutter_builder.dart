@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:tiki_sdk_dart/node/l0_storage.dart';
@@ -7,7 +5,6 @@ import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_dart/tiki_sdk_builder.dart';
 
 import 'package:path/path.dart' as p;
-
 
 import 'tiki_sdk_flutter.dart';
 import 'utils/flutter_key_store.dart';
@@ -45,7 +42,7 @@ class TikiSdkFlutterBuilder {
 
   Future<Database> _openDb() async {
     final dir = await getApplicationDocumentsDirectory();
-    if (! await dir.exists()) {
+    if (!await dir.exists()) {
       await dir.create(recursive: true);
     }
     return sqlite3.open(p.join(dir.path, '$_address.db'));
