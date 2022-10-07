@@ -5,9 +5,7 @@ import 'package:tiki_sdk_dart/node/l0_storage.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_dart/tiki_sdk_builder.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk_flutter.dart';
-
 import 'package:tiki_sdk_flutter/tiki_sdk_flutter_builder.dart';
-
 import 'package:tiki_sdk_flutter/utils/flutter_key_store.dart';
 
 import 'in_mem_storage.dart';
@@ -51,10 +49,11 @@ void main() {
     builder.l0storage = l0storage;
     await builder.build();
     TikiSdkFlutter tikiSdk = builder.tikiSdkFlutter;
-    String ownershipId = await tikiSdk
-        .assignOwnership('give and revoke consent test', TikiSdkDataTypeEnum.point, ['email']);
+    String ownershipId = await tikiSdk.assignOwnership(
+        'give and revoke consent test', TikiSdkDataTypeEnum.point, ['email']);
     await tikiSdk.modifyConsent(ownershipId, const TikiSdkDestination.all());
-    ConsentModel? consentGiven = tikiSdk.getConsent('give and revoke consent test');
+    ConsentModel? consentGiven =
+        tikiSdk.getConsent('give and revoke consent test');
     expect(consentGiven!.destination.uses[0], "*");
     expect(consentGiven.destination.paths[0], "*");
     await tikiSdk.modifyConsent(ownershipId, const TikiSdkDestination.none());
@@ -70,16 +69,16 @@ void main() {
     builder.l0storage = l0storage;
     await builder.build();
     TikiSdkFlutter tikiSdk = builder.tikiSdkFlutter;
-    String ownershipId = await tikiSdk
-        .assignOwnership('expire consent test', TikiSdkDataTypeEnum.point, ['email']);
+    String ownershipId = await tikiSdk.assignOwnership(
+        'expire consent test', TikiSdkDataTypeEnum.point, ['email']);
     await tikiSdk.modifyConsent(ownershipId, const TikiSdkDestination.all());
     await tikiSdk.applyConsent(
         'expire consent test', const TikiSdkDestination.all(), () => ok = true);
     expect(ok, true);
     await tikiSdk.modifyConsent(ownershipId, const TikiSdkDestination.all(),
         expiry: DateTime.now());
-    await tikiSdk.applyConsent(
-        'expire consent test', const TikiSdkDestination.all(), () => ok = false);
+    await tikiSdk.applyConsent('expire consent test',
+        const TikiSdkDestination.all(), () => ok = false);
     expect(ok, false);
   });
 
@@ -90,14 +89,17 @@ void main() {
     builder.l0storage = l0storage;
     await builder.build();
     TikiSdkFlutter tikiSdk = builder.tikiSdkFlutter;
-    String ownershipId = await tikiSdk
-        .assignOwnership('run a function based on user consent test', TikiSdkDataTypeEnum.point, ['email']);
+    String ownershipId = await tikiSdk.assignOwnership(
+        'run a function based on user consent test',
+        TikiSdkDataTypeEnum.point,
+        ['email']);
     await tikiSdk.modifyConsent(ownershipId, const TikiSdkDestination.all());
-    ConsentModel? consentGiven = tikiSdk.getConsent('run a function based on user consent test');
+    ConsentModel? consentGiven =
+        tikiSdk.getConsent('run a function based on user consent test');
     expect(consentGiven!.destination.uses[0], "*");
     expect(consentGiven.destination.paths[0], "*");
-    await tikiSdk.applyConsent(
-        'run a function based on user consent test', const TikiSdkDestination.all(), () => ok = true);
+    await tikiSdk.applyConsent('run a function based on user consent test',
+        const TikiSdkDestination.all(), () => ok = true);
     expect(ok, true);
   });
 }
