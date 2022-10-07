@@ -3,8 +3,11 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:tiki_sdk_dart/node/l0_storage.dart';
-import 'package:tiki_sdk_dart/tiki_sdk_builder.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
+import 'package:tiki_sdk_dart/tiki_sdk_builder.dart';
+
+import 'package:path/path.dart' as p;
+
 
 import 'tiki_sdk_flutter.dart';
 import 'utils/flutter_key_store.dart';
@@ -19,8 +22,11 @@ class TikiSdkFlutterBuilder {
   late String primaryKey;
 
   set address(String val) => _address = val;
+
   set origin(String val) => _origin = val;
+
   set l0storage(L0Storage val) => _l0storage = val;
+
   set apiKey(String val) => _apiKey = val;
 
   TikiSdkFlutterBuilder(this._origin) {
@@ -38,17 +44,11 @@ class TikiSdkFlutterBuilder {
   }
 
   Future<Database> _openDb() async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String appDocPath = appDocDir.path;
-    String path = "$appDocPath/$_address.db";
-    final File f = File(path);
-    if (!f.existsSync()) {
-      var dir = Directory.fromUri(Uri.directory(path));
-      if (!dir.parent.existsSync()) {
-        dir.parent.createSync(recursive: true);
-      }
+    final dir = await getApplicationDocumentsDirectory();
+    if (! await dir.exists()) {
+      await dir.create(recursive: true);
     }
-    return sqlite3.open(path);
+    return sqlite3.open(p.join(dir.path, '$_address.db'));
   }
 
   void _loadStorage() {
