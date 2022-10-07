@@ -7,10 +7,11 @@ class TikiSdk(private val flutterPlugin: TikiSdkFlutterPlugin = TikiSdkFlutterPl
     var apiKey: String? = null
     var l0storage: L0StorageInterface? = null
 
-    fun buildSdk() {
+    fun build() {
         if(l0storage == null && apiKey == null){
             throw Exception("Set apiKey or l0storage for chain backup")
         }
+        flutterPlugin.l0Storage = l0storage
         flutterPlugin.channel.invokeMethod(
             "buildSdk", mapOf(
                 "apiKey" to apiKey
@@ -18,12 +19,8 @@ class TikiSdk(private val flutterPlugin: TikiSdkFlutterPlugin = TikiSdkFlutterPl
         )
     }
 
-    fun assignOwnership(
-        source: String,
-        type: String,
-        contains: List<String>,
-        origin: String?
-    ) {
+    fun assignOwnership( source: String,  type: String,  contains: List<String>,  origin: String?)
+    {
         flutterPlugin.channel.invokeMethod(
             "assignOwnership", mapOf(
                 "source" to source,
@@ -43,11 +40,7 @@ class TikiSdk(private val flutterPlugin: TikiSdkFlutterPlugin = TikiSdkFlutterPl
         )
     }
 
-    fun modifyConsent(
-        ownershipId: String,
-        destination: TikiSdkDestination,
-        about: String?,
-        reward: String?
+    fun modifyConsent(ownershipId: String, destination: TikiSdkDestination, about: String?, reward: String?
     ) {
         flutterPlugin.channel.invokeMethod(
             "modifyConsent", mapOf(
@@ -66,6 +59,8 @@ class TikiSdk(private val flutterPlugin: TikiSdkFlutterPlugin = TikiSdkFlutterPl
         request: () -> Unit,
         onBlock: (value: String) -> Unit
     ) {
+        flutterPlugin.requestCallbacks[requestId] = request;
+        flutterPlugin.blockCallbacks[requestId] = onBlock;
         flutterPlugin.channel.invokeMethod(
             "applyConsent", mapOf(
                 "source" to source,
