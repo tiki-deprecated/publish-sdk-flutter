@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:tiki_sdk_dart/node/l0_storage.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk_flutter.dart';
 
 import 'tiki_sdk_flutter_builder.dart';
+import 'utils/injected_storage.dart';
 
 class TikiSdkFlutterPlatform extends PlatformInterface {
   TikiSdkFlutterPlatform() : super(token: _token);
@@ -100,21 +100,4 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
   static void blockRequest(String requestId, String val) async =>
       await instance.methodChannel
           .invokeMethod('blockRequest', {'requestId': requestId, 'val': val});
-}
-
-class InjectedStorage extends L0Storage {
-  final Future<Uint8List?> Function(String) _read;
-  final Future<void> Function(String, Uint8List) _write;
-  final Future<Map<String, Uint8List>> Function(String) _getAll;
-
-  InjectedStorage(this._read, this._write, this._getAll);
-
-  @override
-  Future<Map<String, Uint8List>> getAll(String address) => _getAll(address);
-
-  @override
-  Future<Uint8List?> read(String path) async => _read(path);
-
-  @override
-  Future<void> write(String path, Uint8List obj) async => _write(path, obj);
 }
