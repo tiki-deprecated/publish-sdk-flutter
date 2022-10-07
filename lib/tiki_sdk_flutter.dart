@@ -29,7 +29,7 @@ class TikiSdkFlutter {
   Future<ConsentModel> modifyConsent(
           String ownershipId, TikiSdkDestination destination,
           {String? about, String? reward, DateTime? expiry}) async =>
-      await modifyConsent(ownershipId, destination,
+      await tikiSdkDart.modifyConsent(ownershipId, destination,
           about: about, expiry: expiry);
 
   /// Apply consent for [data] given a specific [destination].
@@ -38,6 +38,6 @@ class TikiSdkFlutter {
   Future<void> applyConsent(
           String source, TikiSdkDestination destination, Function request,
           {void Function(String)? onBlocked, String? origin}) async =>
-      await applyConsent(source, destination, request,
+      await tikiSdkDart.applyConsent(source, destination, request,
           onBlocked: onBlocked, origin: origin);
 }
