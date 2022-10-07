@@ -42,7 +42,7 @@ class TikiSdkFlutterBuilder {
 
   Future<Database> _openDb() async {
     final dir = await getApplicationDocumentsDirectory();
-    if (! await dir.exists()) {
+    if (!await dir.exists()) {
       await dir.create(recursive: true);
     }
     return sqlite3.open(p.join(dir.path, '$_address.db'));
