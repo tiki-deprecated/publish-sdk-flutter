@@ -6,7 +6,7 @@ import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_dart/tiki_sdk_builder.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk_flutter.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk_flutter_builder.dart';
-import 'package:tiki_sdk_flutter/utils/flutter_key_store.dart';
+import 'package:tiki_sdk_flutter/utils/flutter_key_storage.dart';
 
 import 'in_mem_storage.dart';
 
@@ -14,9 +14,9 @@ void main() {
   test('Import Dart TIKI SDK ', () async {
     TestWidgetsFlutterBinding.ensureInitialized();
     Database database = sqlite3.openInMemory();
-    FlutterKeyStore keyStore = FlutterKeyStore();
+    FlutterKeyStorage keyStore = FlutterKeyStorage();
     L0Storage l0storage = InMemL0Storage();
-    TikiSdkBuilderStorage sdkBuilder = TikiSdkBuilderStorage('com.mytiki');
+    TikiSdkBuilder sdkBuilder = TikiSdkBuilder('com.mytiki');
     sdkBuilder.keyStorage = keyStore;
     await sdkBuilder.loadPrimaryKey();
     sdkBuilder.database = database;
