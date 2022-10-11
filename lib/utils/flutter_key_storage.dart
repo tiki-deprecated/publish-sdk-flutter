@@ -1,7 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tiki_sdk_dart/node/node_service.dart';
 
-class FlutterKeyStore implements KeyStorage {
+class FlutterKeyStorage implements KeyStorage {
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   @override

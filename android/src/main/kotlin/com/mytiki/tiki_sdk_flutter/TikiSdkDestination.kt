@@ -1,4 +1,4 @@
-package com.mytiki.tiki_sdk_android
+package com.mytiki.tiki_sdk_flutter
 import org.json.JSONArray
 import org.json.JSONObject
 

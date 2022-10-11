@@ -1,5 +1,6 @@
 package com.mytiki.tiki_sdk_android
 
+import com.mytiki.tiki_sdk_flutter.TikiSdkDestination
 import com.mytiki.tiki_sdk_flutter.TikiSdkFlutterPlugin
 
 class TikiSdk(private val flutterPlugin: TikiSdkFlutterPlugin = TikiSdkFlutterPlugin()) {

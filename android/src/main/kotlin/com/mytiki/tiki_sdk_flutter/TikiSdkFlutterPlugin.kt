@@ -1,7 +1,6 @@
 package com.mytiki.tiki_sdk_flutter
 
 import androidx.annotation.NonNull
-import com.mytiki.tiki_sdk_android.L0StorageInterface
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall

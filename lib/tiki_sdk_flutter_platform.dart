@@ -7,15 +7,13 @@ import 'tiki_sdk_flutter_builder.dart';
 import 'utils/injected_storage.dart';
 
 class TikiSdkFlutterPlatform extends PlatformInterface {
-  TikiSdkFlutterPlatform() : super(token: _token);
+  static final Object _token = Object();
+  static late final TikiSdkFlutter _tikiSdk;
+  static TikiSdkFlutterPlatform _instance = TikiSdkFlutterPlatform();
 
   final methodChannel = const MethodChannel('tiki_sdk_flutter');
 
-  static late final TikiSdkFlutter tikiSdk;
-
-  static final Object _token = Object();
-
-  static TikiSdkFlutterPlatform _instance = TikiSdkFlutterPlatform();
+  TikiSdkFlutterPlatform() : super(token: _token);
 
   static TikiSdkFlutterPlatform get instance => _instance;
 
@@ -26,9 +24,13 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
 
   Future<void> methodHandler(MethodCall call) async {
     switch (call.method) {
-      case "buildSdk":
+      case "build":
         String? apiKey = call.arguments['apiKey'];
-        await buildSdk(apiKey: apiKey);
+        String? origin = call.arguments['origin'];
+        TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
+          ..origin(origin!)
+          ..apiKey(apiKey!);
+        _tikiSdk = await builder.build();
         break;
       case "assignOwnership":
         String source = call.arguments['source'];
@@ -36,12 +38,12 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
             TikiSdkDataTypeEnum.fromValue(call.arguments['type']);
         List<String> contains = call.arguments['contains'];
         String? origin = call.arguments['origin'];
-        await tikiSdk.assignOwnership(source, type, contains, origin: origin);
+        await _tikiSdk.assignOwnership(source, type, contains, origin: origin);
         break;
       case "getConsent":
         String source = call.arguments['source'];
         String? origin = call.arguments['origin'];
-        tikiSdk.getConsent(source, origin: origin);
+        _tikiSdk.getConsent(source, origin: origin);
         break;
       case "modifyConsent":
         String ownershipId = call.arguments['ownershipId'];
@@ -49,9 +51,8 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
             TikiSdkDestination.fromJson(call.arguments['destination']);
         String? about = call.arguments['about'];
         String? reward = call.arguments['reward'];
-        DateTime? expiry = DateTime.fromMillisecondsSinceEpoch(
-            call.arguments['expiry'] ~/ 1000);
-        await tikiSdk.modifyConsent(ownershipId, destination,
+        DateTime? expiry = DateTime.fromMillisecondsSinceEpoch(call.arguments['expiry']);
+        await _tikiSdk.modifyConsent(ownershipId, destination,
             about: about, reward: reward, expiry: expiry);
         break;
       case "applyConsent":
@@ -59,45 +60,19 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
         TikiSdkDestination destination =
             TikiSdkDestination.fromJson(call.arguments['destination']);
         String requestId = call.arguments['requestId'];
-        tikiSdk.applyConsent(source, destination, () => callRequest(requestId),
-            onBlocked: (val) => blockRequest(requestId, val));
+        _tikiSdk.applyConsent(source, destination, () => _callRequest(requestId),
+            onBlocked: (val) => _blockRequest(requestId, val));
         break;
       default:
         throw Exception('no method handler for method ${call.method}');
     }
   }
 
-  static Future<void> buildSdk({String? apiKey}) async {
-    TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder('flutter test');
-    if (apiKey != null) {
-      builder.apiKey = apiKey;
-    } else {
-      builder.l0storage = InjectedStorage(read, write, getAll);
-    }
-    await builder.build();
-    tikiSdk = builder.tikiSdkFlutter;
-  }
-
-  static Future<Map<String, Uint8List>> getAll(String address) async {
-    Map<String, Uint8List>? response = await instance.methodChannel
-        .invokeMapMethod<String, Uint8List>('getAll', {'address': address});
-    if (response == null) return {};
-    return response;
-  }
-
-  static Future<Uint8List?> read(String path) async =>
-      await instance.methodChannel
-          .invokeMethod<Uint8List>('read', {'path': path});
-
-  static Future<void> write(String path, Uint8List obj) async =>
-      await instance.methodChannel
-          .invokeMethod('write', {'path': path, 'obj': obj});
-
-  static Future<void> callRequest(String requestId) async =>
+  Future<void> _callRequest(String requestId) async =>
       await instance.methodChannel
           .invokeMethod('callRequest', {'requestId': requestId});
 
-  static void blockRequest(String requestId, String val) async =>
+  void _blockRequest(String requestId, String val) async =>
       await instance.methodChannel
           .invokeMethod('blockRequest', {'requestId': requestId, 'val': val});
 }
