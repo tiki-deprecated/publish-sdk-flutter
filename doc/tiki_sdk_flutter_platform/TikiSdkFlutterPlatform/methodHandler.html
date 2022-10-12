@@ -93,7 +93,8 @@
           TikiSdkDestination.fromJson(call.arguments[&#39;destination&#39;]);
       String? about = call.arguments[&#39;about&#39;];
       String? reward = call.arguments[&#39;reward&#39;];
-      DateTime? expiry = DateTime.fromMillisecondsSinceEpoch(call.arguments[&#39;expiry&#39;]);
+      DateTime? expiry =
+          DateTime.fromMillisecondsSinceEpoch(call.arguments[&#39;expiry&#39;]);
       await _tikiSdk.modifyConsent(ownershipId, destination,
           about: about, reward: reward, expiry: expiry);
       break;
@@ -102,7 +103,8 @@
       TikiSdkDestination destination =
           TikiSdkDestination.fromJson(call.arguments[&#39;destination&#39;]);
       String requestId = call.arguments[&#39;requestId&#39;];
-      _tikiSdk.applyConsent(source, destination, () =&gt; _callRequest(requestId),
+      _tikiSdk.applyConsent(
+          source, destination, () =&gt; _callRequest(requestId),
           onBlocked: (val) =&gt; _blockRequest(requestId, val));
       break;
     default:
