@@ -29,7 +29,7 @@ void main() {
     TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
       ..origin(origin)
       ..apiKey(apiKey);
-    TikiSdkFlutter tikiSdk =  await builder.build();
+    TikiSdkFlutter tikiSdk = await builder.build();
     String ownershipId = await tikiSdk.assignOwnership(
         'give and revoke consent test', TikiSdkDataTypeEnum.point, ['email']);
     await tikiSdk.modifyConsent(ownershipId, const TikiSdkDestination.all());
@@ -48,7 +48,7 @@ void main() {
     TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
       ..origin(origin)
       ..apiKey(apiKey);
-    TikiSdkFlutter tikiSdk =  await builder.build();
+    TikiSdkFlutter tikiSdk = await builder.build();
     String ownershipId = await tikiSdk.assignOwnership(
         'expire consent test', TikiSdkDataTypeEnum.point, ['email']);
     await tikiSdk.modifyConsent(ownershipId, const TikiSdkDestination.all());
@@ -67,7 +67,7 @@ void main() {
     TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
       ..origin(origin)
       ..apiKey(apiKey);
-    TikiSdkFlutter tikiSdk =  await builder.build();
+    TikiSdkFlutter tikiSdk = await builder.build();
     String ownershipId = await tikiSdk.assignOwnership(
         'run a function based on user consent test',
         TikiSdkDataTypeEnum.point,
