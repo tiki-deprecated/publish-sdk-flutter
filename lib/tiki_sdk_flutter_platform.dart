@@ -50,7 +50,8 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
             TikiSdkDestination.fromJson(call.arguments['destination']);
         String? about = call.arguments['about'];
         String? reward = call.arguments['reward'];
-        DateTime? expiry = DateTime.fromMillisecondsSinceEpoch(call.arguments['expiry']);
+        DateTime? expiry =
+            DateTime.fromMillisecondsSinceEpoch(call.arguments['expiry']);
         await _tikiSdk.modifyConsent(ownershipId, destination,
             about: about, reward: reward, expiry: expiry);
         break;
@@ -59,7 +60,8 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
         TikiSdkDestination destination =
             TikiSdkDestination.fromJson(call.arguments['destination']);
         String requestId = call.arguments['requestId'];
-        _tikiSdk.applyConsent(source, destination, () => _callRequest(requestId),
+        _tikiSdk.applyConsent(
+            source, destination, () => _callRequest(requestId),
             onBlocked: (val) => _blockRequest(requestId, val));
         break;
       default:

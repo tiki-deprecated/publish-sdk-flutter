@@ -34,5 +34,4 @@ class TikiSdkFlutterBuilder {
     }
     return dir.path;
   }
-
 }
