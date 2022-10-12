@@ -4,7 +4,6 @@ import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk_flutter.dart';
 
 import 'tiki_sdk_flutter_builder.dart';
-import 'utils/injected_storage.dart';
 
 class TikiSdkFlutterPlatform extends PlatformInterface {
   static final Object _token = Object();
