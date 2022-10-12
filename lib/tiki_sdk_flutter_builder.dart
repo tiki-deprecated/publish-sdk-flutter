@@ -1,9 +1,5 @@
 import 'package:path_provider/path_provider.dart';
-import 'package:tiki_sdk_dart/node/l0_storage.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
-import 'package:tiki_sdk_dart/tiki_sdk_builder.dart';
-
-import 'package:path/path.dart' as p;
 
 import 'tiki_sdk_flutter.dart';
 import 'utils/flutter_key_storage.dart';
@@ -36,7 +32,7 @@ class TikiSdkFlutterBuilder {
     if (!await dir.exists()) {
       await dir.create(recursive: true);
     }
-    return p.join(dir.path, '$_address.db');
+    return dir.path;
   }
 
 }
