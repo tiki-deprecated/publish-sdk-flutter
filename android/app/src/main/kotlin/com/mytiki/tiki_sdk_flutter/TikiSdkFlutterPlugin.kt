@@ -29,21 +29,39 @@ class TikiSdkFlutterPlugin : FlutterPlugin, MethodCallHandler {
         channel.setMethodCallHandler(this)
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
         when (call.method) {
             "getAll" -> {
-                val all: Map<String,ByteArray> = l0Storage!!.getAll(call.arguments["address"])
-                result(all)
+                val address = call.argument<String>("address")
+                if(address == null) result.error("-1", "missing address argument", call.arguments)
+                val all: Map<String,ByteArray> = l0Storage!!.getAll(address!!)
+                result.success(all)
             }
             "read" -> {
-                val obj: ByteArray? = l0Storage!!.read(call.arguments["path"])
-                result(obj)
+                val path = call.argument<String>("path")
+                if(path == null) result.error("-1", "missing path argument", call.arguments)
+                val obj: ByteArray? = l0Storage!!.read(path!!)
+                result.success(obj)
             }
             "write" -> {
-                l0Storage!!.write(call.arguments["path"], call.arguments["obj"])
+                val path = call.argument<String>("path")
+                val obj = call.argument<ByteArray>("obj")
+                if(path == null) result.error("-1", "missing path argument", call.arguments)
+                if(obj == null) result.error("-1", "missing obj argument", call.arguments)
+                l0Storage!!.write(path!!, obj!!)
             }
-            "callRequest" -> callRequest(call.arguments["requestId"])
-            "blockRequest" -> blockRequest(call.arguments["requestId"], call.arguments["value"])
+            "callRequest" -> {
+                val requestId = call.argument<String>("requestId")
+                if(requestId == null) result.error("-1", "missing requestId argument", call.arguments)
+                callRequest(requestId!!)
+            }
+            "blockRequest" -> {
+                val requestId = call.argument<String>("requestId")
+                val value = call.argument<String>("value")
+                if(requestId == null) result.error("-1", "missing requestId argument", call.arguments)
+                if(value == null) result.error("-1", "missing value argument", call.arguments)
+                blockRequest(requestId!!, value!!)
+            }
             else -> result.notImplemented()
         }
     }
