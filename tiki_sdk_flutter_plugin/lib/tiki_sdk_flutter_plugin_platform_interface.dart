@@ -8,8 +8,7 @@ abstract class TikiSdkFlutterPluginPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static TikiSdkFlutterPluginPlatform _instance =
-      MethodChannelTikiSdkFlutterPlugin();
+  static TikiSdkFlutterPluginPlatform _instance = MethodChannelTikiSdkFlutterPlugin();
 
   /// The default instance of [TikiSdkFlutterPluginPlatform] to use.
   ///
