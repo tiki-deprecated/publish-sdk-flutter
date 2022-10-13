@@ -3,8 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tiki_sdk_flutter_plugin/tiki_sdk_flutter_plugin_method_channel.dart';
 
 void main() {
-  MethodChannelTikiSdkFlutterPlugin platform =
-      MethodChannelTikiSdkFlutterPlugin();
+  MethodChannelTikiSdkFlutterPlugin platform = MethodChannelTikiSdkFlutterPlugin();
   const MethodChannel channel = MethodChannel('tiki_sdk_flutter_plugin');
 
   TestWidgetsFlutterBinding.ensureInitialized();

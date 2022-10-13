@@ -7,13 +7,13 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockTikiSdkFlutterPluginPlatform
     with MockPlatformInterfaceMixin
     implements TikiSdkFlutterPluginPlatform {
+
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
 }
 
 void main() {
-  final TikiSdkFlutterPluginPlatform initialPlatform =
-      TikiSdkFlutterPluginPlatform.instance;
+  final TikiSdkFlutterPluginPlatform initialPlatform = TikiSdkFlutterPluginPlatform.instance;
 
   test('$MethodChannelTikiSdkFlutterPlugin is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelTikiSdkFlutterPlugin>());
@@ -21,8 +21,7 @@ void main() {
 
   test('getPlatformVersion', () async {
     TikiSdkFlutterPlugin tikiSdkFlutterPlugin = TikiSdkFlutterPlugin();
-    MockTikiSdkFlutterPluginPlatform fakePlatform =
-        MockTikiSdkFlutterPluginPlatform();
+    MockTikiSdkFlutterPluginPlatform fakePlatform = MockTikiSdkFlutterPluginPlatform();
     TikiSdkFlutterPluginPlatform.instance = fakePlatform;
 
     expect(await tikiSdkFlutterPlugin.getPlatformVersion(), '42');
