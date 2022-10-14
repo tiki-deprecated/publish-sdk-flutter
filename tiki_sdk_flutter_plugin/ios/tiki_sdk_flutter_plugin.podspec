@@ -5,9 +5,9 @@
 Pod::Spec.new do |s|
   s.name             = 'tiki_sdk_flutter_plugin'
   s.version          = '0.0.1'
-  s.summary          = 'The Plugin for native Android and iOS code for TIKI SDK Flutter'
+  s.summary          = 'Flutter plugin to expose TIKI SDK native code to Android and iOS'
   s.description      = <<-DESC
-The Plugin for native Android and iOS code for TIKI SDK Flutter
+Flutter plugin to expose TIKI SDK native code to Android and iOS
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
