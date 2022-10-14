@@ -3,10 +3,11 @@ import UIKit
 
 public class SwiftTikiSdkFlutterPlugin: NSObject, FlutterPlugin {
 
-    var requestCallbacks: Dictionary<String, () -> Unit> = [:]
-    var blockCallbacks: Dictionary<String, (String) -> Unit> = [:]
+    public var requestCallbacks: Dictionary<String, () -> Unit> = [:]
+    public var blockCallbacks: Dictionary<String, (String) -> Unit> = [:]
+    public var channel : FlutterMethodChannel? = nil;
 
-    public static func register(with registrar: FlutterPluginRegistrar) {
+    static public func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "tiki_sdk_flutter", binaryMessenger: registrar.messenger())
         let instance = SwiftTikiSdkFlutterPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
