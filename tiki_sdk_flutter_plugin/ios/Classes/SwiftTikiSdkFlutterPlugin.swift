@@ -5,8 +5,16 @@ public class SwiftTikiSdkFlutterPlugin: NSObject, FlutterPlugin {
 
     public var requestCallbacks: Dictionary<String, () -> Unit> = [:]
     public var blockCallbacks: Dictionary<String, (String) -> Unit> = [:]
-    public var channel : FlutterMethodChannel? = nil;
+    public var channel : FlutterMethodChannel;
 
+    init(){
+        if (flutterPlugin.channel == null) {
+                   flutterPlugin.channel =
+                       MethodChannel(flutterEngine.dartExecutor, "com.mytiki.plugin")
+                   flutterPlugin.channel!!.setMethodCallHandler(flutterPlugin)
+               }
+    }
+    
     static public func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "tiki_sdk_flutter", binaryMessenger: registrar.messenger())
         let instance = SwiftTikiSdkFlutterPlugin()
