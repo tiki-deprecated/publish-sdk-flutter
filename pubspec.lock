@@ -221,7 +221,7 @@ packages:
     source: hosted
     version: "1.8.0"
   path:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: path
       url: "https://pub.dartlang.org"
@@ -382,7 +382,7 @@ packages:
   tiki_sdk_flutter_plugin:
     dependency: "direct main"
     description:
-      path: tiki_sdk_flutter_plugin
+      path: "../tiki_sdk_flutter_plugin"
       relative: true
     source: path
     version: "0.0.1"
