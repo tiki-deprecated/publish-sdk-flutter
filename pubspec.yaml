@@ -18,7 +18,7 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.10
   tiki_sdk_dart: ^0.0.6
   tiki_sdk_flutter_plugin:
-    path: ./tiki_sdk_flutter_plugin
+    path: ../tiki_sdk_flutter_plugin
 
 dev_dependencies:
   integration_test:
