@@ -28,5 +28,14 @@ jobs:
           mkdir $XDG_CONFIG_HOME/dart
           echo '${{ secrets.PUB_DEV_CREDENTIALS }}' > "$XDG_CONFIG_HOME/dart/pub-credentials.json"
 
-      - name: 'Publish'
-        run: pub publish -f
+      - name: 'Publish Plugin'
+        run: |
+          cd tiki_sdk_flutter_plugin
+          pub publish -f
+          cd ..
+
+      - name: 'Publish Module'
+        run: |
+          cd tiki_sdk_flutter_module
+          pub publish -f
+          cd ..
