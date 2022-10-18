@@ -397,7 +397,7 @@
         <entry key="tiki_sdk_dart">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../flutter/.pub-cache/hosted/pub.dartlang.org/tiki_sdk_dart-0.0.6/lib" />
+              <option value="$PROJECT_DIR$/../tiki-sdk-dart/lib" />
             </list>
           </value>
         </entry>
@@ -502,7 +502,6 @@
       <root url="file://$PROJECT_DIR$/../flutter/.pub-cache/hosted/pub.dartlang.org/sync_http-0.3.1/lib" />
       <root url="file://$PROJECT_DIR$/../flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.4.12/lib" />
-      <root url="file://$PROJECT_DIR$/../flutter/.pub-cache/hosted/pub.dartlang.org/tiki_sdk_dart-0.0.6/lib" />
       <root url="file://$PROJECT_DIR$/../flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.1/lib" />
       <root url="file://$PROJECT_DIR$/../flutter/.pub-cache/hosted/pub.dartlang.org/uuid-3.0.6/lib" />
       <root url="file://$PROJECT_DIR$/../flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.2/lib" />
@@ -517,6 +516,7 @@
       <root url="file://$PROJECT_DIR$/../flutter/packages/flutter_web_plugins/lib" />
       <root url="file://$PROJECT_DIR$/../flutter/packages/fuchsia_remote_debug_protocol/lib" />
       <root url="file://$PROJECT_DIR$/../flutter/packages/integration_test/lib" />
+      <root url="file://$PROJECT_DIR$/../tiki-sdk-dart/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
