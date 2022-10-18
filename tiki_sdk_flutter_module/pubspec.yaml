@@ -1,7 +1,7 @@
 name: tiki_sdk_flutter
 description: The TIKI SDK implementation for Flutter. Create data Ownership and Consent NFTs with TIKI.
 version: 0.0.3
-homepage: https://github.com/tiki/tiki-sdk-flutter
+homepage: https://github.com/tiki/tiki-sdk-flutter/tiki_sdk_flutter_module
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -11,14 +11,12 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_secure_storage: ^6.0.0
-  path: ^1.8.2
   path_provider: ^2.0.11
   plugin_platform_interface: ^2.1.3
   sqlite3: ^1.9.0
   sqlite3_flutter_libs: ^0.5.10
   tiki_sdk_dart: ^0.0.6
-  tiki_sdk_flutter_plugin:
-    path: ./tiki_sdk_flutter_plugin
+  tiki_sdk_flutter_plugin: ^0.0.1
 
 dev_dependencies:
   integration_test:
@@ -26,6 +24,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.1
+
+dependency_overrides:
+  tiki_sdk_flutter_plugin:
+    path: ../tiki_sdk_flutter_plugin
 
 flutter:
   module:
