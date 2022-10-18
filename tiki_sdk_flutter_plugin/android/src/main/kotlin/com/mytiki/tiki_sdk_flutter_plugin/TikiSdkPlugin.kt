@@ -9,8 +9,8 @@ import io.flutter.plugin.common.MethodChannel
 
 /** TikiSdkPluginTikiSdkPlugin */
 class TikiSdkPlugin(
-    private val apiKey: String,
-    private val origin: String,
+    var apiKey: String? = null,
+    var origin: String? = null,
     context: Context? = null
 ) : FlutterPlugin {
 

@@ -22,7 +22,7 @@ flutter:
     platforms:
       android:
         package: com.mytiki.tiki_sdk_flutter_plugin
-        pluginClass: TikiSdkFlutterPlugin
+        pluginClass: TikiSdkPlugin
       ios:
         pluginClass: TikiSdkFlutterPlugin
 
