@@ -2,19 +2,18 @@ package com.mytiki.tiki_sdk_flutter_plugin
 
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.CompletableDeferred
-import java.lang.Exception
 import java.util.*
 
 
 class TikiSdkPluginCaller(val methodChannel: MethodChannel) {
-    var completables : MutableMap<String, CompletableDeferred<String>> = mutableMapOf()
+    var completables: MutableMap<String, CompletableDeferred<String>> = mutableMapOf()
 
     suspend fun assignOwnership(
         source: String,
         type: String,
         contains: List<String>,
         origin: String? = null
-    ) : String {
+    ): String {
         val requestId = UUID.randomUUID().toString()
         methodChannel.invokeMethod(
             "assignOwnership", mapOf(
@@ -31,8 +30,11 @@ class TikiSdkPluginCaller(val methodChannel: MethodChannel) {
     }
 
     suspend fun modifyConsent(
-        source: String, destination: TikiSdkDestination, about: String? = null, reward: String? = null
-    ) : String  {
+        source: String,
+        destination: TikiSdkDestination,
+        about: String? = null,
+        reward: String? = null
+    ): String {
         val requestId = UUID.randomUUID().toString()
         methodChannel.invokeMethod(
             "modifyConsent", mapOf(
@@ -50,7 +52,8 @@ class TikiSdkPluginCaller(val methodChannel: MethodChannel) {
 
     suspend fun getConsent(
         source: String,
-        origin: String? = null) : TikiSdkConsent {
+        origin: String? = null
+    ): TikiSdkConsent {
         val requestId = UUID.randomUUID().toString()
         methodChannel.invokeMethod(
             "getConsent", mapOf(
@@ -62,7 +65,7 @@ class TikiSdkPluginCaller(val methodChannel: MethodChannel) {
         val deferred = CompletableDeferred<String>()
         completables[requestId] = deferred
         val jsonConsent = deferred.await()
-        return TikiSdkConsent(jsonConsent)
+        return TikiSdkConsent.fromJson(jsonConsent)
     }
 
     suspend fun applyConsent(
@@ -70,7 +73,7 @@ class TikiSdkPluginCaller(val methodChannel: MethodChannel) {
         destination: TikiSdkDestination,
         request: () -> Unit,
         onBlock: (value: String) -> Unit
-    ){
+    ) {
         val requestId = UUID.randomUUID().toString()
         methodChannel.invokeMethod(
             "applyConsent", mapOf(
@@ -84,7 +87,7 @@ class TikiSdkPluginCaller(val methodChannel: MethodChannel) {
             completables[requestId] = deferred
             deferred.await()
             request()
-        }catch(e : Exception){
+        } catch (e: Exception) {
             onBlock(e.message ?: "no consent")
         }
     }
