@@ -3,7 +3,7 @@ package com.mytiki.tiki_sdk_flutter_plugin
 import org.json.JSONObject
 import java.util.*
 
-data class TikiSdkConsent(
+data class TikiSdkFlutterConsent(
     /**
      * Transaction ID corresponding to the ownership mint for the data source.
      */
@@ -35,7 +35,7 @@ data class TikiSdkConsent(
     val expiry: GregorianCalendar
 ) {
     companion object {
-        fun fromJson(jsonString: String): TikiSdkConsent {
+        fun fromJson(jsonString: String): TikiSdkFlutterConsent {
             val jsonObject = JSONObject(jsonString)
             val ownershipId: String = jsonObject.getString("ownershipId")
             val destination: String = jsonObject.getString("destination")
@@ -45,7 +45,7 @@ data class TikiSdkConsent(
             val expiry: String = jsonObject.getString("expiry")
             val dateTime = GregorianCalendar()
             dateTime.timeInMillis = expiry.toLong()
-            return TikiSdkConsent(
+            return TikiSdkFlutterConsent(
                 ownershipId,
                 TikiSdkDestination.fromJson(destination),
                 about,

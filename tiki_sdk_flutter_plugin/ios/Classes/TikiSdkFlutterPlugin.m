@@ -8,8 +8,9 @@
 #import "tiki_sdk_flutter_plugin-Swift.h"
 #endif
 
+#import <tiki_sdk_flutter_plugin/TikiSdkFlutterPlugin.h>
 @implementation TikiSdkFlutterPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  [SwiftTikiSdkFlutterPlugin registerWithRegistrar:registrar];
+  [TikiSdkFlutterPlugin registerWithRegistrar:registrar];
 }
 @end

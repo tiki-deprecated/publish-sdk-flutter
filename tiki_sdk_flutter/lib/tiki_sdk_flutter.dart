@@ -7,10 +7,6 @@ class TikiSdkFlutter {
 
   TikiSdkFlutter(this.origin);
 
-  /// Assign ownership to a given [source] : data point, pool, or stream.
-  /// [types] describe the various types of data represented by
-  /// the referenced data. Optionally, the [origin] can be overridden
-  /// for the specific ownership grant.
   Future<String> assignOwnership(
           String source, TikiSdkDataTypeEnum type, List<String> contains,
           {String? origin}) async =>

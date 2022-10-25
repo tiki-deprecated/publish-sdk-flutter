@@ -7,12 +7,20 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterPluginBinding
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 
-/** TikiSdkPluginTikiSdkPlugin */
-class TikiSdkPlugin(
+/**
+ * Tiki sdk plugin
+ *
+ * @property apiKey
+ * @property origin
+ * @constructor
+ *
+ * @param context
+ */
+class TikiSdkFlutterChannel(
     var apiKey: String? = null,
     var origin: String? = null,
     context: Context? = null
-) : FlutterPlugin {
+) : FlutterPlugin, MethodChannel.MethodCallHandler  {
 
     var caller: TikiSdkPluginCaller? = null
 
@@ -57,6 +65,22 @@ class TikiSdkPlugin(
         methodChannel!!.setMethodCallHandler(null)
         methodChannel = null
         caller = null
+    }
+
+    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
+        val requestId = call.argument<String>("requestId")
+        val response = call.argument<String?>("response")
+        if (requestId == null) result.error("-1", "missing requestId argument", call.arguments)
+        when (call.method) {
+            "success" -> {
+                caller.completables[requestId]?.complete(response)
+            }
+            "error" -> {
+                caller.completables[requestId]?.completeExceptionally(Exception(response))
+            }
+            else -> result.notImplemented()
+        }
+        caller.completables.remove(requestId)
     }
 
     override fun onAttachedToEngine(binding: FlutterPluginBinding) {
