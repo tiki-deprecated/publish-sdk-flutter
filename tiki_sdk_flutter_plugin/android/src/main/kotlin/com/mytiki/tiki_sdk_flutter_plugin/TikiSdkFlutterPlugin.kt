@@ -5,8 +5,8 @@ import kotlinx.coroutines.CompletableDeferred
 import java.util.*
 
 
-class TikiSdkPluginCaller(val methodChannel: MethodChannel) {
-    var completables: MutableMap<String, CompletableDeferred<String>> = mutableMapOf()
+class TikiSdkFlutterPlugin(private val methodChannel: MethodChannel) {
+    var completables: MutableMap<String, CompletableDeferred<String?>> = mutableMapOf()
 
     suspend fun assignOwnership(
         source: String,
@@ -24,9 +24,9 @@ class TikiSdkPluginCaller(val methodChannel: MethodChannel) {
                 "origin" to origin,
             )
         )
-        val deferred = CompletableDeferred<String>()
+        val deferred = CompletableDeferred<String?>()
         completables[requestId] = deferred
-        return deferred.await()
+        return deferred.await()!!
     }
 
     suspend fun modifyConsent(
@@ -45,7 +45,7 @@ class TikiSdkPluginCaller(val methodChannel: MethodChannel) {
                 "reward" to reward,
             )
         )
-        val deferred = CompletableDeferred<String>()
+        val deferred = CompletableDeferred<String?>()
         completables[requestId] = deferred
         return deferred.await()
     }
@@ -71,8 +71,8 @@ class TikiSdkPluginCaller(val methodChannel: MethodChannel) {
     suspend fun applyConsent(
         source: String,
         destination: TikiSdkDestination,
-        request: () -> Unit,
-        onBlock: (value: String) -> Unit
+        request: (value: String) -> Unit,
+        onBlocked: (value: String) -> Unit
     ) {
         val requestId = UUID.randomUUID().toString()
         methodChannel.invokeMethod(
@@ -85,10 +85,10 @@ class TikiSdkPluginCaller(val methodChannel: MethodChannel) {
         try {
             val deferred = CompletableDeferred<String>()
             completables[requestId] = deferred
-            deferred.await()
-            request()
+            val value = deferred.await()
+            request(value)
         } catch (e: Exception) {
-            onBlock(e.message ?: "no consent")
+            onBlocked(e.message ?: "no consent")
         }
     }
 }

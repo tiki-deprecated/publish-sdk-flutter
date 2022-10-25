@@ -1,28 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:tiki_sdk_dart/consent/consent_model.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk_flutter.dart';
 
 import 'tiki_sdk_flutter_builder.dart';
 
-class TikiSdkFlutterPlatform extends PlatformInterface {
-  static final Object _token = Object();
+class TikiSdkFlutterPlatform{
   static late final TikiSdkFlutter _tikiSdk;
-  static TikiSdkFlutterPlatform _instance = TikiSdkFlutterPlatform();
 
   final methodChannel = const MethodChannel('tiki_sdk_flutter');
-
-  TikiSdkFlutterPlatform() : super(token: _token);
-
-  static TikiSdkFlutterPlatform get instance => _instance;
-
-  static set instance(TikiSdkFlutterPlatform instance) {
-    PlatformInterface.verifyToken(instance, _token);
-    _instance = instance;
-  }
 
   Future<void> methodHandler(MethodCall call) async {
     String requestId = call.arguments['requestId'] ?? '0';
@@ -35,7 +23,7 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
             ..origin(origin!)
             ..apiKey(apiKey!);
           _tikiSdk = await builder.build();
-          _success(requestId, 'SDK initialized');
+          _success(requestId);
         }catch(e){
           _error(requestId, e.toString());
         }
@@ -48,7 +36,7 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
           List<String> contains = call.arguments['contains'];
           String? origin = call.arguments['origin'];
           String ownershipId = await _tikiSdk.assignOwnership(source, type, contains, origin: origin);
-          _success(requestId, ownershipId);
+          _success(requestId, response: ownershipId);
         }catch(e){
           _error(requestId, e.toString());
         }
@@ -59,9 +47,9 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
           String? origin = call.arguments['origin'];
           ConsentModel? consentModel = _tikiSdk.getConsent(source, origin: origin);
           if(consentModel == null) {
-            _success(requestId, '');
+            _success(requestId, response: consentModel?.toJson());
           }else{
-            _success(requestId, base64.encode(consentModel.serialize()));
+            _success(requestId, response : base64.encode(consentModel.serialize()));
           }
         }catch(e){
           _error(requestId, e.toString());
@@ -78,7 +66,7 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
               DateTime.fromMillisecondsSinceEpoch(call.arguments['expiry']);
           ConsentModel consentModel = await _tikiSdk.modifyConsent(ownershipId, destination,
               about: about, reward: reward, expiry: expiry);
-          _success(requestId, base64.encode(consentModel.serialize()));
+          _success(requestId, response: base64.encode(consentModel.serialize()));
         }catch(e){
         _error(requestId, e.toString());
         }
@@ -90,7 +78,7 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
           TikiSdkDestination.fromJson(call.arguments['destination']);
           String requestId = call.arguments['requestId'];
           _tikiSdk.applyConsent(
-              source, destination, () => _success(requestId, ''),
+              source, destination, () => _success(requestId),
               onBlocked: (val) => _error(requestId, val));
         }catch(e){
           _error(requestId, e.toString());
@@ -101,11 +89,11 @@ class TikiSdkFlutterPlatform extends PlatformInterface {
     }
   }
 
-  Future<void> _success(String requestId, String val) async =>
-      await instance.methodChannel
-          .invokeMethod('successk', {'requestId': requestId, 'val': val});
+  Future<void> _success(String requestId, {String? response}) async =>
+      await methodChannel
+          .invokeMethod('success', {'requestId': requestId, 'response': response});
 
-  void _error(String requestId, String val) async =>
-      await instance.methodChannel
-          .invokeMethod('error', {'requestId': requestId, 'val': val});
+  void _error(String requestId, String response) async =>
+      await methodChannel
+          .invokeMethod('error', {'requestId': requestId, 'response': response});
 }

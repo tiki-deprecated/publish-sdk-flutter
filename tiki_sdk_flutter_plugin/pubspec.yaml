@@ -1,6 +1,6 @@
 name: tiki_sdk_flutter_plugin
 description: Flutter plugin to expose TIKI SDK native code to Android and iOS
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/tiki/tiki-sdk-flutter/tiki_sdk_flutter_plugin
 
 environment:
@@ -22,7 +22,7 @@ flutter:
     platforms:
       android:
         package: com.mytiki.tiki_sdk_flutter_plugin
-        pluginClass: TikiSdkPlugin
+        pluginClass: TikiSdkFlutterChannel
       ios:
-        pluginClass: TikiSdkFlutterPlugin
+        pluginClass: TikiSdkFlutterChannel
 
