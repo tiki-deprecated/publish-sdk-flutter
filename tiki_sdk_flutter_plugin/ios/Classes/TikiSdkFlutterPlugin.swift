@@ -1,36 +1,36 @@
 import Flutter
 import Promises
 
-class TikiSdkFlutterPlugin{
+public class TikiSdkFlutterPlugin{
     var promises: Dictionary<String, Promise<String?>> = [:]
     var methodChannel: FlutterMethodChannel
 
-    init(methodChannel: FlutterMethodChannel){
+    public init(methodChannel: FlutterMethodChannel){
         self.methodChannel = methodChannel
     }
 
-    func assignOwnership(
+    public func assignOwnership(
         source: String,
         type: String,
         contains: Array<String>,
         origin: String? = nil
     ) async throws -> String?  {
 
-    let requestId = UUID().uuidString
+        let requestId = UUID().uuidString
         methodChannel.invokeMethod(
             "assignOwnership", arguments: [
                 "requestId" : requestId,
                 "source" : source,
                 "type" : type,
                 "contains" : contains,
-                "origin" : origin
+                "origin" : origin as Any
             ])
         let promise = Promise<String?>.pending()
         promises[requestId] = promise
         return try awaitPromise(promise)
     }
 
-    func modifyConsent(
+    public func modifyConsent(
         source: String,
         destination: TikiSdkFlutterDestination,
         about: String?,
@@ -51,7 +51,7 @@ class TikiSdkFlutterPlugin{
         return try awaitPromise(promise)
     }
 
-    func getConsent(
+    public func getConsent(
         source: String,
         origin: String? = nil
     ) async throws -> String?  {
@@ -60,7 +60,7 @@ class TikiSdkFlutterPlugin{
             "getConsent",  arguments: [
                 "requestId" : requestId,
                 "source" : source,
-                "origin" : origin,
+                "origin" : origin as Any
             ]
         )
         let promise = Promise<String?>.pending()
@@ -68,12 +68,12 @@ class TikiSdkFlutterPlugin{
         return try awaitPromise(promise)
     }
 
-    func applyConsent(
+    public func applyConsent(
         source: String,
         destination: TikiSdkFlutterDestination,
-        request: (String?) -> Unit,
-        onBlock: (String) -> Unit
-    )  async throws -> Unit  {
+        request: (String?) -> Void,
+        onBlock: (String) -> Void
+    )  async throws -> Void  {
         let requestId = UUID().uuidString
         methodChannel.invokeMethod(
             "applyConsent",  arguments: [
