@@ -1,9 +1,9 @@
 import Foundation
-struct TikiSdkFlutterDestination:Codable {
-    var uses: Array<String> = []
-    var paths: Array<String> = []
+public struct TikiSdkFlutterDestination:Codable {
+    public var uses: Array<String> = []
+    public var paths: Array<String> = []
     
-    static func fromJson(jsonString : String) -> TikiSdkFlutterDestination{
+    public static func fromJson(jsonString : String) -> TikiSdkFlutterDestination{
         let decoder = JSONDecoder()
         do {
             let tikiSdkFlutterDestination = try decoder.decode(TikiSdkFlutterDestination.self, from:  Data(jsonString.utf8))
@@ -13,7 +13,7 @@ struct TikiSdkFlutterDestination:Codable {
         }
     }
     
-    func toJson() -> String{
+    public func toJson() -> String{
         let encoder = JSONEncoder()
         do {
             return String(data: try encoder.encode(self), encoding: String.Encoding.utf8) ?? "{uses: [], paths: []}"

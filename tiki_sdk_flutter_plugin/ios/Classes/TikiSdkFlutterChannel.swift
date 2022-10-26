@@ -3,24 +3,24 @@ import Promises
 
 public class TikiSdkFlutterChannel: FlutterMethodChannel, FlutterPlugin {
 
-    static let channelId = "tiki_sdk_flutter"
+    public static let channelId = "tiki_sdk_flutter"
 
-    static var channel: FlutterMethodChannel?
+    public static var channel: FlutterMethodChannel?
 
-    var plugin: TikiSdkFlutterPlugin? = nil
+    public var plugin: TikiSdkFlutterPlugin? = nil
 
 
-    lazy var flutterEngine = FlutterEngine(name: "tiki_sdk_flutter_engine")
-    var methodChannel: FlutterMethodChannel? = nil
+    public lazy var flutterEngine = FlutterEngine(name: "tiki_sdk_flutter_engine")
+    public var methodChannel: FlutterMethodChannel? = nil
 
-    init(apiKey: String? =  nil, origin: String? = nil) {
+    public init(apiKey: String? =  nil, origin: String? = nil) {
         super.init()
         if(methodChannel == nil){
             setupChannel(apiKey: apiKey ?? "", origin: origin ?? "")
         }
     }
 
-    func buildSdk(apiKey: String, origin: String) {
+    public func buildSdk(apiKey: String, origin: String) {
         plugin = TikiSdkFlutterPlugin(methodChannel: methodChannel!)
         methodChannel!.invokeMethod(
             "build", arguments: [
@@ -53,7 +53,7 @@ public class TikiSdkFlutterChannel: FlutterMethodChannel, FlutterPlugin {
     }
 
 
-    func setupChannel(apiKey: String, origin: String) {
+    public func setupChannel(apiKey: String, origin: String) {
         if (methodChannel == nil) {
             flutterEngine.run()
             methodChannel = FlutterMethodChannel()
@@ -63,7 +63,7 @@ public class TikiSdkFlutterChannel: FlutterMethodChannel, FlutterPlugin {
 
 }
 
-struct TikiSdkError : Error {
+public struct TikiSdkError : Error {
 
     var message: String?
 

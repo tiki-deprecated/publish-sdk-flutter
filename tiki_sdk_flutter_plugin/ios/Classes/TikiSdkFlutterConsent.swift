@@ -1,36 +1,36 @@
-struct TikiSdkFlutterConsent : Codable{
+public struct TikiSdkFlutterConsent : Codable{
     /**
      * Transaction ID corresponding to the ownership mint for the data source.
      */
-    var ownershipId: String
+    public var ownershipId: String
 
     /**
      *  The identifier of the paths and use cases for this consent.
      */
-    var destination: TikiSdkFlutterDestination
+    public var destination: TikiSdkFlutterDestination
 
     /**
      *  Optional description of the consent.
      */
-    var about: String
+    public var about: String
 
     /**
      *  Optional reward description the user will receive for this consent.
      */
-    var reward: String
+    public var reward: String
 
     /**
      *  The transaction id of this registry.
      */
-    var transactionId: String
+    public var transactionId: String
     
     /**
      *  The Consent expiration date. Null for no expiration.
      */
-    var expiry: Int
+    public var expiry: Int
 
     
-    static func fromJson(jsonData: String) -> TikiSdkFlutterConsent {
+    public static func fromJson(jsonData: String) -> TikiSdkFlutterConsent {
         let decoder = JSONDecoder()
 
         do {
