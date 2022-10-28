@@ -12,6 +12,7 @@ class TikiSdkFlutterPlatform{
 
   final methodChannel = const MethodChannel('tiki_sdk_flutter');
 
+  /// Handles the method calls from native code.
   Future<void> methodHandler(MethodCall call) async {
     String requestId = call.arguments['requestId'] ?? '0';
     switch (call.method) {
