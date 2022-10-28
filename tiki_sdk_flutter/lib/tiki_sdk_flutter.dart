@@ -1,3 +1,5 @@
+library tiki_sdk_flutter;
+
 import 'package:tiki_sdk_dart/consent/consent_service.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 

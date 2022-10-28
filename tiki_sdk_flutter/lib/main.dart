@@ -1,5 +1,4 @@
-library tiki_sdk_flutter;
-
+///@nodoc
 import 'package:flutter/cupertino.dart';
 
 export 'tiki_sdk_flutter.dart';
