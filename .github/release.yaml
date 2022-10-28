@@ -36,6 +36,6 @@ jobs:
 
       - name: 'Publish Module'
         run: |
-          cd tiki_sdk_flutter_module
+          cd tiki_sdk_flutter
           pub publish -f
           cd ..
