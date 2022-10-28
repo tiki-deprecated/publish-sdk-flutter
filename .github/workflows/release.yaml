@@ -31,11 +31,11 @@ jobs:
       - name: 'Publish Plugin'
         run: |
           cd tiki_sdk_flutter_plugin
-          pub publish -f
+          flutter pub publish -f
           cd ..
 
       - name: 'Publish Module'
         run: |
           cd tiki_sdk_flutter
-          pub publish -f
+          flutter pub publish -f
           cd ..
