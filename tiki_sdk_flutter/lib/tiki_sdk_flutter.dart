@@ -1,18 +1,33 @@
 import 'package:tiki_sdk_dart/consent/consent_service.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 
+/// The TIKI SDK for Flutter.
+///
+/// This SDK works as a wrapper for TIKI SDK Dart, defining specific implementations
+/// for Android and iOS.
 class TikiSdkFlutter {
+
+  /// The base TIKI SDK for Dart
   late final TikiSdk tikiSdkDart;
+
+  /// The default origin.
   final String origin;
 
+  /// Initializes the TIKI SDK for Flutter, defining a default [origin].
   TikiSdkFlutter(this.origin);
 
+  /// Assigns ownership to a given [source] : data point, pool, or stream.
+  /// [types] describe the various types of data represented by
+  /// the referenced data. Optionally, the [origin] can be overridden
+  /// for the specific ownership grant.
   Future<String> assignOwnership(
           String source, TikiSdkDataTypeEnum type, List<String> contains,
           {String? origin}) async =>
       await tikiSdkDart.assignOwnership(source, type, contains);
 
-  /// Gets latest consent
+  /// Gets latest consent given to a specific [source] and [origin].
+  ///
+  /// If no [origin] is provided, the default will be used.
   ConsentModel? getConsent(String source, {String? origin}) =>
       tikiSdkDart.getConsent(source);
 
