@@ -5,7 +5,7 @@ import 'package:tiki_sdk_flutter/tiki_sdk_flutter.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk_flutter_builder.dart';
 
 void main() {
-  String apiKey = '';
+  String apiKey = '123';
   String origin = 'com.mytiki.test';
 
   test('Initialize Flutter TIKI SDK', skip: apiKey.isEmpty, () async {
