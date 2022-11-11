@@ -1,6 +1,6 @@
-# tiki_sdk_flutter
+# tiki_sdk_flutter_plugin
 
-TIKI SDK Flutter
+Flutter plugin to expose TIKI SDK native code to Android and iOS
 
 # tiki_sdk_flutter_plugin
 
