@@ -1,3 +1,7 @@
+## 0.0.6
+
+* remove tiki_sdk_plugin dependency
+
 ## 0.0.5
 
 * update naming and structure
