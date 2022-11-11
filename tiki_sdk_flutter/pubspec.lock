@@ -375,17 +375,10 @@ packages:
   tiki_sdk_dart:
     dependency: "direct main"
     description:
-      path: "../../tiki-sdk-dart"
-      relative: true
-    source: path
-    version: "0.0.6"
-  tiki_sdk_flutter_plugin:
-    dependency: "direct main"
-    description:
-      path: "../tiki_sdk_flutter_plugin"
-      relative: true
-    source: path
-    version: "0.0.2"
+      name: tiki_sdk_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.7"
   typed_data:
     dependency: transitive
     description:
