@@ -31,19 +31,18 @@ jobs:
       - name: Run integration tests
         run: flutter test integration_test --verbose
   android:
-      runs-on: macos-11
-      strategy:
-        matrix:
-          api-level:
-            - 29
-        fail-fast: true
-      steps:
+    runs-on: macos-11
+    strategy:
+      matrix:
+        api-level:
+          - 29
+      fail-fast: true
+    steps:
         - uses: actions/checkout@v3
         - name: Setup Flutter SDK
           uses: subosito/flutter-action@v2
           with:
-            with:
-              flutter-version: '3.3.7'
+            flutter-version: '3.3.7'
         - name: Install Flutter dependencies
           run: flutter pub get
         - name: Run integration tests
