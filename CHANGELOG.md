@@ -1,3 +1,7 @@
+## 0.0.9
+
+* remove duplicate publish command
+
 ## 0.0.8
 
 * remove tests from release

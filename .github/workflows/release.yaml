@@ -28,10 +28,6 @@ jobs:
           mkdir $XDG_CONFIG_HOME/dart
           echo '${{ secrets.PUB_DEV_CREDENTIALS }}' > "$XDG_CONFIG_HOME/dart/pub-credentials.json"
 
-      - name: 'Run tests'
-        run: |
-          flutter pub publish -f
-
       - name: 'Publish SDK'
         run: |
           flutter pub publish -f
