@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="tiki_sdk_flutter library API docs, for the Dart programming language.">
+  <title>tiki_sdk_flutter library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">tiki_sdk_flutter</a></li>
+    <li class="self-crumb">tiki_sdk_flutter library</li>
+  </ol>
+  <div class="self-name">tiki_sdk_flutter</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-library">tiki_sdk_flutter</span> library 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+ 
+</h1></div>
+
+    
+<section class="desc markdown">
+  <h1 id="the-tiki-sdk-for-flutter">The TIKI SDK for Flutter.</h1>
+<p>This SDK works as a wrapper for <a href="https://pub.dev/documentation/tiki_sdk_dart/0.0.8/tiki_sdk_dart/TikiSdk-class.html">TikiSdk</a>, defining specific implementations
+for Android and iOS.</p>
+<h2 id="how-to-use">How to use</h2>
+<p>Use <a href="../tiki_sdk_flutter_builder/TikiSdkFlutterBuilder-class.html">TikiSdkFlutterBuilder</a> to initialize the SDK.</p>
+<h2 id="api-reference">API Reference</h2>
+<h3 id="tikisdkdatatypeenum">TikiSdkDataTypeEnum</h3>
+<p>The type of data to which the ownership refers.</p>
+<ul>
+<li>data_point
+A specific and single ocurrence of a data.</li>
+<li>data_pool
+A pool of data from different ocurrences.</li>
+<li>data_stream
+A continuous stream of data.</li>
+</ul>
+<h3 id="tikisdkdestination">TikiSdkDestination</h3>
+<p>The destination to which the data is consented to be used.
+It is composed by <code>uses</code> and <code>paths</code>.
+To allow all the constant is <code>TikiSdkDestination.all()</code>. To block all use <code>TikiSdkDestination.none()</code>.</p>
+<h4 id="uses">uses</h4>
+<p>An optional list of application specific uses cases applicable to the given destination.<br></p>
+<p>Prefix with NOT to invert. <em>i.e. NOT ads</em>. <br></p>
+<h4 id="paths">paths</h4>
+<p>A list of paths, preferably URL without the scheme or reverse FQDN. Keep list short and use wildcard (<em>) matching. Prefix with NOT to invert. _i.e. NOT mytiki.com/</em></p>
+<h4 id="wildcards">WildCards</h4>
+<p>Wildcards are allowed in paths and uses using <code>*</code>.  To allow all uses, use a single item list with <code>*</code>.  To block all uses, create an empty list.</p>
+<h3 id="assign-ownership">Assign Ownership</h3>
+<pre class="language-dart"><code>String ownershipId = sdk.assignOwnership(source, type, contains, origin: origin);
+</code></pre>
+<p>Assign ownership to a given <code>source</code> : data point, pool, or stream.<br>
+The <code>types</code> describe the various types of data represented by the referenced data. <br>
+Optionally, the <code>origin</code> can be overridden for the specific ownership grant.</p>
+<h3 id="give-consent">Give Consent</h3>
+<pre class="language-dart"><code>ConsentModel consent = sdk.modifyConsent(
+  ownershipId, destination, about: about, reward: reward, expiry: expiry);
+</code></pre>
+<p>The consent is always given by overriding the previous consent. It is up to the implementer to verify the prior consent and modify it if necessary.</p>
+<h3 id="get-consent">Get Consent</h3>
+<pre class="language-dart"><code>ConsentModel consent = sdk. getConsent(source, origin: origin);
+</code></pre>
+<p>Get the latest consent given for the source. The origin is optional and defaults to the one used in SDK builder.</p>
+<h3 id="revoke-consent">Revoke Consent</h3>
+<pre class="language-dart"><code>ConsentModel consent = sdk.modifyConsent(ownershipId, TikiSdkDestination.none());
+</code></pre>
+<p>To revoke a given consent, use the constant TikiSdkDestition.none().</p>
+<h3 id="apply-consent">Apply Consent</h3>
+<pre class="language-dart"><code>Function request = () =&gt; print('ok');
+Function onBlocked = () =&gt; print('blocked');
+sdk.applyConsent(source, destination, request, onBlocked: onBlocked);
+</code></pre>
+<p>Runs a request if the consent was given for a specific source and destination. If the consent was not given, onBlocked is executed.</p>
+</section>
+
+
+    <section class="summary offset-anchor" id="classes">
+      <h2>Classes</h2>
+
+      <dl>
+        <dt id="TikiSdkFlutter">
+  <span class="name "><a href="../tiki_sdk_flutter/TikiSdkFlutter-class.html">TikiSdkFlutter</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+      </dl>
+    </section>
+
+
+
+
+
+
+
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">tiki_sdk_flutter</a></li>
+  <li class="self-crumb">tiki_sdk_flutter library</li>
+</ol>
+
+
+    <h5><span class="package-name">tiki_sdk_flutter</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="../flutter_key_storage/flutter_key_storage-library.html">flutter_key_storage</a></li>
+      <li><a href="../tiki_sdk_flutter/tiki_sdk_flutter-library.html">tiki_sdk_flutter</a></li>
+      <li><a href="../tiki_sdk_flutter_builder/tiki_sdk_flutter_builder-library.html">tiki_sdk_flutter_builder</a></li>
+      <li><a href="../tiki_sdk_flutter_platform/tiki_sdk_flutter_platform-library.html">tiki_sdk_flutter_platform</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>tiki_sdk_flutter library</h5>
+    <ol>
+  <li class="section-title"><a href="../tiki_sdk_flutter/tiki_sdk_flutter-library.html#classes">Classes</a></li>
+  <li><a href="../tiki_sdk_flutter/TikiSdkFlutter-class.html">TikiSdkFlutter</a></li>
+
+
+
+
+
+
+
+
+</ol>
+
+  </div><!--/sidebar-offcanvas-right-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    tiki_sdk_flutter
+      0.0.7
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
