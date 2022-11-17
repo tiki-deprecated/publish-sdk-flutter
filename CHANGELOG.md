@@ -3,6 +3,7 @@
 * cleanup code
 * update tests
 * update docs
+* remove tiki_sdk_plugin
 
 ## 0.0.6
 
