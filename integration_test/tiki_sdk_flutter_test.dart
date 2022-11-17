@@ -2,8 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tiki_sdk_dart/consent/consent_service.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_flutter/main.dart';
-import 'package:tiki_sdk_flutter/tiki_sdk_flutter.dart';
-import 'package:tiki_sdk_flutter/tiki_sdk_flutter_builder.dart';
 
 void main() {
   String apiKey = '123';
