@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tiki_sdk_dart/consent/consent_service.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
@@ -11,7 +9,7 @@ void main() {
   String apiKey = '123';
   String origin = 'com.mytiki.test';
 
-  test('FlutterKeyStorage write and read',  () async {
+  test('FlutterKeyStorage write and read', () async {
     FlutterKeyStorage keyStorage = FlutterKeyStorage();
     String value = 'test';
     keyStorage.write(key: 'test_value', value: 'test');
