@@ -1,6 +1,6 @@
 name: tiki_sdk_flutter
 description: The TIKI SDK implementation for Flutter. Create data Ownership and Consent NFTs with TIKI.
-version: 0.0.7
+version: 0.0.8
 homepage: https://github.com/tiki/tiki-sdk-flutter/tiki_sdk_flutter
 
 environment:
