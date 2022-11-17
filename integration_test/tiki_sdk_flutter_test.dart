@@ -1,12 +1,24 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tiki_sdk_dart/consent/consent_service.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
+import 'package:tiki_sdk_flutter/main.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk_flutter.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk_flutter_builder.dart';
 
 void main() {
   String apiKey = '123';
   String origin = 'com.mytiki.test';
+
+  test('FlutterKeyStorage write and read',  () async {
+    FlutterKeyStorage keyStorage = FlutterKeyStorage();
+    String value = 'test';
+    keyStorage.write(key: 'test_value', value: 'test');
+    String? returnedValue = await keyStorage.read(key: 'test_value');
+    expect(returnedValue == null, false);
+    expect(returnedValue, value);
+  });
 
   test('Initialize Flutter TIKI SDK', skip: apiKey.isEmpty, () async {
     TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
