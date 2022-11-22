@@ -329,7 +329,7 @@ packages:
       name: sqlite3_flutter_libs
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.11+1"
+    version: "0.5.12"
   stack_trace:
     dependency: transitive
     description:
@@ -378,7 +378,7 @@ packages:
       name: tiki_sdk_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.8"
+    version: "0.0.11"
   typed_data:
     dependency: transitive
     description:
