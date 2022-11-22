@@ -4,7 +4,7 @@ import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
 void main() {
-  String apiKey = '123';
+  String apiKey = '2b8de004-cbe0-4bd5-bda6-b266d54f5c90';
   String origin = 'com.mytiki.test';
 
   test('FlutterKeyStorage write and read', () async {

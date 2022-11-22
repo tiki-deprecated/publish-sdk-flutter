@@ -1,3 +1,13 @@
+## 0.0.11
+
+* update tiki sdk dart to 0.0.11
+* update docs
+
+## 0.0.10
+
+* update platform channels
+* add platform channels tests
+
 ## 0.0.9
 
 * remove duplicate publish command

@@ -14,6 +14,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:tiki_sdk_dart/consent/consent_model.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
+import 'package:tiki_sdk_flutter/main.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk_flutter.dart';
 
 import 'tiki_sdk_flutter_builder.dart';
@@ -23,6 +24,10 @@ class TikiSdkFlutterPlatform {
   static late final TikiSdkFlutter _tikiSdk;
 
   final methodChannel = const MethodChannel('tiki_sdk_flutter');
+
+  TikiSdkFlutterPlatform() {
+    methodChannel.setMethodCallHandler(methodHandler); // set method handler
+  }
 
   /// Handles the method calls from native code.
   ///
@@ -51,10 +56,11 @@ class TikiSdkFlutterPlatform {
           String source = call.arguments['source'];
           TikiSdkDataTypeEnum type =
               TikiSdkDataTypeEnum.fromValue(call.arguments['type']);
-          List<String> contains = call.arguments['contains'];
+          List<Object?> contains = call.arguments['contains'];
+          List<String> strcontains = contains.map((e) => e.toString()).toList();
           String? origin = call.arguments['origin'];
           String ownershipId = await _tikiSdk
-              .assignOwnership(source, type, contains, origin: origin);
+              .assignOwnership(source, type, strcontains, origin: origin);
           _success(requestId, response: ownershipId);
         } catch (e) {
           _error(requestId, e.toString());
@@ -84,8 +90,9 @@ class TikiSdkFlutterPlatform {
               TikiSdkDestination.fromJson(call.arguments['destination']);
           String? about = call.arguments['about'];
           String? reward = call.arguments['reward'];
-          DateTime? expiry =
-              DateTime.fromMillisecondsSinceEpoch(call.arguments['expiry']);
+          DateTime? expiry = call.arguments['expiry'] == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(call.arguments['expiry']);
           ConsentModel consentModel = await _tikiSdk.modifyConsent(
               ownershipId, destination,
               about: about, reward: reward, expiry: expiry);

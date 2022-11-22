@@ -92,10 +92,11 @@ platform.</p>
         String source = call.arguments[&#39;source&#39;];
         TikiSdkDataTypeEnum type =
             TikiSdkDataTypeEnum.fromValue(call.arguments[&#39;type&#39;]);
-        List&lt;String&gt; contains = call.arguments[&#39;contains&#39;];
+        List&lt;Object?&gt; contains = call.arguments[&#39;contains&#39;];
+        List&lt;String&gt; strcontains = contains.map((e) =&gt; e.toString()).toList();
         String? origin = call.arguments[&#39;origin&#39;];
         String ownershipId = await _tikiSdk
-            .assignOwnership(source, type, contains, origin: origin);
+            .assignOwnership(source, type, strcontains, origin: origin);
         _success(requestId, response: ownershipId);
       } catch (e) {
         _error(requestId, e.toString());
@@ -125,8 +126,9 @@ platform.</p>
             TikiSdkDestination.fromJson(call.arguments[&#39;destination&#39;]);
         String? about = call.arguments[&#39;about&#39;];
         String? reward = call.arguments[&#39;reward&#39;];
-        DateTime? expiry =
-            DateTime.fromMillisecondsSinceEpoch(call.arguments[&#39;expiry&#39;]);
+        DateTime? expiry = call.arguments[&#39;expiry&#39;] == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(call.arguments[&#39;expiry&#39;]);
         ConsentModel consentModel = await _tikiSdk.modifyConsent(
             ownershipId, destination,
             about: about, reward: reward, expiry: expiry);
@@ -209,7 +211,7 @@ platform.</p>
 <footer>
   <span class="no-break">
     tiki_sdk_flutter
-      0.0.7
+      0.0.11
   </span>
 
   
