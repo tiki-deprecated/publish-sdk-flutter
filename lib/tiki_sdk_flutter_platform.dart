@@ -25,8 +25,8 @@ class TikiSdkFlutterPlatform {
 
   final methodChannel = const MethodChannel('tiki_sdk_flutter');
 
-  TikiSdkFlutterPlatform(){
-      methodChannel.setMethodCallHandler(methodHandler); // set method handler
+  TikiSdkFlutterPlatform() {
+    methodChannel.setMethodCallHandler(methodHandler); // set method handler
   }
 
   /// Handles the method calls from native code.
@@ -56,7 +56,7 @@ class TikiSdkFlutterPlatform {
           String source = call.arguments['source'];
           TikiSdkDataTypeEnum type =
               TikiSdkDataTypeEnum.fromValue(call.arguments['type']);
-          List<Object?> contains =  call.arguments['contains'];
+          List<Object?> contains = call.arguments['contains'];
           List<String> strcontains = contains.map((e) => e.toString()).toList();
           String? origin = call.arguments['origin'];
           String ownershipId = await _tikiSdk
@@ -90,8 +90,9 @@ class TikiSdkFlutterPlatform {
               TikiSdkDestination.fromJson(call.arguments['destination']);
           String? about = call.arguments['about'];
           String? reward = call.arguments['reward'];
-          DateTime? expiry = call.arguments['expiry'] == null ? null :
-              DateTime.fromMillisecondsSinceEpoch(call.arguments['expiry']);
+          DateTime? expiry = call.arguments['expiry'] == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(call.arguments['expiry']);
           ConsentModel consentModel = await _tikiSdk.modifyConsent(
               ownershipId, destination,
               about: about, reward: reward, expiry: expiry);

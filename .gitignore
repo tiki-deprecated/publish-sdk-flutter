@@ -42,6 +42,7 @@ build/
 .ios/
 .flutter-plugins
 .flutter-plugins-dependencies
+Framerworks
 
 # Symbolication related
 app.*.symbols
