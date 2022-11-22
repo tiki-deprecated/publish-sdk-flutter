@@ -1,8 +1,6 @@
-import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tiki_sdk_dart/consent/consent_model.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
@@ -13,44 +11,42 @@ void main() {
   Map<String, Function(MethodCall)> callbacks = {};
 
   handler(MethodCall methodCall) async {
-    Function(MethodCall)? callback = callbacks[methodCall.arguments["requestId"]];
-    if(callback != null) await callback(methodCall);
+    Function(MethodCall)? callback =
+        callbacks[methodCall.arguments["requestId"]];
+    if (callback != null) await callback(methodCall);
   }
 
   TestWidgetsFlutterBinding.ensureInitialized();
   TikiSdkFlutterPlatform platform = TikiSdkFlutterPlatform();
   MethodChannel channel = platform.methodChannel;
 
-
   TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger
       .setMockMethodCallHandler(channel, handler);
 
   group('TikiSdkFlutterPlatform tests', () {
-
     test('Build Sdk', () async {
       bool ok = false;
       String requestId = 'build';
-      callbacks[requestId] = (methodCall) => ok = methodCall.method == "success";
-      await channel.invokeMockMethod('build',{
-        "requestId" : requestId,
-        "apiKey" : apiKey,
-        "origin" : origin
-      });
-      expect(ok,true);
+      callbacks[requestId] =
+          (methodCall) => ok = methodCall.method == "success";
+      await channel.invokeMockMethod('build',
+          {"requestId": requestId, "apiKey": apiKey, "origin": origin});
+      expect(ok, true);
     });
 
     test('Assign Ownership', () async {
       bool ok = false;
       String requestId = 'assignOwnership';
-      callbacks[requestId] = (methodCall) => ok = methodCall.method == "success";
-      await channel.invokeMockMethod('assignOwnership',{
-        "requestId" : requestId,
-        "source" : "assing test",
-        "type" : "data_point",
-        "contains" : ["nothing"],
-        "origin" : origin
+      callbacks[requestId] =
+          (methodCall) => ok = methodCall.method == "success";
+      await channel.invokeMockMethod('assignOwnership', {
+        "requestId": requestId,
+        "source": "assing test",
+        "type": "data_point",
+        "contains": ["nothing"],
+        "origin": origin
       });
-      expect(ok,true);
+      expect(ok, true);
     });
 
     test('Get consent', () async {
@@ -74,8 +70,8 @@ void main() {
           };
           await channel.invokeMockMethod('getConsent', {
             "requestId": getId,
-            "source" : "get consent test",
-            "origin" : origin
+            "source": "get consent test",
+            "origin": origin
           });
         };
         await channel.invokeMockMethod('modifyConsent', {
@@ -84,15 +80,14 @@ void main() {
           'destination': const TikiSdkDestination.all().toJson()
         });
       };
-      await channel.invokeMockMethod('assignOwnership',{
-          "requestId" : requestId,
-          "source" : "get consent test",
-          "type" : "data_point",
-          "contains" : ["nothing"],
-          "origin" : origin
-        });
+      await channel.invokeMockMethod('assignOwnership', {
+        "requestId": requestId,
+        "source": "get consent test",
+        "type": "data_point",
+        "contains": ["nothing"],
+        "origin": origin
       });
-
+    });
   });
 }
 
@@ -105,7 +100,7 @@ extension MethodChannelMock on MethodChannel {
         .handlePlatformMessage(
       name,
       data,
-          (ByteData? data) {},
+      (ByteData? data) {},
     );
   }
 }
