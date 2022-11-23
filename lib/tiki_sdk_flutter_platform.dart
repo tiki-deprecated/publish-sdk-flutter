@@ -12,16 +12,11 @@ library tiki_sdk_flutter_platform;
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:tiki_sdk_dart/consent/consent_model.dart';
-import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_flutter/main.dart';
-import 'package:tiki_sdk_flutter/tiki_sdk_flutter.dart';
-
-import 'tiki_sdk_flutter_builder.dart';
 
 /// The definition of native platform channels
 class TikiSdkFlutterPlatform {
-  static late final TikiSdkFlutter _tikiSdk;
+  static late final TikiSdk _tikiSdk;
 
   final methodChannel = const MethodChannel('tiki_sdk_flutter');
 
@@ -44,7 +39,7 @@ class TikiSdkFlutterPlatform {
           String? origin = call.arguments['origin'];
           TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
             ..origin(origin!)
-            ..apiKey(apiKey!);
+            ..apiId(apiKey!);
           _tikiSdk = await builder.build();
           _success(requestId);
         } catch (e) {

@@ -45,8 +45,7 @@ library tiki_sdk_flutter_builder;
 import 'package:path_provider/path_provider.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 
-import 'tiki_sdk_flutter.dart';
-import 'utils/flutter_key_storage.dart';
+import 'tiki_sdk_flutter_key_storage.dart';
 
 /// The TIKI SDK Flutter Builder
 ///
@@ -66,7 +65,7 @@ class TikiSdkFlutterBuilder {
   void origin(String origin) => _origin = origin;
 
   /// The apiKey to connect to TIKI L0 Storage.
-  void apiKey(String apiId) => _apiId = apiId;
+  void apiId(String apiId) => _apiId = apiId;
 
   /// The directory to be used by SQLite to store the database.
   ///
@@ -74,17 +73,14 @@ class TikiSdkFlutterBuilder {
   void databaseDir(String databaseDir) => _databaseDir = databaseDir;
 
   /// Builds a new [TikiSdkFlutter]
-  Future<TikiSdkFlutter> build() async {
+  Future<TikiSdk> build() async {
     TikiSdkBuilder sdkBuilder = TikiSdkBuilder()
       ..databaseDir(_databaseDir ?? await _dbDir())
-      ..keyStorage(FlutterKeyStorage())
+      ..keyStorage(TikiSdkFlutterKeyStorage())
       ..address(_address)
       ..apiId(_apiId)
       ..origin(_origin!);
-    TikiSdk tikiSdkDart = await sdkBuilder.build();
-    TikiSdkFlutter tikiSdkFlutter = TikiSdkFlutter(_origin!);
-    tikiSdkFlutter.tikiSdkDart = tikiSdkDart;
-    return tikiSdkFlutter;
+    return sdkBuilder.build();
   }
 
   Future<String> _dbDir() async {

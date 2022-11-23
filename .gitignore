@@ -51,3 +51,4 @@ app.*.symbols
 app.*.map.json
 
 coverage/
+doc/api/
