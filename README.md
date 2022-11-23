@@ -1,38 +1,21 @@
-![Image](https://img.shields.io/github/deployments/tiki/tiki-sdk-flutter/Production?label=deployment&logo=github)
-![Image](https://img.shields.io/github/workflow/status/tiki/tiki-sdk-flutter/docs?label=docs&logo=github)
-![Image](https://img.shields.io/pub/v/tiki_sdk_flutter?logo=dart)
-![Image](https://img.shields.io/pub/points/tiki_sdk_flutter?logo=dart)
-![Image](https://img.shields.io/github/license/tiki/tiki-sdk-flutter)
-
-# TIKI SDK —build the new data economy
+# TIKI SDK [Flutter] —build the new data economy
 
 ### [📚 Docs](https://docs.mytiki.com) &nbsp;&nbsp;[💬 Discord](https://discord.gg/tiki)
 
-The Flutter implementation of TIKI's decentralized infrastructure plus abstractions to simplify the tokenization and application of data ownership, consent, and rewards. It wraps the **[tiki-sdk-dart](https://github.com/tiki/tiki-sdk-dart)** and adds specific implementations for Android and iOS.
+A package for adding TIKI's decentralized infrastructure to **Flutter** projects. Add tokenized data ownership, consent, and rewards to your app in minutes.
 
-This package should be used just for Flutter projects. For native implementation the specific SDKs are recommended. 
+For native iOS and Android projects, use:
 
 - **🤖 Android: [tiki-sdk-android](https://github.com/tiki/tiki-sdk-android)**
 - **🍎 iOS: [tiki-sdk-ios](https://github.com/tiki/tiki-sdk-ios)**
 
-### 🎬 How to get started
+### [🎬 How to get started ➝](https://docs.mytiki.com/docs/tiki-sdk-flutter-getting-started)
+- **[API Reference ➝](https://docs.mytiki.com/reference/tiki-sdk-flutter-tiki-sdk-flutter-builder)**
+- **[Dart Docs ➝](https://pub.dev/documentation/tiki_sdk_flutter/latest/)**
 
-#### Depend on it
-Run this command with Flutter:
-```
-$ flutter pub add tiki_sdk_flutter
-```
-This will add a line like this to your package's pubspec.yaml (and run an implicit flutter pub get):
-```
-    dependencies:
-        tiki_sdk_flutter: ^0.0.11
-```
-Alternatively, your editor might support flutter pub get. Check the docs for your editor to learn more.
+#### Basic Architecture
+The package builds on TIKI's core SDK implementation (**[tiki-sdk-dart](https://github.com/tiki/tiki-sdk-dart)**) adding the following platform-specific configurations:
 
-#### Import it
-Now in your Dart code, you can use:
-```
-import 'package:tiki_sdk_flutter/tiki_sdk_flutter.dart';
-```
-
-- **[API Reference ➝](https://pub.dev/documentation/tiki_sdk_flutter/latest/)**
+- A KeyStorage (`tiki_sdk_flutter_key_storage.dart`) implementation using [flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage)
+- Native dependencies for SQLite ([sqlite3](https://pub.dev/packages/sqlite3) & [sqlite3_flutter_libs](https://pub.dev/packages/sqlite3_flutter_libs))
+- Default storage directory using [path_provider](https://pub.dev/packages/path_provider)

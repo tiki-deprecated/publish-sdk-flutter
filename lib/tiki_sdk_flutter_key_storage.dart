@@ -12,7 +12,7 @@ import 'package:tiki_sdk_dart/node/node_service.dart';
 ///
 /// It uses [FlutterSecureStorage] to implement encrypted key-value storage
 /// for Android and iOS.
-class FlutterKeyStorage implements KeyStorage {
+class TikiSdkFlutterKeyStorage implements KeyStorage {
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   @override
