@@ -1,6 +1,6 @@
-# TIKI SDK [Flutter] —build the new data economy
+###  [🍍 Console](https://console.mytiki.com) &nbsp; ⏐ &nbsp; [📚 Docs](https://docs.mytiki.com)
 
-### [📚 Docs](https://docs.mytiki.com) &nbsp;&nbsp;[💬 Discord](https://discord.gg/tiki)
+# TIKI SDK [Flutter] —build the new data economy
 
 A package for adding TIKI's decentralized infrastructure to **Flutter** projects. Add tokenized data ownership, consent, and rewards to your app in minutes.
 
