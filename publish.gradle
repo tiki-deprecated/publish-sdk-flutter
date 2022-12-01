@@ -8,7 +8,7 @@ afterEvaluate {
 
                 groupId = 'com.mytiki'
                 artifactId = 'tiki-sdk-flutter'
-                version = '0.0.13'
+                version = '0.0.14'
 
             }
         }
