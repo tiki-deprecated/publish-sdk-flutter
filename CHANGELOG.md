@@ -1,3 +1,19 @@
+## 0.0.15
+
+* Publish to pub.dev and github packages
+
+## 0.0.14 
+
+* Publish to github packages through github actions
+
+## 0.0.13
+
+* Publish to github packages manually
+
+## 0.0.12
+
+* documentation
+
 ## 0.0.11
 
 * update tiki sdk dart to 0.0.11

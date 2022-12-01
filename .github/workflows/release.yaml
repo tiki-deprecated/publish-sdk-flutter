@@ -6,7 +6,8 @@ on:
       - '*.*.*'
 
 jobs:
-  publish:
+
+  publish_sdk:
     runs-on: ubuntu-latest
     environment: Production
     steps:
@@ -28,6 +29,53 @@ jobs:
           mkdir $XDG_CONFIG_HOME/dart
           echo '${{ secrets.PUB_DEV_CREDENTIALS }}' > "$XDG_CONFIG_HOME/dart/pub-credentials.json"
 
-      - name: 'Publish SDK'
+
+     - name: 'Publish SDK'
         run: |
           flutter pub publish -f
+
+
+  publish_aar:
+    runs-on: ubuntu-latest
+    needs: publish_sdk
+    environment: Production
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+
+      - name: 'Setup Dart'
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.18.2
+
+      - name: 'Setup Flutter'
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.3.4'
+
+      - name: 'Set up Java 11'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: 'Flutter Pub Get'
+        run: |
+          flutter pub get
+
+      - name: 'Flutter Build AAR'
+        run: |
+          flutter build aar
+
+      - name: 'Inject publish gradle script'
+        run: |
+          cat publish.gradle >> .android/build.gradle
+
+      - name: 'Publish package to Github Packages'
+        run: |
+          cd .android
+          ./gradlew publish
+        env:
+          PUBLISH_TO_GITHUB: 1
+          GITHUB_USER: 'ricardobrg'
+          GITHUB_TOKEN: ${{ secrets.PACKAGES_ACCESS_TOKEN }}
