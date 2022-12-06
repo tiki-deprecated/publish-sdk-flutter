@@ -4,7 +4,7 @@
  */
 /// Not used. Required by Flutter build scripts.
 ///@nodoc
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'tiki_sdk_flutter_platform.dart';
 
