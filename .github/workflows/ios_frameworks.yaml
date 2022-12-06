@@ -1,0 +1,82 @@
+name: Publish iOS Frameworks
+
+on:
+  push:
+    branches:
+      - build_frameworks
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: "Checkout TIKI SDK Flutter"
+        uses: actions/checkout@v3
+        with:
+          repository: tiki/tiki-sdk-flutter
+          path: tiki-sdk-flutter
+
+      - name: "Setup Dart"
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.18.2
+
+      - name: "Setup Flutter"
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.3.4'
+
+      - name: "Setup XCode"
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: "Build Frameworks"
+        run: |
+          cd tiki-sdk-flutter
+          flutter build ios-framework --output=Frameworks
+
+      - name: "Zip debug frameworks"
+        run: |
+          cd Frameworks/Debug
+          zip -r sqlite3.xcframework.zip sqlite3.xcframework
+          swift package compute-checksum sqlite3.xcframework.zip >> sqlite3.xcframework.checksum
+          zip -r flutter_secure_storage.xcframework.zip flutter_secure_storage.xcframework
+          swift package compute-checksum flutter_secure_storage.xcframework.zip >> flutter_secure_storage.xcframework.checksum
+          zip -r path_provider_ios.xcframework.zip path_provider_ios.xcframework
+          swift package compute-checksum path_provider_ios.xcframework.zip >> path_provider_ios.xcframework.checksum
+          zip -r App.xcframework.zip App.xcframework
+          swift package compute-checksum App.xcframework.zip >> App.xcframework.checksum
+          zip -r Flutter.xcframework.zip Flutter.xcframework
+          swift package compute-checksum Flutter.xcframework.zip >> Flutter.xcframework.checksum
+          zip -r sqlite3_flutter_libs.xcframework.zip sqlite3_flutter_libs.xcframework
+          swift package compute-checksum sqlite3_flutter_libs.xcframework.zip >> sqlite3_flutter_libs.xcframework.checksum
+          zip -r FlutterPluginRegistrant.xcframework.zip FlutterPluginRegistrant.xcframework
+          swift package compute-checksum FlutterPluginRegistrant.xcframework.zip >> FlutterPluginRegistrant.xcframework.checksum
+
+      - name: "Zip release frameworks"
+        run: |
+          cd ../Release
+
+          zip -r sqlite3.xcframework.zip sqlite3.xcframework
+          swift package compute-checksum sqlite3.xcframework.zip >> sqlite3.xcframework.checksum
+          zip -r flutter_secure_storage.xcframework.zip flutter_secure_storage.xcframework
+          swift package compute-checksum flutter_secure_storage.xcframework.zip >> flutter_secure_storage.xcframework.checksum
+          zip -r path_provider_ios.xcframework.zip path_provider_ios.xcframework
+          swift package compute-checksum path_provider_ios.xcframework.zip >> path_provider_ios.xcframework.checksum
+          zip -r App.xcframework.zip App.xcframework
+          swift package compute-checksum App.xcframework.zip >> App.xcframework.checksum
+          zip -r Flutter.xcframework.zip Flutter.xcframework
+          swift package compute-checksum Flutter.xcframework.zip >> Flutter.xcframework.checksum
+          zip -r sqlite3_flutter_libs.xcframework.zip sqlite3_flutter_libs.xcframework
+          swift package compute-checksum sqlite3_flutter_libs.xcframework.zip >> sqlite3_flutter_libs.xcframework.checksum
+          zip -r FlutterPluginRegistrant.xcframework.zip FlutterPluginRegistrant.xcframework
+          swift package compute-checksum FlutterPluginRegistrant.xcframework.zip >> FlutterPluginRegistrant.xcframework.checksum
+
+      - name: upload frameworks
+        uses: actions/upload-artifact@v3
+        with:
+          path: |
+            Frameworks/Release/*.zip
+            Frameworks/Release/*.checksum
+            Frameworks/Debug/*.zip
+            Frameworks/Debug/*.checksum
