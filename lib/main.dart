@@ -2,9 +2,10 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-/// Not used. Required by Flutter build scripts.
+
+/// Not used. Required by Dart Runtime for native implementations
 ///@nodoc
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'tiki_sdk_flutter_platform.dart';
 

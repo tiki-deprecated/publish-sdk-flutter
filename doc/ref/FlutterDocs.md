@@ -1,5 +1,5 @@
 ---
-title: Dart Docs
+title: Flutter Docs
 category: 637e58d4d9362512a6fd7451
 slug: tiki-sdk-flutter-docs
 hidden: false
