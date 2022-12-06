@@ -57,5 +57,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           path: |
-            Frameworks/Release/*.zip
-            Frameworks/Release/*.checksum
+            tiki-sdk-flutter/Frameworks/Release/*.zip
+            tiki-sdk-flutter/Frameworks/Release/*.checksum
