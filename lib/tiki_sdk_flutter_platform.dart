@@ -21,7 +21,7 @@ class TikiSdkFlutterPlatform {
   final methodChannel = const MethodChannel('tiki_sdk_flutter');
 
   TikiSdkFlutterPlatform() {
-    methodChannel.setMethodCallHandler(methodHandler); // set method handler
+    methodChannel.setMethodCallHandler(methodHandler);
   }
 
   /// Handles the method calls from native code.
@@ -41,9 +41,10 @@ class TikiSdkFlutterPlatform {
             ..origin(origin!)
             ..apiId(apiKey!);
           _tikiSdk = await builder.build();
-          _success(requestId);
+          String address = _tikiSdk.address;
+          _success("build", response: address);
         } catch (e) {
-          _error(requestId, e.toString());
+          _error("build", e.toString());
         }
         break;
       case "assignOwnership":
