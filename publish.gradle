@@ -9,6 +9,7 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
+                
                 groupId = 'com.mytiki'
                 artifactId = 'tiki-sdk-flutter'
                 version = buildVersion
