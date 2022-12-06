@@ -33,47 +33,25 @@ jobs:
       - name: "Build Frameworks"
         run: |
           cd tiki-sdk-flutter
-          flutter build ios-framework --output=Frameworks
+          flutter build ios-framework --output=Frameworks --no-profile --no-debug
 
-      - name: "Zip debug frameworks"
-        run: |
-          ls
-          cd tiki-sdk-flutter
-          cd Frameworks/Debug
-          zip -r sqlite3.xcframework.zip sqlite3.xcframework
-          swift package compute-checksum sqlite3.xcframework.zip >> sqlite3.xcframework.checksum
-          zip -r flutter_secure_storage.xcframework.zip flutter_secure_storage.xcframework
-          swift package compute-checksum flutter_secure_storage.xcframework.zip >> flutter_secure_storage.xcframework.checksum
-          zip -r path_provider_ios.xcframework.zip path_provider_ios.xcframework
-          swift package compute-checksum path_provider_ios.xcframework.zip >> path_provider_ios.xcframework.checksum
-          zip -r App.xcframework.zip App.xcframework
-          swift package compute-checksum App.xcframework.zip >> App.xcframework.checksum
-          zip -r Flutter.xcframework.zip Flutter.xcframework
-          swift package compute-checksum Flutter.xcframework.zip >> Flutter.xcframework.checksum
-          zip -r sqlite3_flutter_libs.xcframework.zip sqlite3_flutter_libs.xcframework
-          swift package compute-checksum sqlite3_flutter_libs.xcframework.zip >> sqlite3_flutter_libs.xcframework.checksum
-          zip -r FlutterPluginRegistrant.xcframework.zip FlutterPluginRegistrant.xcframework
-          swift package compute-checksum FlutterPluginRegistrant.xcframework.zip >> FlutterPluginRegistrant.xcframework.checksum
-
-      - name: "Zip release frameworks"
+      - name: "Zip frameworks"
         run: |
           cd tiki-sdk-flutter/Frameworks/Release
-
-
           zip -r sqlite3.xcframework.zip sqlite3.xcframework
-          swift package compute-checksum sqlite3.xcframework.zip >> sqlite3.xcframework.checksum
+          shasum -a 256 sqlite3.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework.checksum
           zip -r flutter_secure_storage.xcframework.zip flutter_secure_storage.xcframework
-          swift package compute-checksum flutter_secure_storage.xcframework.zip >> flutter_secure_storage.xcframework.checksum
+          shasum -a 256 flutter_secure_storage.xcframework.zip | cut -f1 -d''>> flutter_secure_storage.checksum
           zip -r path_provider_ios.xcframework.zip path_provider_ios.xcframework
-          swift package compute-checksum path_provider_ios.xcframework.zip >> path_provider_ios.xcframework.checksum
+          shasum -a 256 path_provider_ios.xcframework.zip | cut -f1 -d''>> path_provider_ios.checksum
           zip -r App.xcframework.zip App.xcframework
-          swift package compute-checksum App.xcframework.zip >> App.xcframework.checksum
+          shasum -a 256 App.xcframework.zip | cut -f1 -d''>> App.checksum
           zip -r Flutter.xcframework.zip Flutter.xcframework
-          swift package compute-checksum Flutter.xcframework.zip >> Flutter.xcframework.checksum
+          shasum -a 256 Flutter.xcframework.zip | cut -f1 -d''>> Flutter.checksum
           zip -r sqlite3_flutter_libs.xcframework.zip sqlite3_flutter_libs.xcframework
-          swift package compute-checksum sqlite3_flutter_libs.xcframework.zip >> sqlite3_flutter_libs.xcframework.checksum
+          shasum -a 256 sqlite3_flutter_libs.xcframework.zip | cut -f1 -d''>> sqlite3_flutter_libs.checksum
           zip -r FlutterPluginRegistrant.xcframework.zip FlutterPluginRegistrant.xcframework
-          swift package compute-checksum FlutterPluginRegistrant.xcframework.zip >> FlutterPluginRegistrant.xcframework.checksum
+          shasum -a 256 FlutterPluginRegistrant.xcframework.zip | cut -f1 -d''>> FlutterPluginRegistrant.checksum
 
       - name: upload frameworks
         uses: actions/upload-artifact@v3
@@ -81,5 +59,3 @@ jobs:
           path: |
             Frameworks/Release/*.zip
             Frameworks/Release/*.checksum
-            Frameworks/Debug/*.zip
-            Frameworks/Debug/*.checksum
