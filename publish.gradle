@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
 
 apply plugin: 'maven-publish'
 afterEvaluate {
@@ -5,11 +9,9 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-
                 groupId = 'com.mytiki'
                 artifactId = 'tiki-sdk-flutter'
-                version = '0.0.15'
-
+                version = buildVersion
             }
         }
         repositories {
@@ -17,24 +19,12 @@ afterEvaluate {
                 name = 'localRepo'
                 url = layout.buildDirectory.dir("repo")
             }
-            if(System.getenv('PUBLISH_TO_OSSRH') != null) {
-                maven {
-                    name = "OSSRH"
-                    url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-                    credentials {
-                        username = System.getenv('OSSRH_USERNAME')
-                        password = System.getenv('OSSRH_PASSWORD')
-                    }
-                }
-            }
-            if(System.getenv('PUBLISH_TO_GITHUB') != null) {
-                maven {
-                    name = "GitHubPackages"
-                    url = "https://maven.pkg.github.com/tiki/tiki-sdk-flutter"
-                    credentials {
-                        username = System.getenv("GITHUB_USER")
-                        password = System.getenv("GITHUB_TOKEN")
-                    }
+            maven {
+                name = "GitHubPackages"
+                url = "https://maven.pkg.github.com/tiki/tiki-sdk-flutter"
+                credentials {
+                    username = System.getenv("GITHUB_USER")
+                    password = System.getenv("GITHUB_TOKEN")
                 }
             }
         }

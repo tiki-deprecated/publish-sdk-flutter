@@ -32,6 +32,9 @@ jobs:
         run: |
           flutter pub publish -f
 
+      - name: Release
+        uses: softprops/action-gh-release@v1
+
   publish_aar:
     runs-on: ubuntu-latest
     needs: publish_sdk
@@ -39,6 +42,10 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v2
+
+      - name: Get Version From Tag
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
       - name: 'Setup Dart'
         uses: dart-lang/setup-dart@v1
@@ -71,8 +78,7 @@ jobs:
       - name: 'Publish package to Github Packages'
         run: |
           cd .android
-          ./gradlew publish
+          ./gradlew publish -PbuildVersion=${{ steps.vars.outputs.tag }}
         env:
-          PUBLISH_TO_GITHUB: 1
           GITHUB_USER: 'ricardobrg'
           GITHUB_TOKEN: ${{ secrets.PACKAGES_ACCESS_TOKEN }}
