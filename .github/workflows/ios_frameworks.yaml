@@ -53,9 +53,9 @@ jobs:
           zip -r FlutterPluginRegistrant.xcframework.zip FlutterPluginRegistrant.xcframework
           shasum -a 256 FlutterPluginRegistrant.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant.checksum
 
-      - name: upload frameworks
-        uses: actions/upload-artifact@v3
+      - name: Create Release
+        uses: ncipollo/release-action@v1
         with:
-          path: |
-            tiki-sdk-flutter/Frameworks/Release/*.zip
-            tiki-sdk-flutter/Frameworks/Release/*.checksum
+          artifacts: "tiki-sdk-flutter/Frameworks/Release/*.zip,tiki-sdk-flutter/Frameworks/Release/*.checksum"
+          replacesArtifacts: false
+          token: ${{ secrets.GH_TOKEN }}
