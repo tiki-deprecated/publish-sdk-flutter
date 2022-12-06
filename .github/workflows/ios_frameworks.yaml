@@ -41,17 +41,17 @@ jobs:
           zip -r sqlite3.xcframework.zip sqlite3.xcframework
           shasum -a 256 sqlite3.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework.checksum
           zip -r flutter_secure_storage.xcframework.zip flutter_secure_storage.xcframework
-          shasum -a 256 flutter_secure_storage.xcframework.zip | cut -f1 -d''>> flutter_secure_storage.checksum
+          shasum -a 256 flutter_secure_storage.xcframework.zip | cut -f1 -d' '>> flutter_secure_storage.checksum
           zip -r path_provider_ios.xcframework.zip path_provider_ios.xcframework
-          shasum -a 256 path_provider_ios.xcframework.zip | cut -f1 -d''>> path_provider_ios.checksum
+          shasum -a 256 path_provider_ios.xcframework.zip | cut -f1 -d' '>> path_provider_ios.checksum
           zip -r App.xcframework.zip App.xcframework
-          shasum -a 256 App.xcframework.zip | cut -f1 -d''>> App.checksum
+          shasum -a 256 App.xcframework.zip | cut -f1 -d' '>> App.checksum
           zip -r Flutter.xcframework.zip Flutter.xcframework
-          shasum -a 256 Flutter.xcframework.zip | cut -f1 -d''>> Flutter.checksum
+          shasum -a 256 Flutter.xcframework.zip | cut -f1 -d' '>> Flutter.checksum
           zip -r sqlite3_flutter_libs.xcframework.zip sqlite3_flutter_libs.xcframework
-          shasum -a 256 sqlite3_flutter_libs.xcframework.zip | cut -f1 -d''>> sqlite3_flutter_libs.checksum
+          shasum -a 256 sqlite3_flutter_libs.xcframework.zip | cut -f1 -d' '>> sqlite3_flutter_libs.checksum
           zip -r FlutterPluginRegistrant.xcframework.zip FlutterPluginRegistrant.xcframework
-          shasum -a 256 FlutterPluginRegistrant.xcframework.zip | cut -f1 -d''>> FlutterPluginRegistrant.checksum
+          shasum -a 256 FlutterPluginRegistrant.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant.checksum
 
       - name: upload frameworks
         uses: actions/upload-artifact@v3
