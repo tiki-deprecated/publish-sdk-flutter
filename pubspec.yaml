@@ -30,4 +30,4 @@ flutter:
   module:
     androidX: true
     androidPackage: com.mytiki.tiki_sdk_flutter
-    iosBundleIdentifier: com.mytiki.tikiSdkFlutter
+    iosBundleIdentifier: com.mytiki.tiki-sdk-flutter

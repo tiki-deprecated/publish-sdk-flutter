@@ -1,4 +1,4 @@
-name: Publish iOS Frameworks
+name: Publish XCFrameworks
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - '*.*.*'
 
 jobs:
-  build:
+  publish:
     runs-on: macos-latest
     steps:
       - name: "Checkout TIKI SDK Flutter"
@@ -30,12 +30,14 @@ jobs:
         with:
           xcode-version: latest-stable
 
+      - name: 'Remove Integration Test Dependency'
+        run: |
+          cd tiki-sdk-flutter
+          perl -i -p0e 's/  integration_test:\n    sdk: flutter//s' pubspec.yaml
+
       - name: "Build Frameworks"
         run: |
           cd tiki-sdk-flutter
-          rm pubspec.yaml
-          mv pubspec-frameworks.yaml pubspec.yaml
-          cat pubspec.yaml
           flutter build ios-framework --output=Frameworks --no-profile
 
       - name: "Zip release frameworks"
