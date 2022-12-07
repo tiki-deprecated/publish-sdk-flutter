@@ -33,6 +33,8 @@ jobs:
       - name: "Build Frameworks"
         run: |
           cd tiki-sdk-flutter
+          rm pubspec.yaml
+          mv pubspec-frameworks.yaml pubspec.yaml
           flutter build ios-framework --output=Frameworks --no-profile --no-debug
 
       - name: "Zip frameworks"
