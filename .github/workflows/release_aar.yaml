@@ -33,6 +33,10 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
+      - name: 'Remove Integration Test Dependency'
+        run: |
+          perl -i -p0e 's/  integration_test:\n    sdk: flutter//s' pubspec.yaml
+
       - name: 'Flutter Pub Get'
         run: |
           flutter pub get
