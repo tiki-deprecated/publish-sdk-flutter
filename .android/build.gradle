@@ -22,56 +22,14 @@ allprojects {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 31
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 16
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-
-                groupId = 'com.mytiki'
-                artifactId = 'tiki_sdk_flutter'
-                version = '0.0.13'
-
-            }
-        }
-        repositories {
-            maven {
-                name = 'localRepo'
-                url = layout.buildDirectory.dir("repo")
-            }
-            if(System.getenv('PUBLISH_TO_OSSRH') != null) {
-                maven {
-                    name = "OSSRH"
-                    url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-                    credentials {
-                        username = System.getenv('OSSRH_USERNAME')
-                        password = System.getenv('OSSRH_PASSWORD')
-                    }
-                }
-            }
-            if(System.getenv('PUBLISH_TO_GITHUB') != null) {
-                maven {
-                    name = "GitHubPackages"
-                    url = "https://maven.pkg.github.com/tiki/tiki-sdk-android"
-                    credentials {
-                        username = System.getenv("GITHUB_ACTOR")
-                        password = System.getenv("GITHUB_TOKEN")
-                    }
-                }
-            }
-        }
-    }
 }
