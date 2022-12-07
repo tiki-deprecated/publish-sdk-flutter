@@ -2,6 +2,7 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
+
 /// Native platform channels for TIKI SDK.
 ///
 /// The Flutter Platform Channels are used to call native code from Dart and
@@ -21,7 +22,7 @@ class TikiSdkFlutterPlatform {
   final methodChannel = const MethodChannel('tiki_sdk_flutter');
 
   TikiSdkFlutterPlatform() {
-    methodChannel.setMethodCallHandler(methodHandler); // set method handler
+    methodChannel.setMethodCallHandler(methodHandler);
   }
 
   /// Handles the method calls from native code.
@@ -35,15 +36,16 @@ class TikiSdkFlutterPlatform {
     switch (call.method) {
       case "build":
         try {
-          String? apiKey = call.arguments['apiKey'];
+          String? apiKey = call.arguments['apiId'];
           String? origin = call.arguments['origin'];
           TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
             ..origin(origin!)
             ..apiId(apiKey!);
           _tikiSdk = await builder.build();
-          _success(requestId);
+          String address = _tikiSdk.address;
+          _success("build", response: address);
         } catch (e) {
-          _error(requestId, e.toString());
+          _error("build", e.toString());
         }
         break;
       case "assignOwnership":

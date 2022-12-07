@@ -16,8 +16,8 @@ next:
 
 _For native iOS and Android projects, use:_
 
-#### 🤖 Android: [tiki-sdk-android](https://github.com/tiki/tiki-sdk-android)
-#### 🍎 iOS: [tiki-sdk-ios](https://github.com/tiki/tiki-sdk-ios)
+#### 🤖 Android: [tiki-sdk-android](tiki-sdk-android-getting-started)
+#### 🍎 iOS: [tiki-sdk-ios](tiki-sdk-ios-getting-started)
 
 ---
 &nbsp;
