@@ -75,7 +75,7 @@ jobs:
           shasum -a 256 FlutterPluginRegistrant_debug.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant.checksum.txt
 
       - name: Publish
-          uses: ncipollo/release-action@v1
-          with:
-            artifacts: "tiki-sdk-flutter/Frameworks/Release/*.zip,tiki-sdk-flutter/Frameworks/Release/*.checksum.txt,tiki-sdk-flutter/Frameworks/Debug/*.zip,tiki-sdk-flutter/Frameworks/Debug/*.checksum.txt"
-            replacesArtifacts: false
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "tiki-sdk-flutter/Frameworks/Release/*.zip,tiki-sdk-flutter/Frameworks/Release/*.checksum.txt,tiki-sdk-flutter/Frameworks/Debug/*.zip,tiki-sdk-flutter/Frameworks/Debug/*.checksum.txt"
+          replacesArtifacts: false
