@@ -53,5 +53,5 @@ jobs:
         run: |
           flutter build aar --no-debug --no-profile --build-number ${{ steps.vars.outputs.tag }}
         env:
-          GITHUB_USER: 'ricardobrg'
-          GITHUB_TOKEN: ${{ secrets.PACKAGES_ACCESS_TOKEN }}
+          GITHUB_USER: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
