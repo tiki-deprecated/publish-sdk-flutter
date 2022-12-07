@@ -1,3 +1,7 @@
+## 0.0.16
+
+* Action to build and publish iOS Frameworks
+
 ## 0.0.15
 
 * Publish to pub.dev and github packages
