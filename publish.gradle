@@ -9,10 +9,28 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                
+
                 groupId = 'com.mytiki'
                 artifactId = 'tiki-sdk-flutter'
                 version = buildVersion
+            }
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.it_nomads'
+                artifactId = 'flutter_secure_storage'
+            }
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'eu.simonbinder'
+                artifactId = 'sqlite3_flutter_libs'
+            }
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'io.flutter.plugins.pathprovider'
+                artifactId = 'path_provider_android'
             }
         }
         repositories {
