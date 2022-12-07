@@ -3,7 +3,7 @@ name: Publish iOS Frameworks
 on:
   push:
     tags:
-      - '*.*.*-ios'
+      - '*.*.*'
 
 jobs:
   build:
