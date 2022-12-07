@@ -55,7 +55,8 @@ jobs:
           shasum -a 256 sqlite3_flutter_libs_release.xcframework.zip | cut -f1 -d' '>> sqlite3_flutter_libs.checksum.txt
           zip -r FlutterPluginRegistrant_release.xcframework.zip FlutterPluginRegistrant.xcframework
           shasum -a 256 FlutterPluginRegistrant_release.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant.checksum.txt
-      - name: "Zip release frameworks"
+
+      - name: "Zip debug frameworks"
         run: |
           cd tiki-sdk-flutter/Frameworks/Debug
           zip -r sqlite3_debug.xcframework.zip sqlite3.xcframework
@@ -73,8 +74,8 @@ jobs:
           zip -r FlutterPluginRegistrant_debug.xcframework.zip FlutterPluginRegistrant.xcframework
           shasum -a 256 FlutterPluginRegistrant_debug.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant.checksum.txt
 
-    - name: Publish
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "tiki-sdk-flutter/Frameworks/Release/*.zip,tiki-sdk-flutter/Frameworks/Release/*.checksum.txt,tiki-sdk-flutter/Frameworks/Debug/*.zip,tiki-sdk-flutter/Frameworks/Debug/*.checksum.txt"
-          replacesArtifacts: false
+      - name: Publish
+          uses: ncipollo/release-action@v1
+          with:
+            artifacts: "tiki-sdk-flutter/Frameworks/Release/*.zip,tiki-sdk-flutter/Frameworks/Release/*.checksum.txt,tiki-sdk-flutter/Frameworks/Debug/*.zip,tiki-sdk-flutter/Frameworks/Debug/*.checksum.txt"
+            replacesArtifacts: false
