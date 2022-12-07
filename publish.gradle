@@ -4,31 +4,16 @@
  */
 
 apply plugin: 'maven-publish'
-afterEvaluate {
-    publishing {
-        publications.all {
-            pom.withXml(configureMavenCentralMetadata)
-        }
-        publications {
-            release(MavenPublication) {
-                from components.release
-
-                groupId = 'com.mytiki'
-                artifactId = 'tiki-sdk-flutter'
-                version = buildVersion
-            }
-        }
-        repositories {
-            maven {
-                name = 'localRepo'
-                url = layout.buildDirectory.dir("repo")
-            }
-            maven {
-                name = "GitHubPackages"
-                url = "https://maven.pkg.github.com/tiki/tiki-sdk-flutter"
-                credentials {
-                    username = System.getenv("GITHUB_USER")
-                    password = System.getenv("GITHUB_TOKEN")
+project.getGradle().projectsEvaluated {
+    allprojects {
+        publishing {
+            repositories {
+                maven {
+                    url = uri("https://maven.pkg.github.com/tiki/tiki-sdk-flutter")
+                    credentials {
+                        username = 'GH_USERNAME'
+                        password = 'GH_TOKEN'
+                    }
                 }
             }
         }
