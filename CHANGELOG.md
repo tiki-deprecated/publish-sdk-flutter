@@ -1,3 +1,7 @@
+## 0.0.17
+
+* Update frameworks filenames
+
 ## 0.0.16
 
 * Action to build and publish iOS Frameworks
