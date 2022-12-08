@@ -8,6 +8,7 @@ on:
 jobs:
   publish:
     runs-on: macos-latest
+    environment: Production
     steps:
       - name: "Checkout TIKI SDK Flutter"
         uses: actions/checkout@v3
@@ -62,19 +63,19 @@ jobs:
         run: |
           cd tiki-sdk-flutter/Frameworks/Debug
           zip -r sqlite3_debug.xcframework.zip sqlite3.xcframework
-          shasum -a 256 sqlite3_debug.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework.checksum.txt
+          shasum -a 256 sqlite3_debug.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework_debug.checksum.txt
           zip -r flutter_secure_storage_debug.xcframework.zip flutter_secure_storage.xcframework
-          shasum -a 256 flutter_secure_storage_debug.xcframework.zip | cut -f1 -d' '>> flutter_secure_storage.checksum.txt
+          shasum -a 256 flutter_secure_storage_debug.xcframework.zip | cut -f1 -d' '>> flutter_secure_storage_debug.checksum.txt
           zip -r path_provider_ios_debug.xcframework.zip path_provider_ios.xcframework
-          shasum -a 256 path_provider_ios_debug.xcframework.zip | cut -f1 -d' '>> path_provider_ios.checksum.txt
+          shasum -a 256 path_provider_ios_debug.xcframework.zip | cut -f1 -d' '>> path_provider_ios_debug.checksum.txt
           zip -r App_debug.xcframework.zip App.xcframework
-          shasum -a 256 App_debug.xcframework.zip | cut -f1 -d' '>> App.checksum.txt
+          shasum -a 256 App_debug.xcframework.zip | cut -f1 -d' '>> App_debug.checksum.txt
           zip -r Flutter_debug.xcframework.zip Flutter.xcframework
-          shasum -a 256 Flutter_debug.xcframework.zip | cut -f1 -d' '>> Flutter.checksum.txt
+          shasum -a 256 Flutter_debug.xcframework.zip | cut -f1 -d' '>> Flutter_debug.checksum.txt
           zip -r sqlite3_flutter_libs_debug.xcframework.zip sqlite3_flutter_libs.xcframework
-          shasum -a 256 sqlite3_flutter_libs_debug.xcframework.zip | cut -f1 -d' '>> sqlite3_flutter_libs.checksum.txt
+          shasum -a 256 sqlite3_flutter_libs_debug.xcframework.zip | cut -f1 -d' '>> sqlite3_flutter_libs_debug.checksum.txt
           zip -r FlutterPluginRegistrant_debug.xcframework.zip FlutterPluginRegistrant.xcframework
-          shasum -a 256 FlutterPluginRegistrant_debug.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant.checksum.txt
+          shasum -a 256 FlutterPluginRegistrant_debug.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant_debug.checksum.txt
 
       - name: Publish
         uses: ncipollo/release-action@v1
