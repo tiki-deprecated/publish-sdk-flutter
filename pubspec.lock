@@ -378,7 +378,7 @@ packages:
       name: tiki_sdk_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.11"
+    version: "0.0.12"
   typed_data:
     dependency: transitive
     description:
