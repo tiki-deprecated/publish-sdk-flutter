@@ -3,7 +3,7 @@ name: Publish XCFrameworks
 on:
   push:
     push:
-      - 'feature/89-Add_build_script_in_frameworks_build_action_to_produce_testable_binaries'
+      - '*.*.*'
 
 jobs:
   publish:
