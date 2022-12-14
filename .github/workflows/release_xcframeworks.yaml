@@ -2,8 +2,8 @@ name: Publish XCFrameworks
 
 on:
   push:
-    tags:
-      - '*.*.*'
+    push:
+      - 'feature/89-Add_build_script_in_frameworks_build_action_to_produce_testable_binaries'
 
 jobs:
   publish:
@@ -37,9 +37,9 @@ jobs:
           perl -i -p0e 's/  integration_test:\n    sdk: flutter//s' pubspec.yaml
 
       - name: 'Flutter pub get'
-          run: |
-            cd tiki-sdk-flutter/
-            flutter pub get
+        run: |
+          cd tiki-sdk-flutter/
+          flutter pub get
 
       - name: 'Add embed script in Xcode Project Build phases'
         run: |
