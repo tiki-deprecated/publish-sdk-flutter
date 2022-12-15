@@ -1,11 +1,10 @@
-
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
 void main() {
-  const String apiKey = '2b8de004-cbe0-4bd5-bda6-b266d54f5c90';
+  const String apiId = '2b8de004-cbe0-4bd5-bda6-b266d54f5c90';
   const String origin = 'com.mytiki.test';
 
   Map<String, Function(MethodCall)> callbacks = {};
@@ -29,8 +28,8 @@ void main() {
       String requestId = 'build';
       callbacks[requestId] =
           (methodCall) => ok = methodCall.method == "success";
-      await channel.invokeMockMethod('build',
-          {"requestId": requestId, "apiKey": apiKey, "origin": origin});
+      await channel.invokeMockMethod(
+          'build', {"requestId": requestId, "apiId": apiId, "origin": origin});
       expect(ok, true);
     });
 
@@ -39,6 +38,8 @@ void main() {
       String requestId = 'assignOwnership';
       callbacks[requestId] =
           (methodCall) => ok = methodCall.method == "success";
+      await channel.invokeMockMethod(
+          'build', {"requestId": "build", "apiId": apiId, "origin": origin});
       await channel.invokeMockMethod('assignOwnership', {
         "requestId": requestId,
         "source": "assing test",
@@ -51,6 +52,8 @@ void main() {
 
     test('Get consent', () async {
       String requestId = 'assignOwnership';
+      await channel.invokeMockMethod(
+          'build', {"requestId": "build", "apiId": apiId, "origin": origin});
       callbacks[requestId] = (methodCall) async {
         callbacks.remove(requestId);
         if (methodCall.method != "success") {

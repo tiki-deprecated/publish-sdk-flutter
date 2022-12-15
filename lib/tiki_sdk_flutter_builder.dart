@@ -29,9 +29,9 @@
 ///
 /// ### API id
 /// ```
-/// builder.apiKey = <api_id;
+/// builder.apiId = <api_id;
 /// ```
-/// The apiKey to connect to TIKI L0 Storage.
+/// The apiId to connect to TIKI L0 Storage.
 ///
 /// ### Database directory
 /// ```
@@ -64,7 +64,7 @@ class TikiSdkFlutterBuilder {
   /// The default origin for the ownership assignments.
   void origin(String origin) => _origin = origin;
 
-  /// The apiKey to connect to TIKI L0 Storage.
+  /// The apiId to connect to TIKI L0 Storage.
   void apiId(String apiId) => _apiId = apiId;
 
   /// The directory to be used by SQLite to store the database.
