@@ -36,13 +36,17 @@ class TikiSdkFlutterPlatform {
     switch (call.method) {
       case "build":
         try {
-          String? apiKey = call.arguments['apiId'];
+          String? apiId = call.arguments['apiId'];
           String? origin = call.arguments['origin'];
+          String? address = call.arguments['address'];
           TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
             ..origin(origin!)
-            ..apiId(apiKey!);
+            ..apiId(apiId!);
+          if (address != null) {
+            builder.address(address);
+          }
           _tikiSdk = await builder.build();
-          String address = _tikiSdk.address;
+          address = _tikiSdk.address;
           _success("build", response: address);
         } catch (e) {
           _error("build", e.toString());
@@ -53,29 +57,26 @@ class TikiSdkFlutterPlatform {
           String source = call.arguments['source'];
           TikiSdkDataTypeEnum type =
               TikiSdkDataTypeEnum.fromValue(call.arguments['type']);
-          List<Object?> contains = call.arguments['contains'];
-          List<String> strcontains = contains.map((e) => e.toString()).toList();
+          List<String> contains = call.arguments['contains']
+              .map<String>((e) => e!.toString())
+              .toList();
+          String? about = call.arguments['about'];
           String? origin = call.arguments['origin'];
-          String ownershipId = await _tikiSdk
-              .assignOwnership(source, type, strcontains, origin: origin);
+          String ownershipId = await _tikiSdk.assignOwnership(
+              source, type, contains,
+              about: about, origin: origin);
           _success(requestId, response: ownershipId);
         } catch (e) {
           _error(requestId, e.toString());
         }
         break;
-      case "getConsent":
+      case "getOwnership":
         try {
           String source = call.arguments['source'];
           String? origin = call.arguments['origin'];
-          ConsentModel? consentModel =
-              _tikiSdk.getConsent(source, origin: origin);
-          if (consentModel == null) {
-            _success(requestId,
-                response: base64Encode(consentModel?.serialize() ?? [0]));
-          } else {
-            _success(requestId,
-                response: base64.encode(consentModel.serialize()));
-          }
+          OwnershipModel? ownershipModel =
+              _tikiSdk.getOwnership(source, origin: origin);
+          _success(requestId, response: ownershipModel?.toJson());
         } catch (e) {
           _error(requestId, e.toString());
         }
@@ -95,6 +96,17 @@ class TikiSdkFlutterPlatform {
               about: about, reward: reward, expiry: expiry);
           _success(requestId,
               response: base64.encode(consentModel.serialize()));
+        } catch (e) {
+          _error(requestId, e.toString());
+        }
+        break;
+      case "getConsent":
+        try {
+          String source = call.arguments['source'];
+          String? origin = call.arguments['origin'];
+          ConsentModel? consentModel =
+              _tikiSdk.getConsent(source, origin: origin);
+          _success(requestId, response: consentModel?.toJson());
         } catch (e) {
           _error(requestId, e.toString());
         }

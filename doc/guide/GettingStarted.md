@@ -76,7 +76,7 @@ Example:
 ```
     TikiSdk tiki = await (TikiSdkBuilder()
           ..origin('com.mycompany.myproduct')
-          ..apiKey('565b3268-cdc0-4e5c-94c8-5d8f53d4577c'))
+          ..apiId('565b3268-cdc0-4e5c-94c8-5d8f53d4577c'))
           .build();
 ```
 
