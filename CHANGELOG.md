@@ -1,3 +1,7 @@
+## 0.0.20
+
+* Build ios frameworks with embed script 
+
 ## 0.0.17
 
 * Update frameworks filenames
