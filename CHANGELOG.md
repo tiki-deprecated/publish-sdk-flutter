@@ -1,3 +1,7 @@
+## 0.0.21
+
+* Update method channels to match Dart SDK
+
 ## 0.0.20
 
 * Build ios frameworks with embed script 
