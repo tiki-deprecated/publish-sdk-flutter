@@ -6,9 +6,10 @@
 import 'dart:convert';
 
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
-import 'package:tiki_sdk_flutter/tiki_sdk_flutter_req.dart';
 
-class TikiSdkFlutterReqConsentModify extends TikiSdkFlutterReq {
+import '../tiki_platform_channel_req.dart';
+
+class TikiPlatformChannelReqConsentModify extends TikiPlatformChannelReq {
   late String ownershipId;
   late TikiSdkDestination destination;
   late String? about;
@@ -19,7 +20,7 @@ class TikiSdkFlutterReqConsentModify extends TikiSdkFlutterReq {
   @override
   late String requestId;
 
-  TikiSdkFlutterReqConsentModify.fromJson(String jsonReq) {
+  TikiPlatformChannelReqConsentModify.fromJson(String jsonReq) {
     Map<String, dynamic> map = jsonDecode(jsonReq);
     ownershipId = map["ownershipId"];
     destination = TikiSdkDestination.fromJson(map["destination"]);

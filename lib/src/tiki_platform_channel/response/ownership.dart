@@ -5,17 +5,13 @@
 
 import 'dart:convert';
 
-import 'package:tiki_sdk_flutter/tiki_sdk_flutter_resp.dart';
+import '../../../main.dart';
+import '../tiki_platform_channel_resp.dart';
 
-import 'main.dart';
-
-class TikiSdkFlutterRespOwnership extends TikiSdkFlutterResp {
+class TikiPlatformChannelRespOwnership extends TikiPlatformChannelResp {
   OwnershipModel? ownershipModel;
 
-  @override
-  String requestId;
-
-  TikiSdkFlutterRespOwnership(this.ownershipModel, this.requestId);
+  TikiPlatformChannelRespOwnership(this.ownershipModel, requestId) : super(requestId);
 
   @override
   String toJson() => jsonEncode(

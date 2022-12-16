@@ -5,18 +5,19 @@
 
 import 'dart:convert';
 
-import 'package:tiki_sdk_flutter/tiki_sdk_flutter_resp.dart';
 
-import 'main.dart';
+import '../../../main.dart';
+import '../tiki_platform_channel_resp.dart';
 
-class TikiSdkFlutterRespBuild implements TikiSdkFlutterResp {
+class TikiPlatformChannelRespBuild implements TikiPlatformChannelResp {
   final TikiSdk tikiSdk;
 
   @override
-  String get requestId => "build";
+  String requestId = "build";
 
-  TikiSdkFlutterRespBuild(this.tikiSdk);
+  TikiPlatformChannelRespBuild(this.tikiSdk);
 
   @override
   String toJson() => jsonEncode({"address": tikiSdk.address});
+
 }

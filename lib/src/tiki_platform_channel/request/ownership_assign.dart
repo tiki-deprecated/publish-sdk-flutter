@@ -5,11 +5,11 @@
 
 import 'dart:convert';
 
-import 'package:tiki_sdk_flutter/tiki_sdk_flutter_req.dart';
 
-import 'main.dart';
+import '../../../main.dart';
+import '../tiki_platform_channel_req.dart';
 
-class TikiSdkFlutterReqOwnership extends TikiSdkFlutterReq {
+class TikiPlatformChannelReqOwnership extends TikiPlatformChannelReq {
   late String source;
   late TikiSdkDataTypeEnum type;
   late List<String> contains;
@@ -19,7 +19,7 @@ class TikiSdkFlutterReqOwnership extends TikiSdkFlutterReq {
   @override
   late String requestId;
 
-  TikiSdkFlutterReqOwnership.fromJson(String jsonReq) {
+  TikiPlatformChannelReqOwnership.fromJson(String jsonReq) {
     Map<String, dynamic> map = jsonDecode(jsonReq);
     requestId = map["requestId"];
     source = map["source"];

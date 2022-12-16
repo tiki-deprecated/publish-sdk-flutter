@@ -45,7 +45,7 @@ library tiki_sdk_flutter_builder;
 import 'package:path_provider/path_provider.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 
-import 'tiki_sdk_flutter_key_storage.dart';
+import 'src/tiki_sdk_flutter_key_storage.dart';
 
 /// The TIKI SDK Flutter Builder
 ///

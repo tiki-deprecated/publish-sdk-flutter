@@ -5,9 +5,10 @@
 
 import 'dart:convert';
 
-import 'package:tiki_sdk_flutter/tiki_sdk_flutter_req.dart';
+import '../tiki_platform_channel_req.dart';
 
-class TikiSdkFlutterReqBuild extends TikiSdkFlutterReq {
+
+class TikiPlatformChannelReqBuild extends TikiPlatformChannelReq {
   late final String apiId;
   late final String origin;
   late final String? address;
@@ -15,7 +16,7 @@ class TikiSdkFlutterReqBuild extends TikiSdkFlutterReq {
   @override
   late final String requestId;
 
-  TikiSdkFlutterReqBuild.fromJson(String jsonString) {
+  TikiPlatformChannelReqBuild.fromJson(String jsonString) {
     Map<Map, String?> map = jsonDecode(jsonString);
     requestId = map['requestId']!;
     apiId = map['apiId']!;

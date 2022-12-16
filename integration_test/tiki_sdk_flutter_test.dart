@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tiki_sdk_flutter/main.dart';
-import 'package:tiki_sdk_flutter/tiki_sdk_flutter_key_storage.dart';
+import 'package:tiki_sdk_flutter/src/tiki_sdk_flutter_key_storage.dart';
 
 void main() {
   String apiId = '2b8de004-cbe0-4bd5-bda6-b266d54f5c90';

@@ -10,31 +10,28 @@
 /// It is **not used** in pure Flutter implementations.
 library tiki_sdk_flutter_platform;
 
-import 'dart:convert';
-
 import 'package:flutter/services.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
-import 'tiki_sdk_flutter_req_consent_apply.dart';
-import 'tiki_sdk_flutter_req_build.dart';
-import 'tiki_sdk_flutter_req_consent_get.dart';
-import 'tiki_sdk_flutter_req_consent_modify.dart';
-import 'tiki_sdk_flutter_req_ownership.dart';
-import 'tiki_sdk_flutter_req_ownership_get.dart';
-import 'tiki_sdk_flutter_resp.dart';
-import 'tiki_sdk_flutter_resp_apply.dart';
-import 'tiki_sdk_flutter_resp_build.dart';
-import 'tiki_sdk_flutter_resp_consent.dart';
-import 'tiki_sdk_flutter_resp_error.dart';
-import 'tiki_sdk_flutter_resp_ownership.dart';
+import 'request/consent_apply.dart';
+import 'request/build.dart';
+import 'request/consent_get.dart';
+import 'request/consent_modify.dart';
+import 'request/ownership_assign.dart';
+import 'request/ownership_get.dart';
+import 'response/error.dart';
+import 'response/ownership.dart';
+import 'tiki_platform_channel_resp.dart';
+import 'response/build.dart';
+import 'response/consent.dart';
 
 /// The definition of native platform channels
-class TikiSdkFlutterPlatform {
+class TikiPlatformChannel {
   static late final TikiSdk _tikiSdk;
 
   final methodChannel = const MethodChannel('tiki_sdk_flutter');
 
-  TikiSdkFlutterPlatform() {
+  TikiPlatformChannel() {
     methodChannel.setMethodCallHandler(methodHandler);
   }
 
@@ -48,42 +45,42 @@ class TikiSdkFlutterPlatform {
     String jsonReq = call.arguments['request'];
     switch (call.method) {
       case "build":
-        TikiSdkFlutterReqBuild tikiSdkFlutterReqBuild =
-            TikiSdkFlutterReqBuild.fromJson(jsonReq);
+        TikiPlatformChannelReqBuild tikiSdkFlutterReqBuild =
+            TikiPlatformChannelReqBuild.fromJson(jsonReq);
         _buildSdk(tikiSdkFlutterReqBuild);
         break;
       case "assignOwnership":
-        TikiSdkFlutterReqOwnership tikiSdkFlutterReqOwnership =
-            TikiSdkFlutterReqOwnership.fromJson(jsonReq);
+        TikiPlatformChannelReqOwnership tikiSdkFlutterReqOwnership =
+            TikiPlatformChannelReqOwnership.fromJson(jsonReq);
         _assignOwnership(tikiSdkFlutterReqOwnership);
         break;
       case "getOwnership":
-        TikiSdkFlutterReqOwnershipGet tikiSdkFlutterReqOwnershipGet =
-            TikiSdkFlutterReqOwnershipGet.fromJson(jsonReq);
+        TikiPlatformChannelReqOwnershipGet tikiSdkFlutterReqOwnershipGet =
+            TikiPlatformChannelReqOwnershipGet.fromJson(jsonReq);
         _getOwnership(tikiSdkFlutterReqOwnershipGet);
         break;
       case "modifyConsent":
-        TikiSdkFlutterReqConsentModify tikiSdkFlutterReqConsentModify =
-            TikiSdkFlutterReqConsentModify.fromJson(jsonReq);
+        TikiPlatformChannelReqConsentModify tikiSdkFlutterReqConsentModify =
+            TikiPlatformChannelReqConsentModify.fromJson(jsonReq);
         _modifyConsent(tikiSdkFlutterReqConsentModify);
         break;
       case "getConsent":
-        TikiSdkFlutterReqConsentGet tikiSdkFlutterReqConsentGet =
-            TikiSdkFlutterReqConsentGet.fromJson(jsonReq);
+        TikiPlatformChannelReqConsentGet tikiSdkFlutterReqConsentGet =
+            TikiPlatformChannelReqConsentGet.fromJson(jsonReq);
         _getConsent(tikiSdkFlutterReqConsentGet);
         break;
       case "applyConsent":
-        TikiSdkFlutterReqConsentApply tikiSdkFlutterReqConsentApply =
-            TikiSdkFlutterReqConsentApply.fromJson(jsonReq);
+        TikiPlatformChannelReqConsentApply tikiSdkFlutterReqConsentApply =
+            TikiPlatformChannelReqConsentApply.fromJson(jsonReq);
         _applyConsent(tikiSdkFlutterReqConsentApply);
         break;
       default:
-        _error(TikiSdkFlutterRespError('no method',
+        _error(TikiPlatformChannelRespError('no method',
             'no method handler for method ${call.method}', StackTrace.current));
     }
   }
 
-  Future<void> _buildSdk(TikiSdkFlutterReqBuild req) async {
+  Future<void> _buildSdk(TikiPlatformChannelReqBuild req) async {
     try {
       TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
         ..origin(req.origin)
@@ -92,100 +89,101 @@ class TikiSdkFlutterPlatform {
         builder.address(req.address!);
       }
       _tikiSdk = await builder.build();
-      TikiSdkFlutterRespBuild tikiSdkFlutterBuildResp =
-          TikiSdkFlutterRespBuild(_tikiSdk);
+      TikiPlatformChannelRespBuild tikiSdkFlutterBuildResp =
+          TikiPlatformChannelRespBuild(_tikiSdk);
       _success(tikiSdkFlutterBuildResp);
     } catch (e) {
-      TikiSdkFlutterRespError error =
-          TikiSdkFlutterRespError.fromError(e as Error, "build");
+      TikiPlatformChannelRespError error =
+          TikiPlatformChannelRespError.fromError(e as Error, "build");
       _error(error);
     }
   }
 
-  Future<void> _assignOwnership(TikiSdkFlutterReqOwnership req) async {
+  Future<void> _assignOwnership(TikiPlatformChannelReqOwnership req) async {
     try {
       await _tikiSdk.assignOwnership(req.source, req.type, req.contains,
           about: req.about, origin: req.origin);
       OwnershipModel ownershipModel =
           _tikiSdk.getOwnership(req.source, origin: req.origin)!;
-      TikiSdkFlutterRespOwnership resp =
-          TikiSdkFlutterRespOwnership(ownershipModel, req.requestId);
+      TikiPlatformChannelRespOwnership resp =
+          TikiPlatformChannelRespOwnership(ownershipModel, req.requestId);
       _success(resp);
     } catch (e) {
-      TikiSdkFlutterRespError error =
-          TikiSdkFlutterRespError.fromError(e as Error, req.requestId);
+      TikiPlatformChannelRespError error =
+          TikiPlatformChannelRespError.fromError(e as Error, req.requestId);
       _error(error);
     }
   }
 
-  void _getOwnership(TikiSdkFlutterReqOwnershipGet req) {
+  void _getOwnership(TikiPlatformChannelReqOwnershipGet req) {
     try {
       OwnershipModel? ownershipModel =
           _tikiSdk.getOwnership(req.source, origin: req.origin);
-      TikiSdkFlutterRespOwnership resp =
-          TikiSdkFlutterRespOwnership(ownershipModel, req.requestId);
+      TikiPlatformChannelRespOwnership resp =
+          TikiPlatformChannelRespOwnership(ownershipModel, req.requestId);
       _success(resp);
     } catch (e) {
-      TikiSdkFlutterRespError error =
-          TikiSdkFlutterRespError.fromError(e as Error, req.requestId);
+      TikiPlatformChannelRespError error =
+          TikiPlatformChannelRespError.fromError(e as Error, req.requestId);
       _error(error);
     }
   }
 
-  Future<void> _modifyConsent(TikiSdkFlutterReqConsentModify req) async {
+  Future<void> _modifyConsent(TikiPlatformChannelReqConsentModify req) async {
     try {
       ConsentModel consentModel = await _tikiSdk.modifyConsent(
           req.ownershipId, req.destination,
           about: req.about, reward: req.reward, expiry: req.expiry);
-      TikiSdkFlutterRespConsent resp =
-          TikiSdkFlutterRespConsent(consentModel, req.requestId);
+      TikiPlatformChannelRespConsent resp =
+          TikiPlatformChannelRespConsent(consentModel, req.requestId);
       _success(resp);
     } catch (e) {
-      TikiSdkFlutterRespError error =
-          TikiSdkFlutterRespError.fromError(e as Error, req.requestId);
+      TikiPlatformChannelRespError error =
+          TikiPlatformChannelRespError.fromError(e as Error, req.requestId);
       _error(error);
     }
   }
 
-  void _getConsent(TikiSdkFlutterReqConsentGet req) {
+  void _getConsent(TikiPlatformChannelReqConsentGet req) {
     try {
       ConsentModel? consentModel =
           _tikiSdk.getConsent(req.source, origin: req.origin);
-      TikiSdkFlutterRespConsent resp =
-          TikiSdkFlutterRespConsent(consentModel, req.requestId);
+      TikiPlatformChannelRespConsent resp =
+          TikiPlatformChannelRespConsent(consentModel, req.requestId);
       _success(resp);
     } catch (e) {
-      TikiSdkFlutterRespError error =
-          TikiSdkFlutterRespError.fromError(e as Error, req.requestId);
+      TikiPlatformChannelRespError error =
+          TikiPlatformChannelRespError.fromError(e as Error, req.requestId);
       _error(error);
     }
   }
 
-  void _applyConsent(TikiSdkFlutterReqConsentApply req) {
+  void _applyConsent(TikiPlatformChannelReqConsentApply req) {
     try {
       request() {
-        TikiSdkFlutterRespApply resp = TikiSdkFlutterRespApply(req.requestId);
+        TikiPlatformChannelResp resp = TikiPlatformChannelResp(req.requestId);
+        resp.requestId = req.requestId;
         _success(resp);
       }
 
       onBlocked(String reason) {
-        TikiSdkFlutterRespError error =
-            TikiSdkFlutterRespError(req.requestId, reason, StackTrace.current);
+        TikiPlatformChannelRespError error =
+            TikiPlatformChannelRespError(req.requestId, reason, StackTrace.current);
         _error(error);
       }
 
       _tikiSdk.applyConsent(req.source, req.destination, request,
           onBlocked: onBlocked);
     } catch (e) {
-      TikiSdkFlutterRespError error =
-          TikiSdkFlutterRespError.fromError(e as Error, req.requestId);
+      TikiPlatformChannelRespError error =
+          TikiPlatformChannelRespError.fromError(e as Error, req.requestId);
       _error(error);
     }
   }
 
-  Future<void> _success(TikiSdkFlutterResp resp) async =>
+  Future<void> _success(TikiPlatformChannelResp resp) async =>
       await methodChannel.invokeMethod('success', {'response': resp.toJson()});
 
-  Future<void> _error(TikiSdkFlutterRespError resp) async =>
+  Future<void> _error(TikiPlatformChannelRespError resp) async =>
       await methodChannel.invokeMethod('error', {'response': resp.toJson()});
 }
