@@ -5,10 +5,9 @@
 
 import 'dart:convert';
 
-import '../tiki_platform_channel_req.dart';
+import 'req.dart';
 
-
-class TikiPlatformChannelReqBuild extends TikiPlatformChannelReq {
+class ReqBuild extends Req {
   late final String apiId;
   late final String origin;
   late final String? address;
@@ -16,7 +15,7 @@ class TikiPlatformChannelReqBuild extends TikiPlatformChannelReq {
   @override
   late final String requestId;
 
-  TikiPlatformChannelReqBuild.fromJson(String jsonString) {
+  ReqBuild.fromJson(String jsonString) {
     Map<Map, String?> map = jsonDecode(jsonString);
     requestId = map['requestId']!;
     apiId = map['apiId']!;

@@ -5,17 +5,16 @@
 
 import 'dart:convert';
 
-import '../tiki_platform_channel_req.dart';
+import 'req.dart';
 
-
-class TikiPlatformChannelReqConsentGet extends TikiPlatformChannelReq {
+class ReqConsentGet extends Req {
   late String source;
   String? origin;
 
   @override
   late String requestId;
 
-  TikiPlatformChannelReqConsentGet.fromJson(String jsonReq) {
+  ReqConsentGet.fromJson(String jsonReq) {
     Map<String, String> map = jsonDecode(jsonReq);
     source = map["source"]!;
     requestId = map["requestId"]!;
