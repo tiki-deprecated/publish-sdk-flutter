@@ -19,12 +19,11 @@ class ReqOwnershipAssign extends Req {
   late String requestId;
 
   ReqOwnershipAssign.fromJson(String jsonReq) {
-    Map<String, dynamic> map = jsonDecode(jsonReq);
+    Map map = jsonDecode(jsonReq);
     requestId = map["requestId"];
     source = map["source"];
     type = TikiSdkDataTypeEnum.fromValue(map["type"]);
-    contains =
-        jsonDecode(map["contains"]).map<String>((e) => e.toString()).asList();
+    contains = map["contains"].map<String>((e) => e.toString()).toList();
     about = map["about"];
     origin = map["origin"];
   }

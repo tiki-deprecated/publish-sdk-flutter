@@ -16,7 +16,7 @@ class ReqConsentApply extends Req {
   late String requestId;
 
   ReqConsentApply.fromJson(String jsonReq) {
-    Map<String, dynamic> map = jsonDecode(jsonReq);
+    Map map = jsonDecode(jsonReq) as Map<String, String?>;
     source = map["source"];
     destination = TikiSdkDestination.fromJson(map["destination"]);
     requestId = map["requestId"];

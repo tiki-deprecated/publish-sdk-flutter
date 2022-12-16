@@ -16,7 +16,7 @@ class ReqBuild extends Req {
   late final String requestId;
 
   ReqBuild.fromJson(String jsonString) {
-    Map<Map, String?> map = jsonDecode(jsonString);
+    Map map = jsonDecode(jsonString);
     requestId = map['requestId']!;
     apiId = map['apiId']!;
     origin = map['origin']!;

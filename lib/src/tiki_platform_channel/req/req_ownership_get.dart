@@ -15,7 +15,7 @@ class ReqOwnershipGet extends Req {
   late String requestId;
 
   ReqOwnershipGet.fromJson(String jsonReq) {
-    Map<String, String?> map = jsonDecode(jsonReq);
+    Map map = jsonDecode(jsonReq);
     requestId = map["requestId"]!;
     source = map["source"]!;
     origin = map["origin"];

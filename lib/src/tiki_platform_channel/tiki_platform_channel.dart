@@ -31,7 +31,7 @@ import 'rsp/rsp_ownership.dart';
 
 /// The definition of native platform channels
 class TikiPlatformChannel {
-  static late final TikiSdk _tikiSdk;
+  TikiSdk? _tikiSdk;
 
   final methodChannel = const MethodChannel('tiki_sdk_flutter');
 
@@ -85,26 +85,26 @@ class TikiPlatformChannel {
       builder.address(req.address!);
     }
     _tikiSdk = await builder.build();
-    return RspBuild(address: _tikiSdk.address);
+    return RspBuild(address: _tikiSdk!.address, requestId: req.requestId);
   }
 
   Future<RspOwnership> _assignOwnership(ReqOwnershipAssign req) async {
-    await _tikiSdk.assignOwnership(req.source, req.type, req.contains,
+    await _tikiSdk!.assignOwnership(req.source, req.type, req.contains,
         about: req.about, origin: req.origin);
     OwnershipModel ownershipModel =
-        _tikiSdk.getOwnership(req.source, origin: req.origin)!;
+        _tikiSdk!.getOwnership(req.source, origin: req.origin)!;
     return RspOwnership(ownership: ownershipModel, requestId: req.requestId);
   }
 
   Future<RspOwnership> _getOwnership(ReqOwnershipGet req) {
     OwnershipModel? ownershipModel =
-        _tikiSdk.getOwnership(req.source, origin: req.origin);
+        _tikiSdk!.getOwnership(req.source, origin: req.origin);
     return Future.value(
         RspOwnership(ownership: ownershipModel, requestId: req.requestId));
   }
 
   Future<RspConsentGet> _modifyConsent(ReqConsentModify req) async {
-    ConsentModel consentModel = await _tikiSdk.modifyConsent(
+    ConsentModel consentModel = await _tikiSdk!.modifyConsent(
         req.ownershipId, req.destination,
         about: req.about, reward: req.reward, expiry: req.expiry);
     return RspConsentGet(consent: consentModel, requestId: req.requestId);
@@ -112,14 +112,14 @@ class TikiPlatformChannel {
 
   Future<RspConsentGet> _getConsent(ReqConsentGet req) {
     ConsentModel? consentModel =
-        _tikiSdk.getConsent(req.source, origin: req.origin);
+        _tikiSdk!.getConsent(req.source, origin: req.origin);
     return Future.value(
         RspConsentGet(consent: consentModel, requestId: req.requestId));
   }
 
   Future<RspConsentApply> _applyConsent(ReqConsentApply req) {
     Future<RspConsentApply>? resp;
-    _tikiSdk.applyConsent(req.source, req.destination, () {
+    _tikiSdk!.applyConsent(req.source, req.destination, () {
       resp = Future.value(
           RspConsentApply(success: true, requestId: req.requestId));
     }, onBlocked: (String reason) {
