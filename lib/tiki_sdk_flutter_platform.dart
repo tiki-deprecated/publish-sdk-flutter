@@ -10,6 +10,8 @@
 /// It is **not used** in pure Flutter implementations.
 library tiki_sdk_flutter_platform;
 
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
@@ -52,7 +54,7 @@ class TikiSdkFlutterPlatform {
         break;
       case "assignOwnership":
         TikiSdkFlutterReqOwnership tikiSdkFlutterReqOwnership =
-            TikiSdkFlutterReqOwnership.fromJson(call.arguments["request"]);
+            TikiSdkFlutterReqOwnership.fromJson(jsonReq);
         _assignOwnership(tikiSdkFlutterReqOwnership);
         break;
       case "getOwnership":
