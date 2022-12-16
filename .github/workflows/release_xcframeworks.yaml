@@ -54,20 +54,20 @@ jobs:
       - name: "Zip release frameworks"
         run: |
           cd tiki-sdk-flutter/Frameworks/Release
-          zip -r sqlite3_release.xcframework.zip sqlite3.xcframework
-          shasum -a 256 sqlite3_release.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework.checksum.txt
-          zip -r flutter_secure_storage_release.xcframework.zip flutter_secure_storage.xcframework
-          shasum -a 256 flutter_secure_storage_release.xcframework.zip | cut -f1 -d' '>> flutter_secure_storage.checksum.txt
-          zip -r path_provider_ios_release.xcframework.zip path_provider_ios.xcframework
-          shasum -a 256 path_provider_ios_release.xcframework.zip | cut -f1 -d' '>> path_provider_ios.checksum.txt
-          zip -r App_release.xcframework.zip App.xcframework
-          shasum -a 256 App_release.xcframework.zip | cut -f1 -d' '>> App.checksum.txt
-          zip -r Flutter_release.xcframework.zip Flutter.xcframework
-          shasum -a 256 Flutter_release.xcframework.zip | cut -f1 -d' '>> Flutter.checksum.txt
-          zip -r sqlite3_flutter_libs_release.xcframework.zip sqlite3_flutter_libs.xcframework
-          shasum -a 256 sqlite3_flutter_libs_release.xcframework.zip | cut -f1 -d' '>> sqlite3_flutter_libs.checksum.txt
-          zip -r FlutterPluginRegistrant_release.xcframework.zip FlutterPluginRegistrant.xcframework
-          shasum -a 256 FlutterPluginRegistrant_release.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant.checksum.txt
+          zip -r sqlite3.xcframework.zip sqlite3.xcframework
+          shasum -a 256 sqlite3.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework.checksum.txt
+          zip -r flutter_secure_storage.xcframework.zip flutter_secure_storage.xcframework
+          shasum -a 256 flutter_secure_storage.xcframework.zip | cut -f1 -d' '>> flutter_secure_storage.checksum.txt
+          zip -r path_provider_ios.xcframework.zip path_provider_ios.xcframework
+          shasum -a 256 path_provider_ios.xcframework.zip | cut -f1 -d' '>> path_provider_ios.checksum.txt
+          zip -r App.xcframework.zip App.xcframework
+          shasum -a 256 App.xcframework.zip | cut -f1 -d' '>> App.checksum.txt
+          zip -r Flutter.xcframework.zip Flutter.xcframework
+          shasum -a 256 Flutter.xcframework.zip | cut -f1 -d' '>> Flutter.checksum.txt
+          zip -r sqlite3_flutter_libs.xcframework.zip sqlite3_flutter_libs.xcframework
+          shasum -a 256 sqlite3_flutter_libs.xcframework.zip | cut -f1 -d' '>> sqlite3_flutter_libs.checksum.txt
+          zip -r FlutterPluginRegistrant.xcframework.zip FlutterPluginRegistrant.xcframework
+          shasum -a 256 FlutterPluginRegistrant.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant.checksum.txt
 
       - name: "Zip debug frameworks"
         run: |
