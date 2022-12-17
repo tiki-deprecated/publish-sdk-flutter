@@ -2,6 +2,7 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
+
 /// # TIKI SDK Flutter Builder
 ///
 /// It handles [TikiSdk] initialization and defines default values for Flutter SDK.
@@ -45,7 +46,7 @@ library tiki_sdk_flutter_builder;
 import 'package:path_provider/path_provider.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 
-import 'tiki_sdk_flutter_key_storage.dart';
+import 'src/flutter_key_storage.dart';
 
 /// The TIKI SDK Flutter Builder
 ///
@@ -72,11 +73,11 @@ class TikiSdkFlutterBuilder {
   /// Defaults to Application Documents Directory.
   void databaseDir(String databaseDir) => _databaseDir = databaseDir;
 
-  /// Builds a new [TikiSdkFlutter]
+  /// Builds a new [TikiSdk] for Flutter.
   Future<TikiSdk> build() async {
     TikiSdkBuilder sdkBuilder = TikiSdkBuilder()
       ..databaseDir(_databaseDir ?? await _dbDir())
-      ..keyStorage(TikiSdkFlutterKeyStorage())
+      ..keyStorage(FlutterKeyStorage())
       ..address(_address)
       ..apiId(_apiId)
       ..origin(_origin!);

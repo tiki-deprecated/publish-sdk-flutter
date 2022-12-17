@@ -30,7 +30,7 @@ _For native iOS and Android projects, use:_
 This will add a line like this to your package's pubspec.yaml (and run an implicit dart pub get):
 ```
 dependencies:
-  tiki_sdk_dart: ^0.0.9
+  tiki_sdk_flutter: ^0.0.22
 ```
 
 **Make sure your project's Android minSdkVersion to is set to at least `19`**  
@@ -74,7 +74,7 @@ Set the user address (primarily for restoring the state on launch). If not set, 
 Example:
 
 ```
-    TikiSdk tiki = await (TikiSdkBuilder()
+    TikiSdk tiki = await (TikiSdkFlutterBuilder()
           ..origin('com.mycompany.myproduct')
           ..apiId('565b3268-cdc0-4e5c-94c8-5d8f53d4577c'))
           .build();

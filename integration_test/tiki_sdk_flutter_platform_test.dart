@@ -1,95 +1,304 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
-import 'package:tiki_sdk_flutter/main.dart';
+import 'package:tiki_sdk_flutter/src/tiki_platform_channel/tiki_platform_channel.dart';
 
 void main() {
   const String apiId = '2b8de004-cbe0-4bd5-bda6-b266d54f5c90';
   const String origin = 'com.mytiki.test';
 
-  Map<String, Function(MethodCall)> callbacks = {};
+  Map<String, Completer<String>> completers = {};
 
   handler(MethodCall methodCall) async {
-    Function(MethodCall)? callback =
-        callbacks[methodCall.arguments["requestId"]];
-    if (callback != null) await callback(methodCall);
+    String jsonResponse = methodCall.arguments["response"];
+    Completer<String>? completer =
+        completers[jsonDecode(jsonResponse)["requestId"]];
+    if (completer != null) completer.complete(jsonResponse);
   }
 
   TestWidgetsFlutterBinding.ensureInitialized();
-  TikiSdkFlutterPlatform platform = TikiSdkFlutterPlatform();
+  TikiPlatformChannel platform = TikiPlatformChannel();
   MethodChannel channel = platform.methodChannel;
 
   TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger
       .setMockMethodCallHandler(channel, handler);
 
   group('TikiSdkFlutterPlatform tests', () {
-    test('Build Sdk', () async {
-      bool ok = false;
+    test('Build Sdk - no address', () async {
+      Completer<String> completer = Completer();
       String requestId = 'build';
-      callbacks[requestId] =
-          (methodCall) => ok = methodCall.method == "success";
-      await channel.invokeMockMethod(
-          'build', {"requestId": requestId, "apiId": apiId, "origin": origin});
-      expect(ok, true);
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
+      String jsonResponse = await completer.future;
+      expect(jsonDecode(jsonResponse)["requestId"], requestId);
+      expect(jsonDecode(jsonResponse)["address"].length > 32, true);
+    });
+
+    test('Build Sdk - providing address', () async {
+      Completer<String> completer = Completer();
+      String requestId = 'build';
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
+      String jsonResponse = await completer.future;
+      String address = jsonDecode(jsonResponse)["address"];
+
+      completer = Completer();
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('build', {
+        "request": jsonEncode({
+          "requestId": requestId,
+          "apiId": apiId,
+          "origin": origin,
+          "address": address
+        })
+      });
+      jsonResponse = await completer.future;
+      expect(address, jsonDecode(jsonResponse)["address"]);
     });
 
     test('Assign Ownership', () async {
-      bool ok = false;
-      String requestId = 'assignOwnership';
-      callbacks[requestId] =
-          (methodCall) => ok = methodCall.method == "success";
-      await channel.invokeMockMethod(
-          'build', {"requestId": "build", "apiId": apiId, "origin": origin});
-      await channel.invokeMockMethod('assignOwnership', {
-        "requestId": requestId,
-        "source": "assing test",
-        "type": "data_point",
-        "contains": ["nothing"],
-        "origin": origin
+      Completer<String> completer = Completer();
+      String requestId = 'build';
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
       });
-      expect(ok, true);
+      await completer.future;
+      completer = Completer();
+      requestId = "assign";
+      String source = "assign test";
+      String type = TikiSdkDataTypeEnum.point.val;
+      List<String> contains = ["test"];
+      String about = "test about";
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('assignOwnership', {
+        "request": jsonEncode({
+          "requestId": requestId,
+          "source": source,
+          "type": type,
+          "contains": contains,
+          "about": about,
+          "origin": origin,
+        })
+      });
+      String jsonResponse = await completer.future;
+      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+      expect(source, ownershipMap["source"]);
+      expect(type, ownershipMap["type"]);
+      expect(contains, ownershipMap["contains"]);
+      expect(about, ownershipMap["about"]);
+      expect(origin, ownershipMap["origin"]);
     });
 
-    test('Get consent', () async {
-      String requestId = 'assignOwnership';
-      await channel.invokeMockMethod(
-          'build', {"requestId": "build", "apiId": apiId, "origin": origin});
-      callbacks[requestId] = (methodCall) async {
-        callbacks.remove(requestId);
-        if (methodCall.method != "success") {
-          fail(methodCall.arguments["response"]);
-        }
-        String modifyID = "modifyConsent";
-        String ownershipId = methodCall.arguments["response"];
-        callbacks[modifyID] = (methodCall2) async {
-          if (methodCall2.method != "success") {
-            fail(methodCall2.arguments["response"]);
-          }
-          String getId = "getConsent";
-          callbacks[getId] = (methodCall3) async {
-            if (methodCall3.method != "success") {
-              fail(methodCall3.arguments["response"]);
-            }
-          };
-          await channel.invokeMockMethod('getConsent', {
-            "requestId": getId,
-            "source": "get consent test",
-            "origin": origin
-          });
-        };
-        await channel.invokeMockMethod('modifyConsent', {
-          "requestId": modifyID,
-          'ownershipId': ownershipId,
-          'destination': const TikiSdkDestination.all().toJson()
-        });
-      };
-      await channel.invokeMockMethod('assignOwnership', {
-        "requestId": requestId,
-        "source": "get consent test",
-        "type": "data_point",
-        "contains": ["nothing"],
-        "origin": origin
+    test('Get Ownership', () async {
+      Completer<String> completer = Completer();
+      String requestId = 'build';
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
       });
+      await completer.future;
+      completer = Completer();
+      requestId = "assign";
+      String source = "assign test";
+      String type = TikiSdkDataTypeEnum.point.val;
+      List<String> contains = ["test"];
+      String about = "test about";
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('assignOwnership', {
+        "request": jsonEncode({
+          "requestId": requestId,
+          "source": source,
+          "type": type,
+          "contains": contains,
+          "about": about,
+          "origin": origin,
+        })
+      });
+      String jsonResponse = await completer.future;
+      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+
+      completer = Completer();
+      completers["getOwnership"] = completer;
+      await channel.invokeMockMethod('getOwnership', {
+        "request": jsonEncode({"requestId": "getOwnership", "source": source})
+      });
+      jsonResponse = await completer.future;
+
+      Map gotOwnership = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+      expect(gotOwnership["source"], ownershipMap["source"]);
+      expect(gotOwnership["type"], ownershipMap["type"]);
+      expect(gotOwnership["contains"], ownershipMap["contains"]);
+      expect(gotOwnership["about"], ownershipMap["about"]);
+      expect(gotOwnership["origin"], ownershipMap["origin"]);
+    });
+
+    test('Modify Consent', () async {
+      Completer<String> completer = Completer();
+      String requestId = 'build';
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
+      await completer.future;
+      completer = Completer();
+      requestId = "assign";
+      String source = "assign test";
+      String type = TikiSdkDataTypeEnum.point.val;
+      List<String> contains = ["test"];
+      String about = "test about";
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('assignOwnership', {
+        "request": jsonEncode({
+          "requestId": requestId,
+          "source": source,
+          "type": type,
+          "contains": contains,
+          "about": about,
+          "origin": origin,
+        })
+      });
+      String jsonResponse = await completer.future;
+      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+
+      completer = Completer();
+      completers["modify"] = completer;
+      String ownershipId = ownershipMap["transactionId"];
+      String destination = const TikiSdkDestination.all().toJson();
+      await channel.invokeMockMethod('modifyConsent', {
+        "request": jsonEncode({
+          "requestId": "modify",
+          "ownershipId": ownershipId,
+          "destination": destination
+        })
+      });
+      jsonResponse = await completer.future;
+      Map consentMap = jsonDecode(jsonDecode(jsonResponse)["consent"]);
+      expect(consentMap["ownershipId"], ownershipId);
+      expect(consentMap["destination"], destination);
+    });
+
+    test('Get Consent', () async {
+      Completer<String> completer = Completer();
+      String requestId = 'build';
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
+      await completer.future;
+      completer = Completer();
+      requestId = "assign";
+      String source = "assign test";
+      String type = TikiSdkDataTypeEnum.point.val;
+      List<String> contains = ["test"];
+      String about = "test about";
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('assignOwnership', {
+        "request": jsonEncode({
+          "requestId": requestId,
+          "source": source,
+          "type": type,
+          "contains": contains,
+          "about": about,
+          "origin": origin,
+        })
+      });
+      String jsonResponse = await completer.future;
+      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+
+      completer = Completer();
+      completers["modify"] = completer;
+      String ownershipId = ownershipMap["transactionId"];
+      String destination = const TikiSdkDestination.all().toJson();
+      await channel.invokeMockMethod('modifyConsent', {
+        "request": jsonEncode({
+          "requestId": "modify",
+          "ownershipId": ownershipId,
+          "destination": destination
+        })
+      });
+      await completer.future;
+
+      completer = Completer();
+      completers["get"] = completer;
+
+      await channel.invokeMockMethod('getConsent', {
+        "request": jsonEncode({"requestId": "get", "source": source})
+      });
+
+      jsonResponse = await completer.future;
+      expect(jsonDecode(jsonDecode(jsonResponse)["consent"])['ownershipId'],
+          ownershipId);
+    });
+
+    test('Apply Consent', () async {
+      Completer<String> completer = Completer();
+      String requestId = 'build';
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
+      await completer.future;
+      completer = Completer();
+      requestId = "assign";
+      String source = "assign test";
+      String type = TikiSdkDataTypeEnum.point.val;
+      List<String> contains = ["test"];
+      String about = "test about";
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('assignOwnership', {
+        "request": jsonEncode({
+          "requestId": requestId,
+          "source": source,
+          "type": type,
+          "contains": contains,
+          "about": about,
+          "origin": origin,
+        })
+      });
+      String jsonResponse = await completer.future;
+      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+
+      completer = Completer();
+      completers["modify"] = completer;
+      String ownershipId = ownershipMap["transactionId"];
+      String destination = const TikiSdkDestination.all().toJson();
+      await channel.invokeMockMethod('modifyConsent', {
+        "request": jsonEncode({
+          "requestId": "modify",
+          "ownershipId": ownershipId,
+          "destination": destination
+        })
+      });
+      await completer.future;
+
+      completer = Completer();
+      completers["apply"] = completer;
+
+      await channel.invokeMockMethod('applyConsent', {
+        "request": jsonEncode({
+          "requestId": "apply",
+          "source": source,
+          "destination": destination
+        })
+      });
+
+      jsonResponse = await completer.future;
+      expect(jsonDecode(jsonResponse)["success"], true);
     });
   });
 }
