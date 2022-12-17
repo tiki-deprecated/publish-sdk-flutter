@@ -13,7 +13,7 @@ class ReqOwnershipAssign extends Req {
   late TikiSdkDataTypeEnum type;
   late List<String> contains;
   late String? about;
-  late String? origin;
+  String? origin;
 
   @override
   late String requestId;

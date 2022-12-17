@@ -25,13 +25,17 @@ void main() {
   TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger
       .setMockMethodCallHandler(channel, handler);
 
-  group('TikiSdkFlutterPlatform tests', () {
+  group('TikiSdkFlutterPlatform tests', ()
+  {
     test('Build Sdk - no address', () async {
       Completer<String> completer = Completer();
       String requestId = 'build';
       completers[requestId] = completer;
       await channel.invokeMockMethod(
-          'build', {"request": jsonEncode({"requestId": requestId, "apiId": apiId, "origin": origin})});
+          'build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
       String jsonResponse = await completer.future;
       expect(jsonDecode(jsonResponse)["requestId"], requestId);
       expect(jsonDecode(jsonResponse)["address"].length > 32, true);
@@ -42,14 +46,24 @@ void main() {
       String requestId = 'build';
       completers[requestId] = completer;
       await channel.invokeMockMethod(
-          'build', {"request": jsonEncode({"requestId": requestId, "apiId": apiId, "origin": origin})});
+          'build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
       String jsonResponse = await completer.future;
       String address = jsonDecode(jsonResponse)["address"];
 
       completer = Completer();
       completers[requestId] = completer;
       await channel.invokeMockMethod(
-          'build', {"request": jsonEncode({"requestId": requestId, "apiId": apiId, "origin": origin, "address" : address})});
+          'build', {
+        "request": jsonEncode({
+          "requestId": requestId,
+          "apiId": apiId,
+          "origin": origin,
+          "address": address
+        })
+      });
       jsonResponse = await completer.future;
       expect(address, jsonDecode(jsonResponse)["address"]);
     });
@@ -59,7 +73,10 @@ void main() {
       String requestId = 'build';
       completers[requestId] = completer;
       await channel.invokeMockMethod(
-          'build', {"request": jsonEncode({"requestId": requestId, "apiId": apiId, "origin": origin})});
+          'build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
       await completer.future;
       completer = Completer();
       requestId = "assign";
@@ -70,14 +87,14 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod(
           'assignOwnership', {
-            "request": jsonEncode(
-                {"requestId": requestId,
-                  "source": source,
-                  "type": type,
-                  "contains": contains,
-                  "about": about,
-                  "origin": origin,
-                })});
+        "request": jsonEncode(
+            {"requestId": requestId,
+              "source": source,
+              "type": type,
+              "contains": contains,
+              "about": about,
+              "origin": origin,
+            })});
       String jsonResponse = await completer.future;
       Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
       expect(source, ownershipMap["source"]);
@@ -92,7 +109,10 @@ void main() {
       String requestId = 'build';
       completers[requestId] = completer;
       await channel.invokeMockMethod(
-          'build', {"request": jsonEncode({"requestId": requestId, "apiId": apiId, "origin": origin})});
+          'build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
       await completer.future;
       completer = Completer();
       requestId = "assign";
@@ -117,7 +137,10 @@ void main() {
       completer = Completer();
       completers["getOwnership"] = completer;
       await channel.invokeMockMethod('getOwnership',
-          {"request": jsonEncode({"requestId": "getOwnership", "source": source})});
+          {
+            "request": jsonEncode(
+                {"requestId": "getOwnership", "source": source})
+          });
       jsonResponse = await completer.future;
 
       Map gotOwnership = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
@@ -126,6 +149,169 @@ void main() {
       expect(gotOwnership["contains"], ownershipMap["contains"]);
       expect(gotOwnership["about"], ownershipMap["about"]);
       expect(gotOwnership["origin"], ownershipMap["origin"]);
+    });
+
+    test('Modify Consent', () async {
+      Completer<String> completer = Completer();
+      String requestId = 'build';
+      completers[requestId] = completer;
+      await channel.invokeMockMethod(
+          'build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
+      await completer.future;
+      completer = Completer();
+      requestId = "assign";
+      String source = "assign test";
+      String type = TikiSdkDataTypeEnum.point.val;
+      List<String> contains = ["test"];
+      String about = "test about";
+      completers[requestId] = completer;
+      await channel.invokeMockMethod(
+          'assignOwnership', {
+        "request": jsonEncode(
+            {"requestId": requestId,
+              "source": source,
+              "type": type,
+              "contains": contains,
+              "about": about,
+              "origin": origin,
+            })});
+      String jsonResponse = await completer.future;
+      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+
+      completer = Completer();
+      completers["modify"] = completer;
+      String ownershipId = ownershipMap["transactionId"];
+      String destination = const TikiSdkDestination.all().toJson();
+      await channel.invokeMockMethod(
+          'modifyConsent', {
+        "request": jsonEncode(
+            {"requestId": "modify",
+              "ownershipId": ownershipId,
+              "destination": destination})
+      });
+      jsonResponse = await completer.future;
+      Map consentMap = jsonDecode(jsonDecode(jsonResponse)["consent"]);
+      expect(consentMap["ownershipId"], ownershipId);
+      expect(consentMap["destination"], destination);
+    });
+
+    test('Get Consent', () async {
+      Completer<String> completer = Completer();
+      String requestId = 'build';
+      completers[requestId] = completer;
+      await channel.invokeMockMethod(
+          'build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
+      await completer.future;
+      completer = Completer();
+      requestId = "assign";
+      String source = "assign test";
+      String type = TikiSdkDataTypeEnum.point.val;
+      List<String> contains = ["test"];
+      String about = "test about";
+      completers[requestId] = completer;
+      await channel.invokeMockMethod(
+          'assignOwnership', {
+        "request": jsonEncode(
+            {"requestId": requestId,
+              "source": source,
+              "type": type,
+              "contains": contains,
+              "about": about,
+              "origin": origin,
+            })});
+      String jsonResponse = await completer.future;
+      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+
+      completer = Completer();
+      completers["modify"] = completer;
+      String ownershipId = ownershipMap["transactionId"];
+      String destination = const TikiSdkDestination.all().toJson();
+      await channel.invokeMockMethod(
+          'modifyConsent', {
+        "request": jsonEncode(
+            {"requestId": "modify",
+              "ownershipId": ownershipId,
+              "destination": destination})
+      });
+      await completer.future;
+
+      completer = Completer();
+      completers["get"] = completer;
+
+      await channel.invokeMockMethod(
+          'getConsent', {
+        "request": jsonEncode(
+            {"requestId": "get",
+              "source": source})
+      });
+
+      jsonResponse = await completer.future;
+      expect(jsonDecode(jsonDecode(jsonResponse)["consent"])['ownershipId'], ownershipId);
+    });
+
+    test('Apply Consent', () async {
+      Completer<String> completer = Completer();
+      String requestId = 'build';
+      completers[requestId] = completer;
+      await channel.invokeMockMethod(
+          'build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin": origin})
+      });
+      await completer.future;
+      completer = Completer();
+      requestId = "assign";
+      String source = "assign test";
+      String type = TikiSdkDataTypeEnum.point.val;
+      List<String> contains = ["test"];
+      String about = "test about";
+      completers[requestId] = completer;
+      await channel.invokeMockMethod(
+          'assignOwnership', {
+        "request": jsonEncode(
+            {"requestId": requestId,
+              "source": source,
+              "type": type,
+              "contains": contains,
+              "about": about,
+              "origin": origin,
+            })});
+      String jsonResponse = await completer.future;
+      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+
+      completer = Completer();
+      completers["modify"] = completer;
+      String ownershipId = ownershipMap["transactionId"];
+      String destination = const TikiSdkDestination.all().toJson();
+      await channel.invokeMockMethod(
+          'modifyConsent', {
+        "request": jsonEncode(
+            {"requestId": "modify",
+              "ownershipId": ownershipId,
+              "destination": destination})
+      });
+      await completer.future;
+
+      completer = Completer();
+      completers["apply"] = completer;
+
+      await channel.invokeMockMethod(
+          'applyConsent', {
+        "request": jsonEncode(
+            {"requestId": "apply",
+              "source": source,
+              "destination": destination})
+      });
+
+      jsonResponse = await completer.future;
+      expect(jsonDecode(jsonResponse)["success"], true);
+
     });
   });
 }

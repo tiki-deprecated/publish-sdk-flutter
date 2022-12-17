@@ -12,15 +12,15 @@ import 'req.dart';
 class ReqConsentModify extends Req {
   late String ownershipId;
   late TikiSdkDestination destination;
-  late String? about;
-  late String? reward;
-  late DateTime? expiry;
+  String? about;
+  String? reward;
+  DateTime? expiry;
 
   @override
   late String requestId;
 
   ReqConsentModify.fromJson(String jsonReq) {
-    Map<String, dynamic> map = jsonDecode(jsonReq);
+    Map map = jsonDecode(jsonReq);
     ownershipId = map["ownershipId"];
     destination = TikiSdkDestination.fromJson(map["destination"]);
     requestId = map["requestId"];

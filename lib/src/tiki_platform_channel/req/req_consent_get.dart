@@ -15,7 +15,7 @@ class ReqConsentGet extends Req {
   late String requestId;
 
   ReqConsentGet.fromJson(String jsonReq) {
-    Map<String, String> map = jsonDecode(jsonReq);
+    Map map = jsonDecode(jsonReq);
     source = map["source"]!;
     requestId = map["requestId"]!;
     origin = map["origin"];

@@ -117,16 +117,14 @@ class TikiPlatformChannel {
         RspConsentGet(consent: consentModel, requestId: req.requestId));
   }
 
-  Future<RspConsentApply> _applyConsent(ReqConsentApply req) {
-    Future<RspConsentApply>? resp;
+  void _applyConsent(ReqConsentApply req) {
     _tikiSdk!.applyConsent(req.source, req.destination, () {
-      resp = Future.value(
+      _success(
           RspConsentApply(success: true, requestId: req.requestId));
     }, onBlocked: (String reason) {
-      resp = Future.value(RspConsentApply(
+      _success(RspConsentApply(
           success: false, reason: reason, requestId: req.requestId));
     });
-    return resp!;
   }
 
   Future<void> _handle<S extends Req, D extends Rsp>(
