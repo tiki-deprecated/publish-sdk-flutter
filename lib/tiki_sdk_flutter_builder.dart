@@ -73,7 +73,7 @@ class TikiSdkFlutterBuilder {
   /// Defaults to Application Documents Directory.
   void databaseDir(String databaseDir) => _databaseDir = databaseDir;
 
-  /// Builds a new [TikiSdkFlutter]
+  /// Builds a new [TikiSdk] for Flutter.
   Future<TikiSdk> build() async {
     TikiSdkBuilder sdkBuilder = TikiSdkBuilder()
       ..databaseDir(_databaseDir ?? await _dbDir())
