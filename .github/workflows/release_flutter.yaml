@@ -23,10 +23,6 @@ jobs:
         with:
           flutter-version: '3.3.4'
 
-      - name: 'Run integration tests'
-        run: |
-          flutter test integration_test
-
       - name: 'Setup credentials'
         run: |
           mkdir $XDG_CONFIG_HOME/dart
