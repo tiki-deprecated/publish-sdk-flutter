@@ -1,3 +1,11 @@
+## 0.0.22
+
+* Implement JSON patterns for Platform Channel arguments
+* **BREAKING CHANGES**
+  * Move Platform Channels to src folder
+  * Rename TikiSdkFlutterPlatform -> TikiPlatformChannel
+  * Rename TikiSdkFlutterKeyStorage -> FlutterKeyStorage
+
 ## 0.0.21
 
 * Update method channels to match Dart SDK
