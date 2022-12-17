@@ -38,16 +38,7 @@ Icon?
 .tags*
 
 build/
-.android/app
-.android/Flutter
-.android/gradle
-.android/src
-.android/gradle.properties
-.android/gradlew
-.android/gradlew.bat
-.android/include_flutter.groovy
-.android/local.properties
-.android/settings.gradle
+.android
 .ios/
 .flutter-plugins
 .flutter-plugins-dependencies
