@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tiki_sdk_flutter/main.dart';
-import 'package:tiki_sdk_flutter/src/tiki_sdk_flutter_key_storage.dart';
+import 'package:tiki_sdk_flutter/src/flutter_key_storage.dart';
 
 void main() {
   String apiId = '2b8de004-cbe0-4bd5-bda6-b266d54f5c90';
   String origin = 'com.mytiki.test';
 
   test('FlutterKeyStorage write and read', () async {
-    TikiSdkFlutterKeyStorage keyStorage = TikiSdkFlutterKeyStorage();
+    FlutterKeyStorage keyStorage = FlutterKeyStorage();
     String value = 'test';
     keyStorage.write(key: 'test_value', value: 'test');
     String? returnedValue = await keyStorage.read(key: 'test_value');
