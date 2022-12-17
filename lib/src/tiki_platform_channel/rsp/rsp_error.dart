@@ -20,6 +20,9 @@ class RspError extends Rsp {
         super(requestId: requestId);
 
   @override
-  String toJson() => jsonEncode(
-      {"requestId": requestId, "message": message, "stacktrace": stackTrace.toString()});
+  String toJson() => jsonEncode({
+        "requestId": requestId,
+        "message": message,
+        "stacktrace": stackTrace.toString()
+      });
 }

@@ -119,8 +119,7 @@ class TikiPlatformChannel {
 
   void _applyConsent(ReqConsentApply req) {
     _tikiSdk!.applyConsent(req.source, req.destination, () {
-      _success(
-          RspConsentApply(success: true, requestId: req.requestId));
+      _success(RspConsentApply(success: true, requestId: req.requestId));
     }, onBlocked: (String reason) {
       _success(RspConsentApply(
           success: false, reason: reason, requestId: req.requestId));
