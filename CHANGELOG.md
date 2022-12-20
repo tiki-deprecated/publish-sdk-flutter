@@ -1,3 +1,8 @@
+## 0.0.23
+
+* update TIKI Dart SDK to 0.0.23
+* fix errors in req/rsp APIs for TIKI Platform Channel
+
 ## 0.0.22
 
 * Implement JSON patterns for Platform Channel arguments

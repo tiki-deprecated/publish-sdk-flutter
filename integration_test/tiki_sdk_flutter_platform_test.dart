@@ -33,7 +33,7 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "request": jsonEncode(
-            {"requestId": requestId, "apiId": apiId, "origin": origin})
+              {"requestId": requestId, "apiId": apiId, "origin": origin})
       });
       String jsonResponse = await completer.future;
       expect(jsonDecode(jsonResponse)["requestId"], requestId);
@@ -106,7 +106,7 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "request": jsonEncode(
-            {"requestId": requestId, "apiId": apiId, "origin": origin})
+            {"requestId": requestId, "apiId": apiId, "origin" : origin})
       });
       await completer.future;
       completer = Completer();
@@ -123,7 +123,6 @@ void main() {
           "type": type,
           "contains": contains,
           "about": about,
-          "origin": origin,
         })
       });
       String jsonResponse = await completer.future;
@@ -142,6 +141,25 @@ void main() {
       expect(gotOwnership["contains"], ownershipMap["contains"]);
       expect(gotOwnership["about"], ownershipMap["about"]);
       expect(gotOwnership["origin"], ownershipMap["origin"]);
+    });
+
+    test('Get non-existing ownership', () async {
+      Completer<String> completer = Completer();
+      String requestId = 'build';
+      completers[requestId] = completer;
+      await channel.invokeMockMethod('build', {
+        "request": jsonEncode(
+            {"requestId": requestId, "apiId": apiId, "origin" : origin})
+      });
+      await completer.future;
+      completer = Completer();
+      completers["getOwnership"] = completer;
+      await channel.invokeMockMethod('getOwnership', {
+        "request": jsonEncode({"requestId": "getOwnership", "source": "not"})
+      });
+      String jsonResponse = await completer.future;
+      Map? gotOwnership = jsonDecode(jsonResponse)["ownership"];
+      expect(gotOwnership == null, true);
     });
 
     test('Modify Consent', () async {

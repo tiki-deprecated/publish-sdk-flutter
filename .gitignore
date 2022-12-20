@@ -40,9 +40,13 @@ Icon?
 build/
 .android
 .ios/
+.gradle/
 .flutter-plugins
 .flutter-plugins-dependencies
-Framerworks
+Frameworks/
+*.jar
+*.properties
+gradlew*
 
 # Symbolication related
 app.*.symbols
