@@ -76,7 +76,7 @@ void main() {
     await tikiSdk.modifyConsent(ownershipId, const TikiSdkDestination.all(),
         expiry: DateTime.now());
     await tikiSdk.applyConsent('expire consent test',
-        const TikiSdkDestination.all(), () => ok = false);
+        const TikiSdkDestination.all(), () => ok = true, onBlocked: (_) => ok = false);
     expect(ok, false);
   });
 

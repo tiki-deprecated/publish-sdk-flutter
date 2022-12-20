@@ -17,8 +17,9 @@ class ReqConsentApply extends Req {
 
   ReqConsentApply.fromJson(String jsonReq) {
     Map map = jsonDecode(jsonReq);
+    var tikisdkdest = TikiSdkDestination.fromJson(jsonEncode(map["destination"]));
     source = map["source"];
-    destination = TikiSdkDestination.fromJson(map["destination"]);
+    destination = tikisdkdest;
     requestId = map["requestId"];
   }
 }
