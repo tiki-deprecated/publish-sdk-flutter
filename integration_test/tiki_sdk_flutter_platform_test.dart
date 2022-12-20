@@ -92,7 +92,7 @@ void main() {
         })
       });
       String jsonResponse = await completer.future;
-      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+      Map ownershipMap = jsonDecode(jsonResponse)["ownership"];
       expect(source, ownershipMap["source"]);
       expect(type, ownershipMap["type"]);
       expect(contains, ownershipMap["contains"]);
@@ -126,7 +126,7 @@ void main() {
         })
       });
       String jsonResponse = await completer.future;
-      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+      Map ownershipMap = jsonDecode(jsonResponse)["ownership"];
 
       completer = Completer();
       completers["getOwnership"] = completer;
@@ -135,7 +135,7 @@ void main() {
       });
       jsonResponse = await completer.future;
 
-      Map gotOwnership = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+      Map gotOwnership = jsonDecode(jsonResponse)["ownership"];
       expect(gotOwnership["source"], ownershipMap["source"]);
       expect(gotOwnership["type"], ownershipMap["type"]);
       expect(gotOwnership["contains"], ownershipMap["contains"]);
@@ -189,12 +189,12 @@ void main() {
         })
       });
       String jsonResponse = await completer.future;
-      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+      Map ownershipMap = jsonDecode(jsonResponse)["ownership"];
 
       completer = Completer();
       completers["modify"] = completer;
       String ownershipId = ownershipMap["transactionId"];
-      String destination = const TikiSdkDestination.all().toJson();
+      Map destination = const TikiSdkDestination.all().toMap();
       await channel.invokeMockMethod('modifyConsent', {
         "request": jsonEncode({
           "requestId": "modify",
@@ -203,7 +203,7 @@ void main() {
         })
       });
       jsonResponse = await completer.future;
-      Map consentMap = jsonDecode(jsonDecode(jsonResponse)["consent"]);
+      Map consentMap = jsonDecode(jsonResponse)["consent"];
       expect(consentMap["ownershipId"], ownershipId);
       expect(consentMap["destination"], destination);
     });
@@ -235,12 +235,12 @@ void main() {
         })
       });
       String jsonResponse = await completer.future;
-      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+      Map ownershipMap = jsonDecode(jsonResponse)["ownership"];
 
       completer = Completer();
       completers["modify"] = completer;
       String ownershipId = ownershipMap["transactionId"];
-      String destination = const TikiSdkDestination.all().toJson();
+      Map destination = const TikiSdkDestination.all().toMap();
       await channel.invokeMockMethod('modifyConsent', {
         "request": jsonEncode({
           "requestId": "modify",
@@ -258,7 +258,7 @@ void main() {
       });
 
       jsonResponse = await completer.future;
-      expect(jsonDecode(jsonDecode(jsonResponse)["consent"])['ownershipId'],
+      expect(jsonDecode(jsonResponse)["consent"]['ownershipId'],
           ownershipId);
     });
 
@@ -289,12 +289,12 @@ void main() {
         })
       });
       String jsonResponse = await completer.future;
-      Map ownershipMap = jsonDecode(jsonDecode(jsonResponse)["ownership"]);
+      Map ownershipMap = jsonDecode(jsonResponse)["ownership"];
 
       completer = Completer();
       completers["modify"] = completer;
       String ownershipId = ownershipMap["transactionId"];
-      String destination = const TikiSdkDestination.all().toJson();
+      Map destination = const TikiSdkDestination.all().toMap();
       await channel.invokeMockMethod('modifyConsent', {
         "request": jsonEncode({
           "requestId": "modify",
