@@ -32,6 +32,17 @@ void main() {
     expect(1, 1);
   });
 
+  test('Get Ownership', skip: apiId.isEmpty, () async {
+    TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
+      ..origin(origin)
+      ..apiId(apiId);
+    TikiSdk tikiSdk = await builder.build();
+    String ownershipId = await tikiSdk.assignOwnership('test', TikiSdkDataTypeEnum.point, ['email']);
+    OwnershipModel getOwnership = tikiSdk.getOwnership('test')!;
+    expect(ownershipId, Bytes.base64UrlEncode(getOwnership.transactionId!));
+    expect(1, 1);
+  });
+
   test('Give and revoke consent', skip: apiId.isEmpty, () async {
     TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
       ..origin(origin)
@@ -65,7 +76,7 @@ void main() {
     await tikiSdk.modifyConsent(ownershipId, const TikiSdkDestination.all(),
         expiry: DateTime.now());
     await tikiSdk.applyConsent('expire consent test',
-        const TikiSdkDestination.all(), () => ok = false);
+        const TikiSdkDestination.all(), () => ok = true, onBlocked: (_) => ok = false);
     expect(ok, false);
   });
 

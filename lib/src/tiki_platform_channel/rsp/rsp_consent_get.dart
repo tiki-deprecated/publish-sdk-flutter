@@ -17,5 +17,5 @@ class RspConsentGet extends Rsp {
 
   @override
   String toJson() =>
-      jsonEncode({"consent": consent?.toJson(), "requestId": requestId});
+      jsonEncode({"consent": consent?.toMap(), "requestId": requestId});
 }
