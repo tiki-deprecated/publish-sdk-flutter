@@ -16,5 +16,5 @@ class RspOwnership extends Rsp {
 
   @override
   String toJson() =>
-      jsonEncode({"ownership": ownership?.toJson(), "requestId": requestId});
+      jsonEncode({"ownership": ownership?.toMap(), "requestId": requestId});
 }
