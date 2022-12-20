@@ -8,6 +8,8 @@ import 'dart:convert';
 import '../../../main.dart';
 import 'req.dart';
 
+
+/// The request for the `assignOwnership` method call in the Platform Channel.
 class ReqOwnershipAssign extends Req {
   late String source;
   late TikiSdkDataTypeEnum type;

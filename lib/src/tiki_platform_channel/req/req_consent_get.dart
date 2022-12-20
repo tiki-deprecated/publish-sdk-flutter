@@ -7,6 +7,7 @@ import 'dart:convert';
 
 import 'req.dart';
 
+/// The request for the `getConsent` call in the Platform Channel.
 class ReqConsentGet extends Req {
   late String source;
   String? origin;

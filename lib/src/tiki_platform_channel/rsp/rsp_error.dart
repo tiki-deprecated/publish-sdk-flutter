@@ -7,6 +7,10 @@ import 'dart:convert';
 
 import 'rsp.dart';
 
+/// The response for the errors thrown in the Platform Channel.
+///
+/// It returns the [message] of the error and the String representation of the
+/// [stackTrace]
 class RspError extends Rsp {
   String? message;
   StackTrace? stackTrace;

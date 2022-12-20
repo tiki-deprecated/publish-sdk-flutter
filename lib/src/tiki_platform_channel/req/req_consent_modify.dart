@@ -9,6 +9,8 @@ import 'package:tiki_sdk_dart/tiki_sdk.dart';
 
 import 'req.dart';
 
+
+/// The request for the `modifyConsent`method call in the Platform Channel.
 class ReqConsentModify extends Req {
   late String ownershipId;
   late TikiSdkDestination destination;

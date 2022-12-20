@@ -9,6 +9,10 @@ import 'package:tiki_sdk_dart/consent/consent_model.dart';
 
 import 'rsp.dart';
 
+/// The response for the `getConsent` and `modifyConsent`method calls in
+/// the Platform Channel.
+///
+/// It returns the [consent]. Null if no consent was given.
 class RspConsentGet extends Rsp {
   ConsentModel? consent;
 

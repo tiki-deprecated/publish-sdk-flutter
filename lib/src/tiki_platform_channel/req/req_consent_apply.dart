@@ -8,6 +8,9 @@ import 'dart:convert';
 import '../../../main.dart';
 import 'req.dart';
 
+/// The request for the `applyConsent` method call in the Platform Channel.
+///
+/// It uses the [source] and [destination] to verify if the consent was given.
 class ReqConsentApply extends Req {
   late String source;
   late TikiSdkDestination destination;
