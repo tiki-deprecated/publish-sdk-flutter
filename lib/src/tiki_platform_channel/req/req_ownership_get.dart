@@ -7,6 +7,7 @@ import 'dart:convert';
 
 import 'req.dart';
 
+/// The request for the `getOwnership` method call in the Platform Channel.
 class ReqOwnershipGet extends Req {
   late String source;
   String? origin;
