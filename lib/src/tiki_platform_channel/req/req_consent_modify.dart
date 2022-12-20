@@ -21,8 +21,12 @@ class ReqConsentModify extends Req {
 
   ReqConsentModify.fromJson(String jsonReq) {
     Map map = jsonDecode(jsonReq);
+    var tikisdkdest = TikiSdkDestination.fromJson(jsonEncode(map["destination"]));
+    var exp = map["expiry"] != null ? DateTime.fromMillisecondsSinceEpoch(map["expiry"]) : null;
     ownershipId = map["ownershipId"];
-    destination = TikiSdkDestination.fromJson(map["destination"]);
+    destination = tikisdkdest;
     requestId = map["requestId"];
+    reward = map["reward"];
+    expiry = exp;
   }
 }
