@@ -17,6 +17,7 @@ export 'package:tiki_sdk_dart/tiki_sdk_destination.dart';
 
 export 'tiki_sdk_flutter_builder.dart';
 
+/// The Dart entry point for Platform Channels integration.
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   TikiPlatformChannel();

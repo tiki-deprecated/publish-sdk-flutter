@@ -45,6 +45,10 @@ class TikiPlatformChannel {
   /// that will identify to which request the response belongs to.
   /// All the calls are asynchronous and should be treated like this in each native
   /// platform.
+  /// Each [call.method] has its own request object that inherits from [Req]. It
+  /// should be passed in the [call.arguments] with the key `request`.
+  /// The responses passed back to the native channels inherits from [Rsp] and
+  /// are JSON encoded in the [call.arguments] with the key `response`.
   Future<void> methodHandler(MethodCall call) async {
     String jsonReq = call.arguments['request'];
     switch (call.method) {
