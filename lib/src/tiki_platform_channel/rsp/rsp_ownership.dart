@@ -15,10 +15,8 @@ import 'rsp.dart';
 class RspOwnership extends Rsp {
   OwnershipModel? ownership;
 
-  RspOwnership({this.ownership, String? requestId})
-      : super(requestId: requestId);
+  RspOwnership({this.ownership, String? requestId});
 
   @override
-  String toJson() =>
-      jsonEncode({"ownership": ownership?.toMap(), "requestId": requestId});
+  String toJson() => jsonEncode({"ownership": ownership?.toMap()});
 }
