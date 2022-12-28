@@ -7,9 +7,9 @@
 
 * Implement JSON patterns for Platform Channel arguments
 * **BREAKING CHANGES**
-  * Move Platform Channels to src folder
-  * Rename TikiSdkFlutterPlatform -> TikiPlatformChannel
-  * Rename TikiSdkFlutterKeyStorage -> FlutterKeyStorage
+    * Move Platform Channels to src folder
+    * Rename TikiSdkFlutterPlatform -> TikiPlatformChannel
+    * Rename TikiSdkFlutterKeyStorage -> FlutterKeyStorage
 
 ## 0.0.21
 
@@ -17,7 +17,7 @@
 
 ## 0.0.20
 
-* Build ios frameworks with embed script 
+* Build ios frameworks with embed script
 
 ## 0.0.17
 
@@ -31,7 +31,7 @@
 
 * Publish to pub.dev and github packages
 
-## 0.0.14 
+## 0.0.14
 
 * Publish to github packages through github actions
 
@@ -75,7 +75,7 @@
 ## 0.0.5
 
 * update naming and structure
-* implement the response for method calls from platform channel 
+* implement the response for method calls from platform channel
 * bump tiki_sdk_dart to 0.0.7
 * add tiki_sdk_plugin 0.0.1 dependency
 

@@ -5,20 +5,14 @@
 
 import 'dart:convert';
 
-import 'req.dart';
-
 /// The request for the `getConsent` call in the Platform Channel.
-class ReqConsentGet extends Req {
+class ReqConsentGet {
   late String source;
   String? origin;
-
-  @override
-  late String requestId;
 
   ReqConsentGet.fromJson(String jsonReq) {
     Map map = jsonDecode(jsonReq);
     source = map["source"]!;
-    requestId = map["requestId"]!;
     origin = map["origin"];
   }
 }
