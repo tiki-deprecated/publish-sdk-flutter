@@ -1,6 +1,11 @@
+## 0.0.24
+
+* remove requestId from Req and Rsp objects
+* force Flutter version to 3.3.4
+
 ## 0.0.23
 
-* update TIKI Dart SDK to 0.0.23
+* update TIKI Dart SDK to 0.0.17
 * fix errors in req/rsp APIs for TIKI Platform Channel
 
 ## 0.0.22
