@@ -16,10 +16,8 @@ import 'rsp.dart';
 class RspConsentGet extends Rsp {
   ConsentModel? consent;
 
-  RspConsentGet({this.consent, String? requestId})
-      : super(requestId: requestId);
+  RspConsentGet({this.consent, String? requestId});
 
   @override
-  String toJson() =>
-      jsonEncode({"consent": consent?.toMap(), "requestId": requestId});
+  String toJson() => jsonEncode({"consent": consent?.toMap()});
 }

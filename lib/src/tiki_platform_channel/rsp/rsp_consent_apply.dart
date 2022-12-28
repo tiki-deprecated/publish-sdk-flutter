@@ -15,10 +15,8 @@ class RspConsentApply extends Rsp {
   bool? success;
   String? reason;
 
-  RspConsentApply({this.success, this.reason, String? requestId})
-      : super(requestId: requestId);
+  RspConsentApply({this.success, this.reason, String? requestId});
 
   @override
-  String toJson() => jsonEncode(
-      {"success": success, "reason": reason, "requestId": requestId});
+  String toJson() => jsonEncode({"success": success, "reason": reason});
 }

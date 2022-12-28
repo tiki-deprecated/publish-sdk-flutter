@@ -13,8 +13,8 @@ import 'rsp.dart';
 class RspBuild extends Rsp {
   final String? address;
 
-  RspBuild({this.address, String? requestId}) : super(requestId: requestId);
+  RspBuild({this.address, String? requestId});
 
   @override
-  String toJson() => jsonEncode({"address": address, "requestId": requestId});
+  String toJson() => jsonEncode({"address": address});
 }

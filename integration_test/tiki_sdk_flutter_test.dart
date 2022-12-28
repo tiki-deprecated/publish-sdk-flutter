@@ -37,7 +37,8 @@ void main() {
       ..origin(origin)
       ..apiId(apiId);
     TikiSdk tikiSdk = await builder.build();
-    String ownershipId = await tikiSdk.assignOwnership('test', TikiSdkDataTypeEnum.point, ['email']);
+    String ownershipId = await tikiSdk
+        .assignOwnership('test', TikiSdkDataTypeEnum.point, ['email']);
     OwnershipModel getOwnership = tikiSdk.getOwnership('test')!;
     expect(ownershipId, Bytes.base64UrlEncode(getOwnership.transactionId!));
     expect(1, 1);
@@ -75,8 +76,9 @@ void main() {
     expect(ok, true);
     await tikiSdk.modifyConsent(ownershipId, const TikiSdkDestination.all(),
         expiry: DateTime.now());
-    await tikiSdk.applyConsent('expire consent test',
-        const TikiSdkDestination.all(), () => ok = true, onBlocked: (_) => ok = false);
+    await tikiSdk.applyConsent(
+        'expire consent test', const TikiSdkDestination.all(), () => ok = true,
+        onBlocked: (_) => ok = false);
     expect(ok, false);
   });
 

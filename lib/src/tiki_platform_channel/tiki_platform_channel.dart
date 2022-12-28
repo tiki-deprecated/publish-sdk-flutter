@@ -15,7 +15,6 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
-import 'req/req.dart';
 import 'req/req_build.dart';
 import 'req/req_consent_apply.dart';
 import 'req/req_consent_get.dart';
@@ -51,33 +50,38 @@ class TikiPlatformChannel {
   /// are JSON encoded in the [call.arguments] with the key `response`.
   Future<void> methodHandler(MethodCall call) async {
     String jsonReq = call.arguments['request'];
+    String requestId = call.arguments['requestId'];
     switch (call.method) {
       case "build":
-        await _handle(ReqBuild.fromJson(jsonReq), _buildSdk);
+        await _handle(requestId, ReqBuild.fromJson(jsonReq), _buildSdk);
         break;
       case "assignOwnership":
-        await _handle(ReqOwnershipAssign.fromJson(jsonReq), _assignOwnership);
+        await _handle(
+            requestId, ReqOwnershipAssign.fromJson(jsonReq), _assignOwnership);
         break;
       case "getOwnership":
-        await _handle(ReqOwnershipGet.fromJson(jsonReq), _getOwnership);
+        await _handle(
+            requestId, ReqOwnershipGet.fromJson(jsonReq), _getOwnership);
         break;
       case "modifyConsent":
-        await _handle(ReqConsentModify.fromJson(jsonReq), _modifyConsent);
+        await _handle(
+            requestId, ReqConsentModify.fromJson(jsonReq), _modifyConsent);
         break;
       case "getConsent":
-        await _handle(ReqConsentGet.fromJson(jsonReq), _getConsent);
+        await _handle(requestId, ReqConsentGet.fromJson(jsonReq), _getConsent);
         break;
       case "applyConsent":
         ReqConsentApply reqConsentApply = ReqConsentApply.fromJson(jsonReq);
-        _applyConsent(reqConsentApply);
+        _applyConsent(requestId, reqConsentApply);
         break;
       default:
         Map<Map, String?> map = jsonDecode(jsonReq);
         String requestId = map['requestId']!;
-        _error(RspError(
-            requestId: requestId,
-            message: 'no method handler for method ${call.method}',
-            stackTrace: StackTrace.current));
+        _error(
+            requestId,
+            RspError(
+                message: 'no method handler for method ${call.method}',
+                stackTrace: StackTrace.current));
     }
   }
 
@@ -89,7 +93,7 @@ class TikiPlatformChannel {
       builder.address(req.address!);
     }
     _tikiSdk = await builder.build();
-    return RspBuild(address: _tikiSdk!.address, requestId: req.requestId);
+    return RspBuild(address: _tikiSdk!.address);
   }
 
   Future<RspOwnership> _assignOwnership(ReqOwnershipAssign req) async {
@@ -97,53 +101,53 @@ class TikiPlatformChannel {
         about: req.about, origin: req.origin);
     OwnershipModel ownershipModel =
         _tikiSdk!.getOwnership(req.source, origin: req.origin)!;
-    return RspOwnership(ownership: ownershipModel, requestId: req.requestId);
+    return RspOwnership(ownership: ownershipModel);
   }
 
   Future<RspOwnership> _getOwnership(ReqOwnershipGet req) {
     OwnershipModel? ownershipModel =
         _tikiSdk!.getOwnership(req.source, origin: req.origin);
-    return Future.value(
-        RspOwnership(ownership: ownershipModel, requestId: req.requestId));
+    return Future.value(RspOwnership(ownership: ownershipModel));
   }
 
   Future<RspConsentGet> _modifyConsent(ReqConsentModify req) async {
     ConsentModel consentModel = await _tikiSdk!.modifyConsent(
         req.ownershipId, req.destination,
         about: req.about, reward: req.reward, expiry: req.expiry);
-    return RspConsentGet(consent: consentModel, requestId: req.requestId);
+    return RspConsentGet(consent: consentModel);
   }
 
   Future<RspConsentGet> _getConsent(ReqConsentGet req) {
     ConsentModel? consentModel =
         _tikiSdk!.getConsent(req.source, origin: req.origin);
-    return Future.value(
-        RspConsentGet(consent: consentModel, requestId: req.requestId));
+    return Future.value(RspConsentGet(consent: consentModel));
   }
 
-  void _applyConsent(ReqConsentApply req) {
+  void _applyConsent(String requestId, ReqConsentApply req) {
     _tikiSdk!.applyConsent(req.source, req.destination, () {
-      _success(RspConsentApply(success: true, requestId: req.requestId));
+      _success(requestId, RspConsentApply(success: true));
     }, onBlocked: (String reason) {
-      _success(RspConsentApply(
-          success: false, reason: reason, requestId: req.requestId));
+      _success(requestId, RspConsentApply(success: false, reason: reason));
     });
   }
 
-  Future<void> _handle<S extends Req, D extends Rsp>(
-      S req, Future<D> Function(S) process) async {
+  Future<void> _handle<S, D extends Rsp>(
+      String requestId, S req, Future<D> Function(S) process) async {
     try {
       D rsp = await process(req);
-      _success(rsp);
+      _success(requestId, rsp);
     } catch (e) {
-      RspError error = RspError.fromError(e as Error, requestId: req.requestId);
-      await methodChannel.invokeMethod('error', {'response': error.toJson()});
+      RspError error = RspError.fromError(e as Error);
+      await methodChannel.invokeMethod(
+          'error', {'requestId': requestId, 'response': error.toJson()});
     }
   }
 
-  Future<void> _success(Rsp rsp) async =>
-      await methodChannel.invokeMethod('success', {'response': rsp.toJson()});
+  Future<void> _success(String requestId, Rsp rsp) async =>
+      await methodChannel.invokeMethod(
+          'success', {'requestId': requestId, 'response': rsp.toJson()});
 
-  Future<void> _error(RspError rsp) async =>
-      await methodChannel.invokeMethod('error', {'response': rsp.toJson()});
+  Future<void> _error(String requestId, RspError rsp) async =>
+      await methodChannel.invokeMethod(
+          'error', {'requestId': requestId, 'response': rsp.toJson()});
 }
