@@ -43,6 +43,7 @@
 ///
 library tiki_sdk_flutter_builder;
 
+import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 
@@ -75,6 +76,7 @@ class TikiSdkFlutterBuilder {
 
   /// Builds a new [TikiSdk] for Flutter.
   Future<TikiSdk> build() async {
+    WidgetsFlutterBinding.ensureInitialized();
     TikiSdkBuilder sdkBuilder = TikiSdkBuilder()
       ..databaseDir(_databaseDir ?? await _dbDir())
       ..keyStorage(FlutterKeyStorage())
