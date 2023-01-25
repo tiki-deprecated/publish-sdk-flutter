@@ -12,7 +12,7 @@ class DestinationLayoutBtn extends StatelessWidget {
     DestinationService service =
         Provider.of<DestinationService>(context, listen: true);
     return Container(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         decoration: BoxDecoration(
             border: Border.all(width: 1.0, color: const Color(0xFFDDDDDD)),
             borderRadius: const BorderRadius.all(Radius.circular(10))),
@@ -21,8 +21,8 @@ class DestinationLayoutBtn extends StatelessWidget {
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    Expanded(child: Text("Destination")),
-                    Icon(Icons.arrow_forward)
+                    Expanded(child: Text("Destination", style: TextStyle(fontWeight: FontWeight.bold),)),
+                    Icon(Icons.keyboard_arrow_right)
                   ]),
               const Padding(padding: EdgeInsets.all(8.0)),
               Text("${service.model.httpMethod} ${service.model.url}")

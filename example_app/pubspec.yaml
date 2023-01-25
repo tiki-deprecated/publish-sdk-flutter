@@ -15,7 +15,6 @@ dependencies:
   intl: ^0.18.0
   tiki_sdk_flutter:
     path: ../.
-  intl: ^0.18.0
   http: ^0.13.5
 
 dev_dependencies:

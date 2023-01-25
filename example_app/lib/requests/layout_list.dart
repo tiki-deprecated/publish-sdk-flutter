@@ -12,36 +12,37 @@ class RequestsLayoutList extends StatelessWidget {
         Provider.of<RequestsService>(context, listen: true);
     List<RequestModel> requests = service.model.log;
     service.controller.startTimer(context);
-    return Padding(
+    return Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            border: Border.all(width: 1.0, color: const Color(0xFFDDDDDD)),
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
         padding: const EdgeInsets.all(8.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text("Requests", style: TextStyle(fontSize: 32)),
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Text("Requests", style: TextStyle(fontWeight: FontWeight.bold),),
           ),
-          Expanded(
-              child: ListView.separated(
-            itemCount: requests.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(requests[index].message, maxLines: 1, overflow: TextOverflow.ellipsis),
-                leading: Text(requests[index].icon),
-                trailing: Text(requests[index].timeStamp),
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text('Body'),
-                          content: Text(requests[index].message),
-                        );
-                      });
-                },
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-          ))
+          ...requests.map((request) {
+              return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                ListTile(
+                  contentPadding: EdgeInsets.all(0),
+                  title: Text(request.message, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  leading: Text(request.icon),
+                  trailing: Text(request.timeStamp),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Body'),
+                            content: Text(request.message),
+                          );
+                        });
+                  }),
+                if(requests.indexOf(request) < requests.length-1) Divider()
+            ]);
+          })
         ]));
   }
 }

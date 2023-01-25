@@ -20,9 +20,9 @@ class WalletLayoutBtn extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                      child: Text(
-                          service.model.tikiSdk?.address ?? "Create a Wallet")),
-                  const Icon(Icons.arrow_forward)
+                      child: Padding(padding: EdgeInsets.all(8), child: Text(
+                          service.model.tikiSdk?.address ?? "Create a Wallet"))),
+                  const Icon(Icons.keyboard_arrow_right)
                 ]),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => ChangeNotifierProvider.value(
