@@ -1,7 +1,7 @@
-import 'package:example_app/destination/layout_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'destination/layout_ body_btn.dart';
 import 'destination/service.dart';
 
 void main() {
@@ -21,6 +21,6 @@ class MyApp extends StatelessWidget {
             body: Center(
                 child: ChangeNotifierProvider<DestinationService>.value(
                     value: destinationService,
-                    child: const DestinationLayoutBtn()))));
+                    child: const DestinationLayoutBodyBtn()))));
   }
 }
