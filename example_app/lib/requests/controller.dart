@@ -8,9 +8,8 @@ import 'package:tiki_sdk_flutter/main.dart';
 import '../destination/model.dart';
 
 class RequestsController{
-  startTimer(BuildContext context){
+  startTimer(BuildContext context, DestinationModel destination){
     TikiSdk tikiSdk = Provider.of<WalletService>(context).model.tikiSdk!;
-    DestinationModel destination = Provider.of<DestinationService>(context, listen: false).model;
     RequestsService requestsService = Provider.of<RequestsService>(context, listen: false);
     requestsService.startTimer(destination, tikiSdk);
   }

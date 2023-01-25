@@ -17,6 +17,7 @@ class ConsentService extends ChangeNotifier {
       const TikiSdkDestination.none();
     ConsentModel consent = await tikiSdk.modifyConsent(Bytes.base64UrlEncode(ownershipId), destination);
     model.consent = consent;
+    model.isConsentGiven = allow;
     notifyListeners();
   }
 }

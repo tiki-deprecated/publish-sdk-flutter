@@ -3,15 +3,18 @@ import 'package:example_app/requests/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../destination/model.dart';
+import '../destination/service.dart';
+
 class RequestsLayoutList extends StatelessWidget {
   const RequestsLayoutList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    RequestsService service =
-        Provider.of<RequestsService>(context, listen: true);
+    RequestsService service = Provider.of<RequestsService>(context, listen: true);
+    DestinationModel destination = Provider.of<DestinationService>(context, listen: true).model;
     List<RequestModel> requests = service.model.log;
-    service.controller.startTimer(context);
+    service.controller.startTimer(context, destination);
     return Container(
         width: double.infinity,
         decoration: BoxDecoration(

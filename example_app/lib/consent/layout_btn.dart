@@ -26,7 +26,15 @@ class ConsentLayoutBtn extends StatelessWidget {
                   ]),
               const Padding(padding: EdgeInsets.all(8.0)),
               Text(Bytes.base64UrlEncode(service.model.consent!.transactionId!)
-              )]),
+              ),
+              Row(mainAxisAlignment:MainAxisAlignment.spaceBetween, children: [
+                Text("Toggle Consent"),
+                Switch(
+                  value: service.model.isConsentGiven,
+                  activeColor: Colors.green,
+                  onChanged: (bool allow) => service.controller.modifyConsent(allow, context),
+                )])
+            ]),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => ChangeNotifierProvider.value(
                     value: service, child: const ConsentLayoutDetail())))));
