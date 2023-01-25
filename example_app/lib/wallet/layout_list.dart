@@ -35,7 +35,9 @@ class WalletLayoutList extends StatelessWidget {
                           leading: const Icon(Icons.keyboard_arrow_left,
                               color: Color(0xFFD2D5D7)),
                           onTap: () {
-                            if (address != service.model.tikiSdk?.address) service.loadTikiSdk(address);
+                            if (address != service.model.tikiSdk?.address) {
+                              service.loadTikiSdk(address);
+                            }
                             Navigator.of(context).pop();
                           },
                         );
