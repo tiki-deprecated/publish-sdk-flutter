@@ -34,12 +34,12 @@ class DestinationLayoutEdit extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 8.0, bottom: 16.0),
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
                         child: Row(children: [
                           IconButton(
-                              icon: Icon(Icons.keyboard_arrow_left),
+                              icon: const Icon(Icons.keyboard_arrow_left),
                               onPressed: () => Navigator.of(context).pop()),
-                          Text("Destination", style: TextStyle(fontSize: 32)),
+                          const Text("Destination", style: TextStyle(fontSize: 32)),
                         ]),
                       ),
                       TextField(

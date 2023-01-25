@@ -1,17 +1,17 @@
-import 'package:example_app/ownership/layout_detail.dart';
-import 'package:example_app/ownership/service.dart';
+import 'package:example_app/consent/layout_detail.dart';
+import 'package:example_app/consent/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
-class OwnershipLayoutBtn extends StatelessWidget {
-  const OwnershipLayoutBtn({super.key});
+class ConsentLayoutBtn extends StatelessWidget {
+  const ConsentLayoutBtn({super.key});
 
   @override
   Widget build(BuildContext context) {
-    OwnershipService service =
-        Provider.of<OwnershipService>(context, listen: true);
-    return service.model.ownership == null ? Container() : Container(
+    ConsentService service =
+        Provider.of<ConsentService>(context, listen: true);
+    return service.model.consent == null ? Container() : Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
             border: Border.all(width: 1.0, color: const Color(0xFFDDDDDD)),
@@ -21,14 +21,14 @@ class OwnershipLayoutBtn extends StatelessWidget {
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    Expanded(child: Text("Ownership")),
+                    Expanded(child: Text("Consent")),
                     Icon(Icons.arrow_forward)
                   ]),
               const Padding(padding: EdgeInsets.all(8.0)),
-              Text(Bytes.base64UrlEncode(service.model.ownership!.transactionId!)
+              Text(Bytes.base64UrlEncode(service.model.consent!.transactionId!)
               )]),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => ChangeNotifierProvider.value(
-                    value: service, child: const OwnershipLayoutDetail())))));
+                    value: service, child: const ConsentLayoutDetail())))));
   }
 }

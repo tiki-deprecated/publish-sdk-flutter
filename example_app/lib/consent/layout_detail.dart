@@ -1,16 +1,17 @@
-import 'package:example_app/ownership/service.dart';
+import 'package:example_app/consent/service.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
-class OwnershipLayoutDetail extends StatelessWidget {
-  const OwnershipLayoutDetail({super.key});
+class ConsentLayoutDetail extends StatelessWidget {
+  const ConsentLayoutDetail({super.key});
 
   @override
   Widget build(BuildContext context) {
-    OwnershipService service =
-        Provider.of<OwnershipService>(context, listen: true);
-    OwnershipModel ownership = service.model.ownership!;
+    ConsentService service =
+        Provider.of<ConsentService>(context, listen: true);
+    ConsentModel consent = service.model.consent!;
     return Scaffold(
         body: SafeArea(
             child: Padding(
@@ -24,22 +25,23 @@ class OwnershipLayoutDetail extends StatelessWidget {
                           IconButton(
                               icon: const Icon(Icons.keyboard_arrow_left),
                               onPressed: () => Navigator.of(context).pop()),
-                          const Text("Ownership NFT", style: TextStyle(fontSize: 32)),
+                          const Text("Consent NFT", style: TextStyle(fontSize: 32)),
                         ]),
                       ),
                       const Divider(),
-                      Text(Bytes.base64UrlEncode(ownership.transactionId!)),
+                      Text(Bytes.base64UrlEncode(consent.transactionId!)),
                       const Divider(),
-                      Text(ownership.source),
+                      Text(Bytes.base64UrlEncode(consent.ownershipId)),
                       const Divider(),
-                      Text(ownership.type.toString()),
+                      Text(consent.destination.paths.join(", ")),
                       const Divider(),
-                      Text(ownership.origin),
+                      Text(consent.destination.uses.join(", ")),
                       const Divider(),
-                      Text(ownership.contains.join(", ")),
+                      Text(consent.about ?? ""),
                       const Divider(),
-                      Text(ownership.about ?? ""),
+                      Text(consent.reward ?? ""),
                       const Divider(),
+                      Text(DateFormat("dd-MM-yy hh:mm:ss").format(consent.expiry!)),
                     ]))));
   }
 }

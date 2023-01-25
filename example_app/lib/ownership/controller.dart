@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
 import '../destination/model.dart';
-import 'model.dart';
 
 class OwnershipController {
   getOrAssignOnwership(DestinationModel destination, BuildContext context) {
