@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DestinationService destinationService = DestinationService();
+
     return MaterialApp(
         title: 'TIKI SDK Example App',
         home: Scaffold(
