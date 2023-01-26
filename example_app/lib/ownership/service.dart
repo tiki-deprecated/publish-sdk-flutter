@@ -9,14 +9,14 @@ class OwnershipService extends ChangeNotifier {
   OwnershipController controller = OwnershipController();
 
   Future<void> getOrAssignOwnership(String source, TikiSdk tikiSdk) async {
-    if(source == model.ownership?.source) return;
     OwnershipModel? ownership = tikiSdk.getOwnership(source);
-    if(ownership != null){
+    if (ownership != null) {
       model.ownership = ownership;
       notifyListeners();
       return;
     }
-    await tikiSdk.assignOwnership(source, TikiSdkDataTypeEnum.stream, ["Test data"]);
+    await tikiSdk
+        .assignOwnership(source, TikiSdkDataTypeEnum.stream, ["Test data"]);
     model.ownership = tikiSdk.getOwnership(source);
     notifyListeners();
   }

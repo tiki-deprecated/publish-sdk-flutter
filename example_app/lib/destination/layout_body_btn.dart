@@ -14,14 +14,19 @@ class DestinationLayoutBodyBtn extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         decoration: BoxDecoration(
-            border: Border.all(width: 1.0, color: const Color(0xFFDDDDDD)),
+            color: Colors.white,
+            border: Border.all(width: 1.0, color: const Color(0xFFCCCCCC)),
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: GestureDetector(
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    Expanded(child: Text("Body", style: TextStyle(fontWeight: FontWeight.bold),)),
+                    Expanded(
+                        child: Text(
+                      "Body",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )),
                     Icon(Icons.keyboard_arrow_right)
                   ]),
               const Padding(padding: EdgeInsets.all(8.0)),

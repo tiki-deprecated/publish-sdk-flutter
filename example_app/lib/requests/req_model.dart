@@ -5,7 +5,7 @@ class RequestModel {
   final String icon;
   final String message;
 
-  RequestModel(this.icon, this.message){
+  RequestModel(this.icon, this.message) {
     timeStamp = DateFormat('hh:mm:ss').format(DateTime.now());
   }
 }

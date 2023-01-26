@@ -8,7 +8,8 @@ import '../destination/model.dart';
 
 class OwnershipController {
   getOrAssignOnwership(DestinationModel destination, BuildContext context) {
-    TikiSdk tikiSdk = Provider.of<WalletService>(context, listen: false).model.tikiSdk!;
+    TikiSdk tikiSdk =
+        Provider.of<WalletService>(context, listen: false).model.tikiSdk!;
     Provider.of<OwnershipService>(context, listen: false)
         .getOrAssignOwnership(destination.source, tikiSdk);
   }

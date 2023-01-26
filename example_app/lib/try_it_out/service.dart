@@ -7,21 +7,19 @@ import '../requests/service.dart';
 import '../wallet/service.dart';
 import 'presenter.dart';
 
-class TryItOutService extends ChangeNotifier{
+class TryItOutService extends ChangeNotifier {
   late TryItOutPresenter presenter;
-  WalletService walletService = WalletService();
-  DestinationService destinationService = DestinationService();
   OwnershipService ownershipService = OwnershipService();
   ConsentService consentService = ConsentService();
+  DestinationService destinationService = DestinationService();
   RequestsService requestsService = RequestsService();
+  late WalletService walletService;
 
   Future<void> init() async {
+    walletService = WalletService(
+        ownershipService, consentService, destinationService, requestsService);
     presenter = TryItOutPresenter(this);
     await walletService.loadTikiSdk();
-    await ownershipService.getOrAssignOwnership(destinationService.model.source, walletService.model.tikiSdk!);
-    await consentService.modifyConsent(
-        false, ownershipService.model.ownership!.transactionId!,
-        destinationService.model, walletService.model.tikiSdk!);
     notifyListeners();
   }
 }

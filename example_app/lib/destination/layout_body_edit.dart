@@ -19,7 +19,8 @@ class DestinationLayoutBodyEdit extends StatelessWidget {
         TextSelection.collapsed(offset: bodyEditingController.text.length);
     return Scaffold(
         body: SafeArea(
-            child: Padding(
+            child: Container(
+                color: const Color(0xFFDDDDDD),
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

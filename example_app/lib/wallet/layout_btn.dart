@@ -13,15 +13,18 @@ class WalletLayoutBtn extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-            border: Border.all(width: 1.0, color: const Color(0xFFDDDDDD)),
+            color: Colors.white,
+            border: Border.all(width: 1.0, color: const Color(0xFFCCCCCC)),
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: GestureDetector(
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                      child: Padding(padding: EdgeInsets.all(8), child: Text(
-                          service.model.tikiSdk?.address ?? "Create a Wallet"))),
+                      child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(service.model.tikiSdk?.address ??
+                              "Create a Wallet"))),
                   const Icon(Icons.keyboard_arrow_right)
                 ]),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(

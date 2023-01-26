@@ -10,9 +10,13 @@ import '../ownership/service.dart';
 
 class ConsentController {
   modifyConsent(bool allow, BuildContext context) {
-    TikiSdk tikiSdk = Provider.of<WalletService>(context, listen: false).model.tikiSdk!;
-    OwnershipModel ownership = Provider.of<OwnershipService>(context, listen: false).model.ownership!;
-    DestinationModel destinationModel = Provider.of<DestinationService>(context, listen: false).model;
-    Provider.of<ConsentService>(context, listen: false).modifyConsent(allow, ownership.transactionId!, destinationModel, tikiSdk);
+    TikiSdk tikiSdk =
+        Provider.of<WalletService>(context, listen: false).model.tikiSdk!;
+    OwnershipModel ownership =
+        Provider.of<OwnershipService>(context, listen: false).model.ownership!;
+    DestinationModel destinationModel =
+        Provider.of<DestinationService>(context, listen: false).model;
+    Provider.of<ConsentService>(context, listen: false).getOrModifyConsent(
+        allow, ownership.transactionId!, destinationModel, tikiSdk);
   }
 }

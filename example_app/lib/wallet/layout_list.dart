@@ -11,41 +11,46 @@ class WalletLayoutList extends StatelessWidget {
     List<String> wallets = service.model.wallets;
     return Scaffold(
       body: SafeArea(
-          child: Padding(
+          child: Container(
+              color: const Color(0xFFDDDDDD),
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+              child: SingleChildScrollView(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                     const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text("Wallets", style: TextStyle(fontSize: 32)),
                     ),
-                    Expanded(
-                        child: ListView.separated(
-                      itemCount: wallets.length,
-                      itemBuilder: (context, index) {
-                        String address = wallets[index];
-                        return ListTile(
-                          title: Text(wallets[index],
-                              style: TextStyle(
-                                  fontWeight:
-                                      address == service.model.tikiSdk?.address
+                    ...wallets.map((wallet) {
+                      return Column(children: [
+                        Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ListTile(
+                              tileColor: Colors.white,
+                              title: Text(wallet,
+                                  style: TextStyle(
+                                      fontWeight: wallet ==
+                                              service.model.tikiSdk?.address
                                           ? FontWeight.bold
                                           : FontWeight.normal)),
-                          leading: const Icon(Icons.keyboard_arrow_left,
-                              color: Color(0xFFD2D5D7)),
-                          onTap: () {
-                            if (address != service.model.tikiSdk?.address) {
-                              service.loadTikiSdk(address);
-                            }
-                            Navigator.of(context).pop();
-                          },
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(),
-                    ))
-                  ]))),
+                              leading: const Icon(Icons.keyboard_arrow_left,
+                                  color: Color(0xFFD2D5D7)),
+                              onTap: () {
+                                if (wallet != service.model.tikiSdk?.address) {
+                                  service.loadTikiSdk(wallet);
+                                }
+                                Navigator.of(context).pop();
+                              },
+                            )),
+                        if (wallets.indexOf(wallet) < wallets.length - 1)
+                          const Divider()
+                      ]);
+                    })
+                  ])))),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           service.loadTikiSdk();

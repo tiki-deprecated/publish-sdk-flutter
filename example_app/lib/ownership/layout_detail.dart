@@ -13,33 +13,142 @@ class OwnershipLayoutDetail extends StatelessWidget {
     OwnershipModel ownership = service.model.ownership!;
     return Scaffold(
         body: SafeArea(
-            child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+            child: Container(
+                color: const Color(0xFFDDDDDD),
+                height: double.infinity,
+                child: SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
                         child: Row(children: [
                           IconButton(
-                              icon: const Icon(Icons.keyboard_arrow_left),
-                              onPressed: () => Navigator.of(context).pop()),
-                          const Text("Ownership NFT", style: TextStyle(fontSize: 32)),
+                            icon: const Icon(Icons.keyboard_arrow_left),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          const Text("Ownership NFT",
+                              style: TextStyle(fontSize: 32)),
                         ]),
                       ),
-                      const Divider(),
-                      Text(Bytes.base64UrlEncode(ownership.transactionId!)),
-                      const Divider(),
-                      Text(ownership.source),
-                      const Divider(),
-                      Text(ownership.type.toString()),
-                      const Divider(),
-                      Text(ownership.origin),
-                      const Divider(),
-                      Text(ownership.contains.join(", ")),
-                      const Divider(),
-                      Text(ownership.about ?? ""),
-                      const Divider(),
-                    ]))));
+                      Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 8),
+                                          child: Text("Hash",
+                                              style: TextStyle(
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                      Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(Bytes.base64UrlEncode(
+                                              ownership.transactionId!)))
+                                    ]),
+                                const Divider(),
+                                Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 8),
+                                          child: Text("Source",
+                                              style: TextStyle(
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                      Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(ownership.source))
+                                    ]),
+                                const Divider(),
+                                Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 8),
+                                          child: Text("Type",
+                                              style: TextStyle(
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                      Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child:
+                                              Text(ownership.type.toString()))
+                                    ]),
+                                const Divider(),
+                                Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 8),
+                                          child: Text("Origin",
+                                              style: TextStyle(
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                      Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(ownership.origin))
+                                    ]),
+                                const Divider(),
+                                Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 8),
+                                          child: Text("Contains",
+                                              style: TextStyle(
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                      Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(
+                                              ownership.contains.join(", ")))
+                                    ]),
+                                const Divider(),
+                                Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 8),
+                                          child: Text("About",
+                                              style: TextStyle(
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                      Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(ownership.about ?? ""))
+                                    ]),
+                                const Divider(),
+                              ]))
+                    ])))));
   }
 }

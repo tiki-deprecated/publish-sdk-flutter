@@ -4,4 +4,3 @@ class ConsentExampleModel {
   ConsentModel? consent;
   bool isConsentGiven = false;
 }
-

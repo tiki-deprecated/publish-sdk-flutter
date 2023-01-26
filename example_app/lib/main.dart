@@ -15,7 +15,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'TIKI SDK Example App',
-        home: Scaffold(
-            body: service.presenter.tryItOut()));
+        home: Scaffold(body: service.presenter.tryItOut()));
   }
 }

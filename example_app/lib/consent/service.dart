@@ -11,13 +11,32 @@ class ConsentService extends ChangeNotifier {
   ConsentExampleModel model = ConsentExampleModel();
   ConsentController controller = ConsentController();
 
-  Future<void> modifyConsent(bool allow, Uint8List ownershipId, DestinationModel destinationModel, TikiSdk tikiSdk) async {
-    TikiSdkDestination destination = allow ?
-      TikiSdkDestination([destinationModel.url], uses: [destinationModel.httpMethod]) :
-      const TikiSdkDestination.none();
-    ConsentModel consent = await tikiSdk.modifyConsent(Bytes.base64UrlEncode(ownershipId), destination);
-    model.consent = consent;
-    model.isConsentGiven = allow;
-    notifyListeners();
+  Future<void> getOrModifyConsent(bool allow, Uint8List ownershipId,
+      DestinationModel destinationModel, TikiSdk tikiSdk) async {
+    TikiSdkDestination destination = TikiSdkDestination([destinationModel.url],
+        uses: [destinationModel.httpMethod]);
+    tikiSdk.applyConsent(destinationModel.source, destination, () async {
+      ConsentModel consent = tikiSdk.getConsent(destinationModel.source)!;
+      if (!allow) {
+        await tikiSdk.modifyConsent(Bytes.base64UrlEncode(ownershipId),
+            const TikiSdkDestination.none());
+      }
+      model.consent = consent;
+      model.isConsentGiven = allow;
+      notifyListeners();
+    }, onBlocked: (String reason) async {
+      ConsentModel? consent = tikiSdk.getConsent(destinationModel.source);
+      if (consent == null) {
+        consent = await tikiSdk.modifyConsent(
+            Bytes.base64UrlEncode(ownershipId),
+            allow ? destination : const TikiSdkDestination.none());
+      } else if (allow) {
+        consent = await tikiSdk.modifyConsent(
+            Bytes.base64UrlEncode(ownershipId), destination);
+      }
+      model.consent = consent;
+      model.isConsentGiven = allow;
+      notifyListeners();
+    });
   }
 }

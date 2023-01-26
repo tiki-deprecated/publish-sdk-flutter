@@ -15,18 +15,16 @@ class TryItOutPresenter {
   TryItOutPresenter(this.service);
 
   Widget tryItOut() {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<WalletService>.value(
-              value: service.walletService),
-          ChangeNotifierProvider<DestinationService>.value(
-              value: service.destinationService),
-          ChangeNotifierProvider<OwnershipService>.value(
-              value: service.ownershipService),
-          ChangeNotifierProvider<ConsentService>.value(
-              value: service.consentService),
-          ChangeNotifierProvider<RequestsService>.value(
-              value: service.requestsService),
-        ], child: const TryItOutLayout());
+    return MultiProvider(providers: [
+      ChangeNotifierProvider<WalletService>.value(value: service.walletService),
+      ChangeNotifierProvider<DestinationService>.value(
+          value: service.destinationService),
+      ChangeNotifierProvider<OwnershipService>.value(
+          value: service.ownershipService),
+      ChangeNotifierProvider<ConsentService>.value(
+          value: service.consentService),
+      ChangeNotifierProvider<RequestsService>.value(
+          value: service.requestsService),
+    ], child: const TryItOutLayout());
   }
 }
