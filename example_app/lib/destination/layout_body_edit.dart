@@ -19,23 +19,24 @@ class DestinationLayoutBodyEdit extends StatelessWidget {
         TextSelection.collapsed(offset: bodyEditingController.text.length);
     return Scaffold(
         body: SafeArea(
-            child: Padding(
+            child: Container(
+                color: const Color(0xFFDDDDDD),
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 8.0, bottom: 16.0),
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
                         child: Row(children: [
                           IconButton(
-                              icon: Icon(Icons.keyboard_arrow_left),
+                              icon: const Icon(Icons.keyboard_arrow_left),
                               onPressed: () => Navigator.of(context).pop()),
-                          Text("Body", style: TextStyle(fontSize: 32)),
+                          const Text("Body", style: TextStyle(fontSize: 32)),
                         ]),
                       ),
                       Expanded(
                           child: Container(
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(),
@@ -45,7 +46,7 @@ class DestinationLayoutBodyEdit extends StatelessWidget {
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 controller: bodyEditingController,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   hintText: "Body",
                                 ),

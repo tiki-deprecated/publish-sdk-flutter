@@ -6,8 +6,6 @@ import 'model.dart';
 
 class DestinationController {
   updateDestination(DestinationModel destination, BuildContext context) {
-    // get/assign onwership
-    // get consent
     Provider.of<DestinationService>(context, listen: false)
         .updateDestination(destination);
   }
