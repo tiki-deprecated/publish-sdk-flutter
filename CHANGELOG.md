@@ -1,3 +1,7 @@
+## 0.0.26
+
+* fix frameworks build
+
 ## 0.0.25
 
 * update TIKI SDK Dart to 0.0.18
