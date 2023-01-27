@@ -31,11 +31,10 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: 'Change pubspec.yaml for Release Frameworks'
+      - name: 'Remove Integration Test Dependency'
         run: |
-          cd tiki-sdk-flutter/
-          rm -f pubspec.yaml
-          mv pubspec-frameworks.yaml pubspec.yaml
+          cd tiki-sdk-flutter
+          perl -i -p0e 's/  integration_test:\n    sdk: flutter//s' pubspec.yaml
 
       - name: 'Flutter pub get'
         run: |
