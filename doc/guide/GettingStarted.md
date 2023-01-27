@@ -1,10 +1,17 @@
 ---
-title: Getting Started excerpt: See just how easy (and fast) it is to add TIKI to your Flutter app
-—drop in a data exchange to increase user opt-ins and lower risk. category: 637e6f07266017008b61b9d2
-slug: tiki-sdk-flutter-getting-started hidden: false order: 1 next:
-pages:
-- type: ref icon: book name: View the entire API slug: tiki-sdk-flutter-tiki-sdk-flutter-builder
-category: SDK [Flutter]
+title: Getting Started
+excerpt: See just how easy (and fast) it is to add TIKI to your Flutter app —drop in a data exchange to increase user opt-ins and lower risk.
+category: 637e6f07266017008b61b9d2
+slug: tiki-sdk-flutter-getting-started
+hidden: false
+order: 1
+next:
+  pages:
+    - type: ref 
+      icon: book 
+      name: View the entire API 
+      slug: tiki-sdk-flutter-tiki-sdk-flutter-builder
+      category: SDK [Flutter]
 ---
 
 _For native iOS and Android projects, use:_
