@@ -1,3 +1,7 @@
+## 1.0.0
+
+* public release
+
 ## 0.0.26
 
 * fix frameworks build
