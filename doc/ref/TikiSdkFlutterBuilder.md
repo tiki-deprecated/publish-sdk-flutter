@@ -1,7 +1,10 @@
 ---
-title: TikiSdkFlutterBuilder excerpt: A Flutter specific builder for
-the [TikiSdk](tiki-sdk-dart-tiki-sdk) object category: 637e58d4d9362512a6fd7451 slug:
-tiki-sdk-flutter-tiki-sdk-flutter-builder hidden: false order: 1
+title: TikiSdkFlutterBuilder 
+excerpt: A Flutter specific builder for the [TikiSdk](tiki-sdk-dart-tiki-sdk) object 
+category: 637e58d4d9362512a6fd7451 
+slug: tiki-sdk-flutter-tiki-sdk-flutter-builder 
+hidden: false 
+order: 1
 ---
 
 ## Constructors
