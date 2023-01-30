@@ -33,7 +33,7 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 
 ```
 dependencies:
-  tiki_sdk_flutter: ^0.0.22
+  tiki_sdk_flutter: ^1.0.0
 ```
 
 **Make sure your project's Android minSdkVersion to is set to at least `19`**
