@@ -1,6 +1,6 @@
 ---
 title: Example App
-excerpt: Getting started with the TIKI SDK flutter sample application
+excerpt: Getting started with the TIKI SDK Flutter sample application
 category: 637e6f07266017008b61b9d2
 parentDoc: 6398e046fff22900a5284a72
 slug: tiki-sdk-flutter-example-app
