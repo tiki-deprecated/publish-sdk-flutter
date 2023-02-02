@@ -74,7 +74,7 @@ onTap: () {
 
 ## Ownership NFT
 
-When a new wallet is created, the application creates an Ownership NFT for the default data source using the assignOwnership call and passing said data source. The source parameter can be any String that uniquely identifies the data. For this example, we use the base64 safe URL of the body of the request.
+When a new wallet is created, the application creates an Ownership NFT for the default data source using the `assignOwnership` call and passing said data source. The source parameter can be any String that uniquely identifies the data. For this example, we use the base64 safe URL of the body of the request.
 
 #### example_app/lib/ownership/service.dart - lines 11 to 22
 
