@@ -18,7 +18,8 @@ jobs:
       
       - name: Start iOS Simulator
         run: |
-          UDID=$(xcrun xctrace list devices | grep "^iPhone 14 Simulator" | awk '{gsub(/[()]/,""); print $NF}')
+          xcrun xctrace list devices
+          UDID=$(xcrun xctrace list devices | grep "^iPhone 14 Simulator /(16.2/)" | awk '{gsub(/[()]/,""); print $NF}')
           echo $UDID
           xcrun simctl boot "${UDID:?No Simulator with this name found}"
       
