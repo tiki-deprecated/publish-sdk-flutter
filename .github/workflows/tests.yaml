@@ -22,7 +22,7 @@ jobs:
           flutter-version: '3.3.4'
 
       - name: Start Andorid emulator
-        run: ./Users/runner/Library/Android/sdk/tools/bin/avdmanager create avd -n test -k "system-images;android-31;google_apis;x86"
+        run: /Users/runner/Library/Android/sdk/tools/bin/avdmanager create avd -n test -k "system-images;android-31;google_apis;x86"
 
       # - name: Start iOS Simulator
       #   run: |
