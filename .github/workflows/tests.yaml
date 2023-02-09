@@ -1,0 +1,39 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.3.4'
+
+      - name: Start iOS Simulator
+        run: |
+          xcrun xctrace list devices
+          UDID=$(xcrun xctrace list devices | grep "^iPhone 14 Simulator (16.2) (" | awk '{gsub(/[()]/,""); print $NF}')
+          echo $UDID
+          xcrun simctl boot "${UDID:?No Simulator with this name found}"
+      
+      - name: Run iOS Integration Tests
+        run: flutter test integration_test/tiki_sdk_flutter_test.dart
+
+      - name: Run iOS TikiSdkPlatform Integration Tests
+        run: flutter test integration_test/tiki_sdk_flutter_platform_test.dart
+
+      - name: 'Test Publish SDK'
+        run: |
+          flutter pub publish --dry-run
