@@ -21,8 +21,13 @@ jobs:
         with:
           flutter-version: '3.3.4'
 
-      - name: Start Andorid emulator
-        run: /Users/runner/Library/Android/sdk/tools/bin/avdmanager create avd -n test -k "system-images;android-31;google_apis;x86"
+      - name: Install Android SDK api 31
+        run: |
+          /Users/runner/Library/Android/sdk/tools/bin/sdkmanager build-tools 31
+          /Users/runner/Library/Android/sdk/tools/bin/sdkmanager platform 31
+          /Users/runner/Library/Android/sdk/tools/bin/sdkmanager "system-images;android-31;google_apis;x86"
+          /Users/runner/Library/Android/sdk/tools/bin/sdkmanager "system-images;android-31;google_apis;x86_64"
+          /Users/runner/Library/Android/sdk/tools/bin/avdmanager create avd -n android_tester -k "system-images;android-31;google_apis;x86"
 
       # - name: Start iOS Simulator
       #   run: |
