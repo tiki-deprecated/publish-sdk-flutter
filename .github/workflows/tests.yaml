@@ -21,42 +21,15 @@ jobs:
         with:
           flutter-version: '3.3.4'
 
-      - name: Install Android SDK api 31
+      - name: Start iOS Simulator
         run: |
-          /Users/runner/Library/Android/sdk/tools/bin/sdkmanager list sdk -a
- #         /Users/runner/Library/Android/sdk/tools/bin/sdkmanager build-tools 31
- #         /Users/runner/Library/Android/sdk/tools/bin/sdkmanager platform 31
- #         /Users/runner/Library/Android/sdk/tools/bin/sdkmanager "system-images;android-31;google_apis;x86"
- #         /Users/runner/Library/Android/sdk/tools/bin/sdkmanager "system-images;android-31;google_apis;x86_64"
- #         /Users/runner/Library/Android/sdk/tools/bin/avdmanager create avd -n android_tester -k "system-images;android-31;google_apis;x86"
-
-      # - name: Start iOS Simulator
-      #   run: |
-      #     xcrun xctrace list devices
-      #     UDID=$(xcrun xctrace list devices | grep "^iPhone 14 Simulator (16.2) (" | awk '{gsub(/[()]/,""); print $NF}')
-      #     echo $UDID
-      #     xcrun simctl boot "${UDID:?No Simulator with this name found}"
+          xcrun xctrace list devices
+          UDID=$(xcrun xctrace list devices | grep "^iPhone 14 Simulator (16.2) (" | awk '{gsub(/[()]/,""); print $NF}')
+          echo $UDID
+          xcrun simctl boot "${UDID:?No Simulator with this name found}"
       
-      # - name: Run iOS Integration Tests
-      #   run: flutter test integration_test/tiki_sdk_flutter_test.dart
+      - name: Run iOS Integration Tests
+        run: flutter test integration_test/tiki_sdk_flutter_test.dart
 
-      # - name: Run iOS TikiSdkPlatform Integration Tests
-      #   run: flutter test integration_test/tiki_sdk_flutter_platform_test.dart
-
-      # - name: Shutdown Simulator
-      #   run: xcrun simctl shutdown all
-
-      # - name: Setup Java 11
-      #   uses: actions/setup-java@v1
-      #   with:
-      #     java-version: '11'
-
-     
-
-      # - name: Run TikiSdkPlatform Integration Tests
-      #   uses: reactivecircus/android-emulator-runner@v2
-      #   with:
-      #     api-level: 31
-      #     arch: x86_64
-      #     profile: Nexus 6
-      #     script: flutter test integration_test/tiki_sdk_flutter_platform_test.dart
+      - name: Run iOS TikiSdkPlatform Integration Tests
+        run: flutter test integration_test/tiki_sdk_flutter_platform_test.dart
