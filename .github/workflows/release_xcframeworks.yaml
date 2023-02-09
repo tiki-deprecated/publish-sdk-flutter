@@ -92,3 +92,4 @@ jobs:
         with:
           artifacts: "tiki-sdk-flutter/Frameworks/Release/*.zip,tiki-sdk-flutter/Frameworks/Release/*.checksum.txt,tiki-sdk-flutter/Frameworks/Debug/*.zip,tiki-sdk-flutter/Frameworks/Debug/*.checksum.txt"
           replacesArtifacts: false
+          allowUpdates: true

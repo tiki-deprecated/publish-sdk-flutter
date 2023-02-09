@@ -33,3 +33,7 @@ jobs:
 
       - name: Run iOS TikiSdkPlatform Integration Tests
         run: flutter test integration_test/tiki_sdk_flutter_platform_test.dart
+
+      - name: 'Test Publish SDK'
+        run: |
+          flutter pub publish --dry-run
