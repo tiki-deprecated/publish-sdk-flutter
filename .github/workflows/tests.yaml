@@ -23,7 +23,7 @@ jobs:
 
       - name: Install Android SDK api 31
         run: |
-          /Users/ricardo/Library/Android/sdk/tools/bin/sdkmanager list sdk -a
+          /Users/runner/Library/Android/sdk/tools/bin/sdkmanager list sdk -a
  #         /Users/runner/Library/Android/sdk/tools/bin/sdkmanager build-tools 31
  #         /Users/runner/Library/Android/sdk/tools/bin/sdkmanager platform 31
  #         /Users/runner/Library/Android/sdk/tools/bin/sdkmanager "system-images;android-31;google_apis;x86"
