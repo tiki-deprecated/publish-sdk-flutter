@@ -1,16 +1,14 @@
-import 'package:example/consent/service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
-class ConsentLayoutDetail extends StatelessWidget {
-  const ConsentLayoutDetail({super.key});
+class ConsentDetail extends StatelessWidget {
+  final ConsentModel consent;
+
+  const ConsentDetail(this.consent, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    ConsentService service = Provider.of<ConsentService>(context, listen: true);
-    ConsentModel consent = service.model.consent!;
     return Scaffold(
         body: SafeArea(
             child: Container(
