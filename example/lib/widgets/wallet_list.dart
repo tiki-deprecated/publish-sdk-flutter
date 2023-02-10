@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 
 class WalletLayoutList extends StatelessWidget {
   const WalletLayoutList({super.key});
+  final String origin = "com.mytiki.tiki_sdk_example";
+  final String apiId = "2b8de004-cbe0-4bd5-bda6-b266d54f5c90";
 
   @override
   Widget build(BuildContext context) {
@@ -60,4 +62,25 @@ class WalletLayoutList extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> loadTikiSdk([String? address]) async {
+  TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
+    ..origin(model.origin)
+    ..apiId(model.apiId);
+  if (address != null) builder.address(address);
+  model.tikiSdk = await builder.build();
+  if (address == null) {
+    model.wallets.add(model.tikiSdk!.address);
+  }
+  await ownershipService.getOrAssignOwnership(
+      destinationService.model.source, model.tikiSdk!);
+  await consentService.getOrModifyConsent(
+      false,
+      ownershipService.model.ownership!.transactionId!,
+      destinationService.model,
+      model.tikiSdk!);
+  requestsService.stopTimer();
+  requestsService.startTimer(destinationService.model, model.tikiSdk!);
+  notifyListeners();
 }

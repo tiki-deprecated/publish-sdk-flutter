@@ -1,20 +1,16 @@
-import 'package:example/try_it_out/service.dart';
+import 'package:example/home.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  TryItOutService service = TryItOutService();
-  await service.init();
-  runApp(MyApp(service));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final TryItOutService service;
-  const MyApp(this.service, {super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'TIKI SDK Example App',
-        home: Scaffold(body: service.presenter.tryItOut()));
+    return const MaterialApp(
+        title: 'TIKI SDK Example App', home: Scaffold(body: HomeWidget()));
   }
 }

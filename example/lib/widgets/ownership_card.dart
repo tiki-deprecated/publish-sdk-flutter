@@ -1,4 +1,4 @@
-import 'package:example/ownership/layout_detail.dart';
+import 'package:example/ownership/ownership_detail.dart';
 import 'package:example/ownership/service.dart';
 import 'package:example/wallet/service.dart';
 import 'package:flutter/material.dart';

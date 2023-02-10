@@ -2,7 +2,7 @@ import 'package:example/destination/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'model.dart';
+import '../model.dart';
 
 class DestinationLayoutBodyEdit extends StatelessWidget {
   DestinationLayoutBodyEdit({super.key});

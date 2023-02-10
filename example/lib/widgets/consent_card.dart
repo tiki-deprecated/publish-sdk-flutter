@@ -1,4 +1,4 @@
-import 'package:example/consent/layout_detail.dart';
+import 'package:example/consent/consent_detail.dart';
 import 'package:example/consent/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
