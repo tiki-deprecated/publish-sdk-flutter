@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:example/widgets/body_card.dart';
 import 'package:example/widgets/consent_card.dart';
@@ -14,26 +15,36 @@ import 'package:tiki_sdk_flutter/main.dart';
 import 'request.dart';
 
 class HomeWidget extends StatefulWidget {
-  const HomeWidget({super.key});
+
+  final String origin;
+  final String apiId;
+
+  const HomeWidget(this.apiId, this.origin, {super.key});
 
   @override
   State<StatefulWidget> createState() => HomeWidgetState();
 }
 
 class HomeWidgetState extends State<HomeWidget> {
-  TikiSdk? tikiSdk;
+  late TikiSdk tikiSdk;
+  List<Request> log = [];
   List<String> wallets = [];
   String bodyData = "{\"message\" : \"Hello Tiki!\"}";
   String httpMethod = "POST";
   String url = "https://postman-echo.com/post";
   int interval = 15;
-  OwnershipModel? ownership;
+  late OwnershipModel ownership;
   ConsentModel? consent;
   List<Request> requests = [];
   bool toggleState = false;
   Timer? timer;
 
-  var log;
+
+  @override
+  void initState() {
+    loadTikiSdk();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,44 +55,42 @@ class HomeWidgetState extends State<HomeWidget> {
             child: SingleChildScrollView(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text("Try It Out", style: TextStyle(fontSize: 32)),
-                Padding(padding: EdgeInsets.all(8)),
-                Padding(
+              children: [
+                const Text("Try It Out", style: TextStyle(fontSize: 32)),
+                const Padding(padding: EdgeInsets.all(8)),
+                const Padding(
                     padding: EdgeInsets.only(left: 8),
                     child: Text(
                       "Wallet",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )),
-                Padding(padding: EdgeInsets.all(8)),
-                WalletCard(),
-                Padding(padding: EdgeInsets.all(8)),
-                OwnershipCard(),
-                Padding(padding: EdgeInsets.all(8)),
-                ConsentCard(),
-                Padding(padding: EdgeInsets.all(8)),
-                Padding(
+                const Padding(padding: EdgeInsets.all(8)),
+                WalletCard(wallets, tikiSdk.address),
+                const Padding(padding: EdgeInsets.all(8)),
+                OwnershipCard(ownership),
+                const Padding(padding: EdgeInsets.all(8)),
+                ConsentCard(consent, toggleState, _getOrModifyConsent),
+                const Padding(padding: EdgeInsets.all(8)),
+                const Padding(
                     padding: EdgeInsets.only(left: 8),
                     child: Text(
                       "Outbound Requests",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )),
-                Padding(padding: EdgeInsets.all(8)),
-                DestinationCard(),
-                Padding(padding: EdgeInsets.all(8)),
-                BodyCard(),
-                Padding(padding: EdgeInsets.all(8)),
-                RequestList()
+                const Padding(padding: EdgeInsets.all(8)),
+                DestinationCard(url, httpMethod, interval),
+                const Padding(padding: EdgeInsets.all(8)),
+                BodyCard(bodyData),
+                const Padding(padding: EdgeInsets.all(8)),
+                RequestList(log)
               ],
             ))));
   }
 
   void startTimer() {
     if (timer == null || timer!.isActive == false) {
-      TikiSdkDestination destination =
-          TikiSdkDestination([url], uses: [httpMethod]);
       timer = Timer.periodic(Duration(seconds: interval), (timer) {
-        _makeRequest(destination);
+        _makeRequest();
       });
     }
   }
@@ -92,66 +101,73 @@ class HomeWidgetState extends State<HomeWidget> {
     }
   }
 
-  Future<void> _makeRequest(TikiSdkDestination destination) async {
-    tikiSdk!.applyConsent(ownership!.source, destination, () async {
+  Future<void> _makeRequest() async {
+    var urlReq = Uri.parse(url);
+    TikiSdkDestination destination = TikiSdkDestination([urlReq.host], uses: [httpMethod]);
+    tikiSdk.applyConsent(ownership.source, destination, () async {
       try {
-        var urlReq = Uri.parse(url);
         http.Response response;
         if (httpMethod == "POST") {
-          response = await http
-              .post(urlReq, body: {'name': 'doodle', 'color': 'blue'});
+          response = await http.post(urlReq, body: bodyData);
         } else {
           response = await http.get(urlReq);
         }
         if (response.statusCode < 200 || response.statusCode > 299) {
           throw HttpException(response.body);
         }
-        log.add(Request("🟢", response.body));
+        setState(() {
+          log.add(Request("🟢", response.body));
+        });
       } catch (error) {
-        log.add(Request("🔴", error.toString()));
+        setState(() {
+          log.add(Request("🔴", error.toString()));
+        });
       }
     }, onBlocked: (reason) {
-      log.add(Request("🔴", "Blocked: $reason"));
+      setState(() {
+        log.add(Request("🔴", "Blocked: $reason"));
+      });
     });
-    setState(() {});
   }
 
-  Future<void> _getOrAssignOwnership(String source, TikiSdk tikiSdk) async {
+  Future<void> _getOrAssignOwnership() async {
+    String source = Bytes.base64UrlEncode(Uint8List.fromList(bodyData.codeUnits));
     OwnershipModel? localOwnership = tikiSdk.getOwnership(source);
     if (localOwnership != null) {
-      ownership = localOwnership;
-      setState(() {});
+      setState(() {
+        ownership = localOwnership;
+      });
       return;
     }
     await tikiSdk
         .assignOwnership(source, TikiSdkDataTypeEnum.stream, ["Test data"]);
-    ownership = tikiSdk.getOwnership(source);
-    setState(() {});
+    setState(() {
+      ownership = tikiSdk.getOwnership(source)!;
+    });
   }
 
-  Future<void> _getOrModifyConsent(
-      bool allow, TikiSdkDestination destination, TikiSdk tikiSdk) async {
+  Future<void> _getOrModifyConsent(bool allow) async {
     TikiSdkDestination destination =
         TikiSdkDestination([url], uses: [httpMethod]);
-    tikiSdk.applyConsent(ownership!.source, destination, () async {
-      ConsentModel localConsent = tikiSdk.getConsent(ownership!.source)!;
+    tikiSdk.applyConsent(ownership.source, destination, () async {
+      ConsentModel localConsent = tikiSdk.getConsent(ownership.source)!;
       if (!allow) {
         await tikiSdk.modifyConsent(
-            Bytes.base64UrlEncode(ownership!.transactionId!),
+            Bytes.base64UrlEncode(ownership.transactionId!),
             const TikiSdkDestination.none());
       }
       consent = localConsent;
       toggleState = allow;
       setState(() {});
     }, onBlocked: (String reason) async {
-      ConsentModel? localConsent = tikiSdk.getConsent(ownership!.source);
+      ConsentModel? localConsent = tikiSdk.getConsent(ownership.source);
       if (localConsent == null) {
         localConsent = await tikiSdk.modifyConsent(
-            Bytes.base64UrlEncode(ownership!.transactionId!),
+            Bytes.base64UrlEncode(ownership.transactionId!),
             allow ? destination : const TikiSdkDestination.none());
       } else if (allow) {
         localConsent = await tikiSdk.modifyConsent(
-            Bytes.base64UrlEncode(ownership!.transactionId!), destination);
+            Bytes.base64UrlEncode(ownership.transactionId!), destination);
       }
       consent = localConsent;
       toggleState = allow;
@@ -161,22 +177,16 @@ class HomeWidgetState extends State<HomeWidget> {
 
   Future<void> loadTikiSdk([String? address]) async {
     TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
-      ..origin(model.origin)
-      ..apiId(model.apiId);
+      ..origin(widget.origin)
+      ..apiId(widget.apiId);
     if (address != null) builder.address(address);
-    model.tikiSdk = await builder.build();
+    tikiSdk = await builder.build();
     if (address == null) {
-      model.wallets.add(model.tikiSdk!.address);
+      wallets.add(tikiSdk.address);
     }
-    await ownershipService.getOrAssignOwnership(
-        destinationService.model.source, model.tikiSdk!);
-    await consentService.getOrModifyConsent(
-        false,
-        ownershipService.model.ownership!.transactionId!,
-        destinationService.model,
-        model.tikiSdk!);
-    requestsService.stopTimer();
-    requestsService.startTimer(destinationService.model, model.tikiSdk!);
-    notifyListeners();
+    await _getOrAssignOwnership();
+    stopTimer();
+    startTimer();
+    setState(() {});
   }
 }
