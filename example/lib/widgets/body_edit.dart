@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BodyEdit extends StatelessWidget {
-
   final TextEditingController bodyEditingController = TextEditingController();
 
-  BodyEdit(String text, {super.key}){
+  BodyEdit(String text, {super.key}) {
     bodyEditingController.text = text;
   }
 
@@ -46,7 +45,9 @@ class BodyEdit extends StatelessWidget {
                                 onChanged: (newBody) {
                                   bodyEditingController.text = newBody;
                                   bodyEditingController.selection =
-                                      TextSelection.collapsed(offset: bodyEditingController.text.length);
+                                      TextSelection.collapsed(
+                                          offset: bodyEditingController
+                                              .text.length);
                                 },
                               ))),
                     ]))));
