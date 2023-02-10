@@ -67,7 +67,7 @@ class HomeWidgetState extends State<HomeWidget> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )),
                 Padding(padding: EdgeInsets.all(8)),
-                DestinationLayoutBtn(),
+                DestinationCard(),
                 Padding(padding: EdgeInsets.all(8)),
                 BodyCard(),
                 Padding(padding: EdgeInsets.all(8)),
