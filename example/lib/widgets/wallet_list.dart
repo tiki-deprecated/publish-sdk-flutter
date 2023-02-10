@@ -1,16 +1,28 @@
-import 'package:example/wallet/service.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class WalletLayoutList extends StatelessWidget {
-  const WalletLayoutList({super.key});
-  final String origin = "com.mytiki.tiki_sdk_example";
-  final String apiId = "2b8de004-cbe0-4bd5-bda6-b266d54f5c90";
+class WalletList extends StatefulWidget {
+  final List<String> wallets;
+  final String currentWallet;
+
+  const WalletList(this.wallets, this.currentWallet, {super.key});
+
+  @override
+  State<StatefulWidget> createState() => WalletListState();
+}
+
+class WalletListState extends State<WalletList>{
+  late List<String> wallets;
+  late String currentWallet;
+
+  @override
+  void initState() {
+    wallets = widget.wallets;
+    currentWallet = widget.currentWallet;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    WalletService service = Provider.of<WalletService>(context, listen: true);
-    List<String> wallets = service.model.wallets;
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -36,14 +48,14 @@ class WalletLayoutList extends StatelessWidget {
                               title: Text(wallet,
                                   style: TextStyle(
                                       fontWeight: wallet ==
-                                              service.model.tikiSdk?.address
+                                              currentWallet
                                           ? FontWeight.bold
                                           : FontWeight.normal)),
                               leading: const Icon(Icons.keyboard_arrow_left,
                                   color: Color(0xFFD2D5D7)),
                               onTap: () {
-                                if (wallet != service.model.tikiSdk?.address) {
-                                  service.loadTikiSdk(wallet);
+                                if (wallet != currentWallet) {
+                                  // TODO load wallet
                                 }
                                 Navigator.of(context).pop();
                               },
@@ -55,32 +67,11 @@ class WalletLayoutList extends StatelessWidget {
                   ])))),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          service.loadTikiSdk();
+          // TODO create new wallet
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.add),
       ),
     );
   }
-}
-
-Future<void> loadTikiSdk([String? address]) async {
-  TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
-    ..origin(model.origin)
-    ..apiId(model.apiId);
-  if (address != null) builder.address(address);
-  model.tikiSdk = await builder.build();
-  if (address == null) {
-    model.wallets.add(model.tikiSdk!.address);
-  }
-  await ownershipService.getOrAssignOwnership(
-      destinationService.model.source, model.tikiSdk!);
-  await consentService.getOrModifyConsent(
-      false,
-      ownershipService.model.ownership!.transactionId!,
-      destinationService.model,
-      model.tikiSdk!);
-  requestsService.stopTimer();
-  requestsService.startTimer(destinationService.model, model.tikiSdk!);
-  notifyListeners();
 }

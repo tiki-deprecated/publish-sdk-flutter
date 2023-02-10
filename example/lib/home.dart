@@ -54,7 +54,7 @@ class HomeWidgetState extends State<HomeWidget> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )),
                 Padding(padding: EdgeInsets.all(8)),
-                WalletLayoutBtn(),
+                WalletCard(),
                 Padding(padding: EdgeInsets.all(8)),
                 OwnershipCard(),
                 Padding(padding: EdgeInsets.all(8)),
@@ -157,5 +157,26 @@ class HomeWidgetState extends State<HomeWidget> {
       toggleState = allow;
       setState(() {});
     });
+  }
+
+  Future<void> loadTikiSdk([String? address]) async {
+    TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
+      ..origin(model.origin)
+      ..apiId(model.apiId);
+    if (address != null) builder.address(address);
+    model.tikiSdk = await builder.build();
+    if (address == null) {
+      model.wallets.add(model.tikiSdk!.address);
+    }
+    await ownershipService.getOrAssignOwnership(
+        destinationService.model.source, model.tikiSdk!);
+    await consentService.getOrModifyConsent(
+        false,
+        ownershipService.model.ownership!.transactionId!,
+        destinationService.model,
+        model.tikiSdk!);
+    requestsService.stopTimer();
+    requestsService.startTimer(destinationService.model, model.tikiSdk!);
+    notifyListeners();
   }
 }
