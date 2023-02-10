@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
 import 'consent_detail.dart';
 
 class ConsentCard extends StatelessWidget {
   final bool toggleStatus;
-  final ConsentModel consent;
-  final Function(bool, BuildContext) modifyConsent;
+  final ConsentModel? consent;
+  final Function(bool) modifyConsent;
 
   const ConsentCard(this.consent, this.toggleStatus, this.modifyConsent, {super.key});
 
@@ -33,8 +32,8 @@ class ConsentCard extends StatelessWidget {
                         Icon(Icons.keyboard_arrow_right)
                       ]),
                   const Padding(padding: EdgeInsets.all(8.0)),
-                  Text(Bytes.base64UrlEncode(
-                      consent.transactionId!)),
+                  Text(consent == null ? "" : Bytes.base64UrlEncode(
+                      consent!.transactionId!)),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -42,11 +41,11 @@ class ConsentCard extends StatelessWidget {
                         Switch(
                           value: toggleStatus,
                           activeColor: Colors.green,
-                          onChanged: (bool allow) => modifyConsent(allow, context),
+                          onChanged: (bool allow) => modifyConsent(allow),
                         )
                       ])
                 ]),
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ConsentDetail(consent)))));
+                onTap: () => consent != null ? Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ConsentDetail(consent!))) : null ));
   }
 }
