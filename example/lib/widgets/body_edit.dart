@@ -1,22 +1,15 @@
-import 'package:example/destination/service.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../model.dart';
-
-class DestinationLayoutBodyEdit extends StatelessWidget {
-  DestinationLayoutBodyEdit({super.key});
+class BodyEdit extends StatelessWidget {
 
   final TextEditingController bodyEditingController = TextEditingController();
 
+  BodyEdit(String text, {super.key}){
+    bodyEditingController.text = text;
+  }
+
   @override
   Widget build(BuildContext context) {
-    DestinationService service =
-        Provider.of<DestinationService>(context, listen: true);
-    DestinationModel model = service.model;
-    bodyEditingController.text = model.body;
-    bodyEditingController.selection =
-        TextSelection.collapsed(offset: bodyEditingController.text.length);
     return Scaffold(
         body: SafeArea(
             child: Container(
@@ -52,9 +45,8 @@ class DestinationLayoutBodyEdit extends StatelessWidget {
                                 ),
                                 onChanged: (newBody) {
                                   bodyEditingController.text = newBody;
-                                  model.body = newBody;
-                                  service.controller
-                                      .updateDestination(model, context);
+                                  bodyEditingController.selection =
+                                      TextSelection.collapsed(offset: bodyEditingController.text.length);
                                 },
                               ))),
                     ]))));

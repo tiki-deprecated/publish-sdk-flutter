@@ -69,7 +69,7 @@ class HomeWidgetState extends State<HomeWidget> {
                 Padding(padding: EdgeInsets.all(8)),
                 DestinationLayoutBtn(),
                 Padding(padding: EdgeInsets.all(8)),
-                DestinationLayoutBodyBtn(),
+                BodyCard(),
                 Padding(padding: EdgeInsets.all(8)),
                 RequestsLayoutList()
               ],

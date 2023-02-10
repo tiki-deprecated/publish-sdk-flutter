@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'body_edit.dart';
 
-class DestinationLayoutBodyBtn extends StatelessWidget {
-  const DestinationLayoutBodyBtn({super.key});
+class BodyCard extends StatefulWidget {
+  String body;
+
+  BodyCard(this.body, {super.key});
+
+  @override
+  State<StatefulWidget> createState() => BodyCardState();
+}
+
+class BodyCardState extends State<BodyCard>{
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +36,12 @@ class DestinationLayoutBodyBtn extends StatelessWidget {
                   ]),
               const Padding(padding: EdgeInsets.all(8.0)),
               Text(
-                service.model.body,
+                widget.body,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               )
             ]),
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ChangeNotifierProvider.value(
-                    value: service, child: DestinationLayoutBodyEdit())))));
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => BodyEdit(widget.body)))));
   }
 }
