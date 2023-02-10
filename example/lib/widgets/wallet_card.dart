@@ -2,7 +2,7 @@ import 'package:example/wallet/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'layout_list.dart';
+import 'wallet/wallet_list.dart';
 
 class WalletLayoutBtn extends StatelessWidget {
   const WalletLayoutBtn({super.key});
