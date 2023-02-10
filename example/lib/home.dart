@@ -15,7 +15,6 @@ import 'package:tiki_sdk_flutter/main.dart';
 import 'request.dart';
 
 class HomeWidget extends StatefulWidget {
-
   final String origin;
   final String apiId;
 
@@ -38,7 +37,6 @@ class HomeWidgetState extends State<HomeWidget> {
   List<Request> requests = [];
   bool toggleState = false;
   Timer? timer;
-
 
   @override
   void initState() {
@@ -103,7 +101,8 @@ class HomeWidgetState extends State<HomeWidget> {
 
   Future<void> _makeRequest() async {
     var urlReq = Uri.parse(url);
-    TikiSdkDestination destination = TikiSdkDestination([urlReq.host], uses: [httpMethod]);
+    TikiSdkDestination destination =
+        TikiSdkDestination([urlReq.host], uses: [httpMethod]);
     tikiSdk.applyConsent(ownership.source, destination, () async {
       try {
         http.Response response;
@@ -131,7 +130,8 @@ class HomeWidgetState extends State<HomeWidget> {
   }
 
   Future<void> _getOrAssignOwnership() async {
-    String source = Bytes.base64UrlEncode(Uint8List.fromList(bodyData.codeUnits));
+    String source =
+        Bytes.base64UrlEncode(Uint8List.fromList(bodyData.codeUnits));
     OwnershipModel? localOwnership = tikiSdk.getOwnership(source);
     if (localOwnership != null) {
       setState(() {

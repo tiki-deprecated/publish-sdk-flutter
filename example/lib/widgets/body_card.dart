@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'body_edit.dart';
 
@@ -12,8 +11,7 @@ class BodyCard extends StatefulWidget {
   State<StatefulWidget> createState() => BodyCardState();
 }
 
-class BodyCardState extends State<BodyCard>{
-
+class BodyCardState extends State<BodyCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,7 +39,7 @@ class BodyCardState extends State<BodyCard>{
                 overflow: TextOverflow.ellipsis,
               )
             ]),
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => BodyEdit(widget.body)))));
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => BodyEdit(widget.body)))));
   }
 }

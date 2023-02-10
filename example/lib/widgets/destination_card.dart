@@ -33,6 +33,7 @@ class DestinationCard extends StatelessWidget {
               Text("$httpMethod $url")
             ]),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => DestinationEdit(url, httpMethod, interval) ))));
+                builder: (context) =>
+                    DestinationEdit(url, httpMethod, interval)))));
   }
 }

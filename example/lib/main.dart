@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'TIKI SDK Example App', home: Scaffold(body: HomeWidget(apiId, origin)));
+        title: 'TIKI SDK Example App',
+        home: Scaffold(body: HomeWidget(apiId, origin)));
   }
 }

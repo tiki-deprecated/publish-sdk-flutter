@@ -9,10 +9,9 @@ class DestinationEdit extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => DestinationEditState();
-
 }
 
-class DestinationEditState extends State<DestinationEdit>{
+class DestinationEditState extends State<DestinationEdit> {
   late String url;
   late String httpMethod;
   late int interval;
@@ -121,16 +120,15 @@ class DestinationEditState extends State<DestinationEdit>{
                                     children: [
                                       const Text("Interval"),
                                       DropdownButton<String>(
-                                        value: secondsList[secondsValues
-                                            .indexOf(interval)],
+                                        value: secondsList[
+                                            secondsValues.indexOf(interval)],
                                         icon: const Icon(
                                             Icons.keyboard_arrow_down),
                                         elevation: 16,
                                         underline: Container(),
                                         onChanged: (newInterval) {
                                           setState(() {
-                                            interval = secondsValues[
-                                            secondsList
+                                            interval = secondsValues[secondsList
                                                 .indexOf(newInterval!)];
                                           });
                                         },

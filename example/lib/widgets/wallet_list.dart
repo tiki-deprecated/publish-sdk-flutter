@@ -10,7 +10,7 @@ class WalletList extends StatefulWidget {
   State<StatefulWidget> createState() => WalletListState();
 }
 
-class WalletListState extends State<WalletList>{
+class WalletListState extends State<WalletList> {
   late List<String> wallets;
   late String currentWallet;
 
@@ -47,8 +47,7 @@ class WalletListState extends State<WalletList>{
                               tileColor: Colors.white,
                               title: Text(wallet,
                                   style: TextStyle(
-                                      fontWeight: wallet ==
-                                              currentWallet
+                                      fontWeight: wallet == currentWallet
                                           ? FontWeight.bold
                                           : FontWeight.normal)),
                               leading: const Icon(Icons.keyboard_arrow_left,
