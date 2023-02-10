@@ -6,7 +6,7 @@ class WalletCard extends StatelessWidget {
   final String currentWallet;
   final List<String> wallets;
 
-  const WalletCard(this.wallets, this.currentWallet, {super.key});
+  const WalletCard(this.wallets, this.currentWallet, Future<void> Function([String? address]) loadTikiSdk, {super.key});
 
   @override
   Widget build(BuildContext context) {

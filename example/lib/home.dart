@@ -17,35 +17,40 @@ import 'request.dart';
 class HomeWidget extends StatefulWidget {
   final String origin;
   final String apiId;
+  final TikiSdk initialTikiSdk;
 
-  const HomeWidget(this.apiId, this.origin, {super.key});
+  const HomeWidget(this.initialTikiSdk, this.apiId, this.origin, {super.key});
 
   @override
   State<StatefulWidget> createState() => HomeWidgetState();
 }
 
 class HomeWidgetState extends State<HomeWidget> {
-  late TikiSdk tikiSdk;
   List<Request> log = [];
   List<String> wallets = [];
+
   String bodyData = "{\"message\" : \"Hello Tiki!\"}";
   String httpMethod = "POST";
   String url = "https://postman-echo.com/post";
   int interval = 15;
-  late OwnershipModel ownership;
-  ConsentModel? consent;
-  List<Request> requests = [];
   bool toggleState = false;
+
+  ConsentModel? consent;
+  OwnershipModel? ownership;
+
   Timer? timer;
+
+  late TikiSdk tikiSdk;
 
   @override
   void initState() {
-    loadTikiSdk();
+    tikiSdk = widget.initialTikiSdk;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if(ownership == null) _getOrAssignOwnership();
     return SafeArea(
         child: Container(
             color: const Color(0xFFDDDDDD),
@@ -63,7 +68,7 @@ class HomeWidgetState extends State<HomeWidget> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )),
                 const Padding(padding: EdgeInsets.all(8)),
-                WalletCard(wallets, tikiSdk.address),
+                WalletCard(wallets, tikiSdk.address, _loadTikiSdk),
                 const Padding(padding: EdgeInsets.all(8)),
                 OwnershipCard(ownership),
                 const Padding(padding: EdgeInsets.all(8)),
@@ -76,16 +81,16 @@ class HomeWidgetState extends State<HomeWidget> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )),
                 const Padding(padding: EdgeInsets.all(8)),
-                DestinationCard(url, httpMethod, interval),
+                DestinationCard(url, httpMethod, interval, _updateDestination),
                 const Padding(padding: EdgeInsets.all(8)),
-                BodyCard(bodyData),
+                BodyCard(bodyData, _updateBody),
                 const Padding(padding: EdgeInsets.all(8)),
                 RequestList(log)
               ],
             ))));
   }
 
-  void startTimer() {
+  void _startTimer() {
     if (timer == null || timer!.isActive == false) {
       timer = Timer.periodic(Duration(seconds: interval), (timer) {
         _makeRequest();
@@ -93,17 +98,49 @@ class HomeWidgetState extends State<HomeWidget> {
     }
   }
 
-  void stopTimer() {
+  void _stopTimer() {
     if (timer?.isActive == true) {
       timer!.cancel();
     }
   }
 
+  void _updateDestination(String url, String httpMethod, int interval){
+    setState(() {
+      this.url = url;
+      this.httpMethod = httpMethod;
+      this.interval = interval;
+    });
+  }
+
+  void _updateBody(String body){
+    bodyData = body;
+    _getOrAssignOwnership();
+  }
+
+  Future<void> _loadTikiSdk([String? address]) async {
+    TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
+      ..origin(widget.origin)
+      ..apiId(widget.apiId);
+    if (address != null) builder.address(address);
+    tikiSdk = await builder.build();
+    if (address == null) {
+      wallets.add(tikiSdk.address);
+    }
+    await _getOrAssignOwnership();
+    _stopTimer();
+    _startTimer();
+    setState(() {});
+  }
+
   Future<void> _makeRequest() async {
+    if(ownership == null){
+      await _getOrAssignOwnership();
+      return;
+    }
     var urlReq = Uri.parse(url);
     TikiSdkDestination destination =
         TikiSdkDestination([urlReq.host], uses: [httpMethod]);
-    tikiSdk.applyConsent(ownership.source, destination, () async {
+    tikiSdk.applyConsent(ownership!.source, destination, () async {
       try {
         http.Response response;
         if (httpMethod == "POST") {
@@ -141,33 +178,37 @@ class HomeWidgetState extends State<HomeWidget> {
     }
     await tikiSdk
         .assignOwnership(source, TikiSdkDataTypeEnum.stream, ["Test data"]);
-    setState(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
       ownership = tikiSdk.getOwnership(source)!;
-    });
+    }));
   }
 
   Future<void> _getOrModifyConsent(bool allow) async {
+    if(ownership == null){
+      await _getOrAssignOwnership();
+      return;
+    }
     TikiSdkDestination destination =
         TikiSdkDestination([url], uses: [httpMethod]);
-    tikiSdk.applyConsent(ownership.source, destination, () async {
-      ConsentModel localConsent = tikiSdk.getConsent(ownership.source)!;
+    tikiSdk.applyConsent(ownership!.source, destination, () async {
+      ConsentModel localConsent = tikiSdk.getConsent(ownership!.source)!;
       if (!allow) {
         await tikiSdk.modifyConsent(
-            Bytes.base64UrlEncode(ownership.transactionId!),
+            Bytes.base64UrlEncode(ownership!.transactionId!),
             const TikiSdkDestination.none());
       }
       consent = localConsent;
       toggleState = allow;
       setState(() {});
     }, onBlocked: (String reason) async {
-      ConsentModel? localConsent = tikiSdk.getConsent(ownership.source);
+      ConsentModel? localConsent = tikiSdk.getConsent(ownership!.source);
       if (localConsent == null) {
         localConsent = await tikiSdk.modifyConsent(
-            Bytes.base64UrlEncode(ownership.transactionId!),
+            Bytes.base64UrlEncode(ownership!.transactionId!),
             allow ? destination : const TikiSdkDestination.none());
       } else if (allow) {
         localConsent = await tikiSdk.modifyConsent(
-            Bytes.base64UrlEncode(ownership.transactionId!), destination);
+            Bytes.base64UrlEncode(ownership!.transactionId!), destination);
       }
       consent = localConsent;
       toggleState = allow;
@@ -175,18 +216,4 @@ class HomeWidgetState extends State<HomeWidget> {
     });
   }
 
-  Future<void> loadTikiSdk([String? address]) async {
-    TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
-      ..origin(widget.origin)
-      ..apiId(widget.apiId);
-    if (address != null) builder.address(address);
-    tikiSdk = await builder.build();
-    if (address == null) {
-      wallets.add(tikiSdk.address);
-    }
-    await _getOrAssignOwnership();
-    stopTimer();
-    startTimer();
-    setState(() {});
-  }
 }
