@@ -1,19 +1,16 @@
-import 'package:example/destination/service.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../requests/service.dart';
-import '../destination/destination_edit.dart';
+import 'destination_edit.dart';
 
-class DestinationLayoutBtn extends StatelessWidget {
-  const DestinationLayoutBtn({super.key});
+class DestinationCard extends StatelessWidget {
+  final String url;
+  final String httpMethod;
+  final int interval;
+
+  const DestinationCard(this.url, this.httpMethod, this.interval, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    DestinationService service =
-        Provider.of<DestinationService>(context, listen: true);
-    RequestsService requestsService =
-        Provider.of<RequestsService>(context, listen: false);
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         decoration: BoxDecoration(
@@ -33,13 +30,9 @@ class DestinationLayoutBtn extends StatelessWidget {
                     Icon(Icons.keyboard_arrow_right)
                   ]),
               const Padding(padding: EdgeInsets.all(8.0)),
-              Text("${service.model.httpMethod} ${service.model.url}")
+              Text("$httpMethod $url")
             ]),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MultiProvider(providers: [
-                      ChangeNotifierProvider<RequestsService>.value(
-                          value: requestsService),
-                      ChangeNotifierProvider.value(value: service)
-                    ], child: DestinationLayoutEdit())))));
+                builder: (context) => DestinationEdit(url, httpMethod, interval) ))));
   }
 }

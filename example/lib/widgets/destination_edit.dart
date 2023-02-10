@@ -1,12 +1,21 @@
-import 'package:example/destination/service.dart';
-import 'package:example/requests/service.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../model.dart';
+class DestinationEdit extends StatefulWidget {
+  final String url;
+  final String httpMethod;
+  final int interval;
 
-class DestinationLayoutEdit extends StatelessWidget {
-  DestinationLayoutEdit({super.key});
+  const DestinationEdit(this.url, this.httpMethod, this.interval, {super.key});
+
+  @override
+  State<StatefulWidget> createState() => DestinationEditState();
+
+}
+
+class DestinationEditState extends State<DestinationEdit>{
+  late String url;
+  late String httpMethod;
+  late int interval;
 
   final List<String> secondsList = [
     "1 second",
@@ -20,19 +29,20 @@ class DestinationLayoutEdit extends StatelessWidget {
   final TextEditingController urlEditingController = TextEditingController();
 
   @override
+  void initState() {
+    url = widget.url;
+    httpMethod = widget.httpMethod;
+    interval = widget.interval;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    DestinationService service =
-        Provider.of<DestinationService>(context, listen: true);
-    DestinationModel model = service.model;
-    urlEditingController.text = model.url;
     urlEditingController.selection =
         TextSelection.collapsed(offset: urlEditingController.text.length);
     return Scaffold(
         body: WillPopScope(
             onWillPop: () async {
-              RequestsService requestsService =
-                  Provider.of<RequestsService>(context);
-              requestsService.controller.stopTimer(context);
               Navigator.pop(context, false);
               return false;
             },
@@ -50,8 +60,6 @@ class DestinationLayoutEdit extends StatelessWidget {
                               IconButton(
                                 icon: const Icon(Icons.keyboard_arrow_left),
                                 onPressed: () {
-                                  service.controller
-                                      .updateDestination(model, context);
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -73,10 +81,10 @@ class DestinationLayoutEdit extends StatelessWidget {
                                     labelText: 'URL',
                                   ),
                                   onChanged: (newUrl) {
-                                    urlEditingController.text = newUrl;
-                                    model.url = newUrl;
-                                    service.controller
-                                        .updateDestination(model, context);
+                                    setState(() {
+                                      urlEditingController.text = newUrl;
+                                      url = newUrl;
+                                    });
                                   },
                                 ),
                                 const Divider(),
@@ -86,15 +94,15 @@ class DestinationLayoutEdit extends StatelessWidget {
                                     children: [
                                       const Text("HTTP Method"),
                                       DropdownButton<String>(
-                                        value: model.httpMethod,
+                                        value: httpMethod,
                                         icon: const Icon(
                                             Icons.keyboard_arrow_down),
                                         elevation: 16,
                                         underline: Container(),
                                         onChanged: (newMethod) {
-                                          model.httpMethod = newMethod!;
-                                          service.controller.updateDestination(
-                                              model, context);
+                                          setState(() {
+                                            httpMethod = newMethod!;
+                                          });
                                         },
                                         items: ["POST", "GET"]
                                             .map<DropdownMenuItem<String>>(
@@ -114,23 +122,17 @@ class DestinationLayoutEdit extends StatelessWidget {
                                       const Text("Interval"),
                                       DropdownButton<String>(
                                         value: secondsList[secondsValues
-                                            .indexOf(model.interval)],
+                                            .indexOf(interval)],
                                         icon: const Icon(
                                             Icons.keyboard_arrow_down),
                                         elevation: 16,
                                         underline: Container(),
                                         onChanged: (newInterval) {
-                                          model.interval = secondsValues[
-                                              secondsList
-                                                  .indexOf(newInterval!)];
-                                          RequestsService requestsService =
-                                              Provider.of<RequestsService>(
-                                                  context,
-                                                  listen: false);
-                                          requestsService.controller
-                                              .stopTimer(context);
-                                          service.controller.updateDestination(
-                                              model, context);
+                                          setState(() {
+                                            interval = secondsValues[
+                                            secondsList
+                                                .indexOf(newInterval!)];
+                                          });
                                         },
                                         items: secondsList
                                             .map<DropdownMenuItem<String>>(
