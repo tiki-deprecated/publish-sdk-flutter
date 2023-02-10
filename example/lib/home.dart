@@ -71,7 +71,7 @@ class HomeWidgetState extends State<HomeWidget> {
                 Padding(padding: EdgeInsets.all(8)),
                 BodyCard(),
                 Padding(padding: EdgeInsets.all(8)),
-                RequestsLayoutList()
+                RequestList()
               ],
             ))));
   }
