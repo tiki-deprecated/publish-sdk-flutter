@@ -34,7 +34,7 @@ class ConsentCard extends StatelessWidget {
                       ]),
                   const Padding(padding: EdgeInsets.all(8.0)),
                   Text(Bytes.base64UrlEncode(
-                      consent!.transactionId!)),
+                      consent.transactionId!)),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
