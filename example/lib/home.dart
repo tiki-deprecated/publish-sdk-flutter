@@ -56,7 +56,7 @@ class HomeWidgetState extends State<HomeWidget> {
                 Padding(padding: EdgeInsets.all(8)),
                 WalletLayoutBtn(),
                 Padding(padding: EdgeInsets.all(8)),
-                OwnershipLayoutBtn(),
+                OwnershipCard(),
                 Padding(padding: EdgeInsets.all(8)),
                 ConsentCard(),
                 Padding(padding: EdgeInsets.all(8)),

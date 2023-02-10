@@ -1,21 +1,16 @@
-import 'package:example/ownership/ownership_detail.dart';
-import 'package:example/ownership/service.dart';
-import 'package:example/wallet/service.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
-class OwnershipLayoutBtn extends StatelessWidget {
-  const OwnershipLayoutBtn({super.key});
+import 'ownership_detail.dart';
+
+class OwnershipCard extends StatelessWidget {
+  final OwnershipModel ownership;
+
+  const OwnershipCard(this.ownership, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    OwnershipService service =
-        Provider.of<OwnershipService>(context, listen: true);
-    Provider.of<WalletService>(context, listen: true);
-    return service.model.ownership == null
-        ? Container()
-        : Container(
+    return Container(
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             decoration: BoxDecoration(
@@ -36,11 +31,9 @@ class OwnershipLayoutBtn extends StatelessWidget {
                       ]),
                   const Padding(padding: EdgeInsets.all(8.0)),
                   Text(Bytes.base64UrlEncode(
-                      service.model.ownership!.transactionId!))
+                      ownership.transactionId!))
                 ]),
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ChangeNotifierProvider.value(
-                        value: service,
-                        child: const OwnershipLayoutDetail())))));
+                    builder: (context) => OwnershipDetail(ownership)))));
   }
 }

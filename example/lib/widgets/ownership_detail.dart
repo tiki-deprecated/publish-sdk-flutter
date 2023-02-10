@@ -1,16 +1,13 @@
-import 'package:example/ownership/service.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
-class OwnershipLayoutDetail extends StatelessWidget {
-  const OwnershipLayoutDetail({super.key});
+class OwnershipDetail extends StatelessWidget {
+  final OwnershipModel ownership;
+
+  const OwnershipDetail(this.ownership, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    OwnershipService service =
-        Provider.of<OwnershipService>(context, listen: true);
-    OwnershipModel ownership = service.model.ownership!;
     return Scaffold(
         body: SafeArea(
             child: Container(
