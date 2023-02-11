@@ -53,18 +53,18 @@ jobs:
       #   with:
       #     release-branch: "main"
 
-      - name: Get pubsbec.yaml Version
-        id: pubspec_version
+      - name: Get Versions
+        id: get_versions
         run: |
           export PUBSPEC_VERSION=$(grep version pubspec.yaml |  awk -F  ': ' '/1/ {print $2}')
           echo "PUBSPEC_VERSION=$PUBSPEC_VERSION"
           echo "{PUBSPEC_VERSION}={$PUBSPEC_VERSION}" >> $GITHUB_OUTPUT
-          export TAG_VERSION=$({{ steps.version.outputs.version }} | awk -F '-' '/1/ {print $1}')
+          export TAG_VERSION=$(echo ${{ steps.version.outputs.version }} | awk -F '-' '/1/ {print $1}')
           echo "TAG_VERSION=$TAG_VERSION" >> $GITHUB_OUTPUT
           echo "{TAG_VERSION}={$TAG_VERSION}" >> $GITHUB_OUTPUT
 
       - name: Check Release version
-        if:  ${{ steps.pubspec_version.outputs.TAG_VERSION }} != ${{ steps.pubspec_version.outputs.PUBSPEC_VERSION }}
+        if:  ${{ steps.get_versions.outputs.TAG_VERSION }} != ${{ steps.get_versions.outputs.PUBSPEC_VERSION }}
         uses: actions/github-script@v3
         with:
           script: |
