@@ -30,9 +30,9 @@
 ///
 /// ### API id
 /// ```
-/// builder.apiId = <api_id;
+/// builder.publishingId = <api_id;
 /// ```
-/// The apiId to connect to TIKI L0 Storage.
+/// The publishingId to connect to TIKI L0 Storage.
 ///
 /// ### Database directory
 /// ```
@@ -55,7 +55,7 @@ import 'src/flutter_key_storage.dart';
 class TikiSdkFlutterBuilder {
   String? _address;
   String? _origin;
-  String? _apiId;
+  String? _publishingId;
   String? _databaseDir;
 
   /// The address of the blockchain node.
@@ -66,8 +66,8 @@ class TikiSdkFlutterBuilder {
   /// The default origin for the ownership assignments.
   void origin(String origin) => _origin = origin;
 
-  /// The apiId to connect to TIKI L0 Storage.
-  void apiId(String apiId) => _apiId = apiId;
+  /// The publishingId to connect to TIKI L0 Storage.
+  void publishingId(String publishingId) => _publishingId = publishingId;
 
   /// The directory to be used by SQLite to store the database.
   ///
@@ -81,7 +81,7 @@ class TikiSdkFlutterBuilder {
       ..databaseDir(_databaseDir ?? await _dbDir())
       ..keyStorage(FlutterKeyStorage())
       ..address(_address)
-      ..apiId(_apiId)
+      ..publishingId(_publishingId)
       ..origin(_origin!);
     return sdkBuilder.build();
   }

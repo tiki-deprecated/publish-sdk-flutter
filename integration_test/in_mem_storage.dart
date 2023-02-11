@@ -4,10 +4,9 @@
  */
 
 import 'dart:typed_data';
+import 'package:tiki_sdk_dart/node/backup/backup_client.dart';
 
-import 'package:tiki_sdk_dart/node/l0_storage.dart';
-
-class InMemL0Storage implements L0Storage {
+class InMemL0Storage implements BackupClient{
   Map<String, Map<String, Uint8List>> storage = {};
 
   @override

@@ -5,9 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 import 'package:tiki_sdk_flutter/src/tiki_platform_channel/tiki_platform_channel.dart';
+import 'tiki_credentials.dart' as credentials;
 
 void main() {
-  const String apiId = '2b8de004-cbe0-4bd5-bda6-b266d54f5c90';
+  String publishingId = credentials.publishingId;
   const String origin = 'com.mytiki.test';
 
   Map<String, Completer<String>> completers = {};
@@ -33,7 +34,7 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "requestId": requestId,
-        "request": jsonEncode({"apiId": apiId, "origin": origin})
+        "request": jsonEncode({"publishingId": publishingId, "origin": origin})
       });
       String jsonResponse = await completer.future;
       expect(jsonDecode(jsonResponse)["address"].length > 32, true);
@@ -45,7 +46,7 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "requestId": requestId,
-        "request": jsonEncode({"apiId": apiId, "origin": origin})
+        "request": jsonEncode({"publishingId": publishingId, "origin": origin})
       });
       String jsonResponse = await completer.future;
       String address = jsonDecode(jsonResponse)["address"];
@@ -55,7 +56,7 @@ void main() {
       await channel.invokeMockMethod('build', {
         "requestId": requestId,
         "request":
-            jsonEncode({"apiId": apiId, "origin": origin, "address": address})
+            jsonEncode({"publishingId": publishingId, "origin": origin, "address": address})
       });
       jsonResponse = await completer.future;
       expect(address, jsonDecode(jsonResponse)["address"]);
@@ -67,7 +68,7 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "requestId": requestId,
-        "request": jsonEncode({"apiId": apiId, "origin": origin})
+        "request": jsonEncode({"publishingId": publishingId, "origin": origin})
       });
       await completer.future;
       completer = Completer();
@@ -102,7 +103,7 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "requestId": requestId,
-        "request": jsonEncode({"apiId": apiId, "origin": origin})
+        "request": jsonEncode({"publishingId": publishingId, "origin": origin})
       });
       await completer.future;
       completer = Completer();
@@ -146,7 +147,7 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "requestId": requestId,
-        "request": jsonEncode({"apiId": apiId, "origin": origin})
+        "request": jsonEncode({"publishingId": publishingId, "origin": origin})
       });
       await completer.future;
       completer = Completer();
@@ -166,7 +167,7 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "requestId": requestId,
-        "request": jsonEncode({"apiId": apiId, "origin": origin})
+        "request": jsonEncode({"publishingId": publishingId, "origin": origin})
       });
       await completer.future;
       completer = Completer();
@@ -210,7 +211,7 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "requestId": requestId,
-        "request": jsonEncode({"apiId": apiId, "origin": origin})
+        "request": jsonEncode({"publishingId": publishingId, "origin": origin})
       });
       await completer.future;
       completer = Completer();
@@ -262,7 +263,7 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "requestId": requestId,
-        "request": jsonEncode({"apiId": apiId, "origin": origin})
+        "request": jsonEncode({"publishingId": publishingId, "origin": origin})
       });
       await completer.future;
       completer = Completer();

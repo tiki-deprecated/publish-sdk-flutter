@@ -88,7 +88,7 @@ class TikiPlatformChannel {
   Future<RspBuild> _buildSdk(ReqBuild req) async {
     TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
       ..origin(req.origin)
-      ..apiId(req.apiId);
+      ..publishingId(req.publishingId);
     if (req.address != null) {
       builder.address(req.address!);
     }

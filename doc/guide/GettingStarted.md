@@ -69,7 +69,7 @@ Configuration parameters:
   to Application Documents Directory.
 
 
-- **apiId &#8594; String**   
+- **publishingId &#8594; String**   
   A unique identifier for your account. Create, revoke, and cycle Ids _(not a secret but try and
   treat it with care)_ at https://mytiki.com.
 
@@ -83,7 +83,7 @@ Example:
 ```
     TikiSdk tiki = await (TikiSdkFlutterBuilder()
           ..origin('com.mycompany.myproduct')
-          ..apiId('565b3268-cdc0-4e5c-94c8-5d8f53d4577c'))
+          ..publishingId('565b3268-cdc0-4e5c-94c8-5d8f53d4577c'))
           .build();
 ```
 
