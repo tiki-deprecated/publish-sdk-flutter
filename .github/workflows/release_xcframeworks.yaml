@@ -19,9 +19,6 @@ jobs:
     steps:
       - name: "Checkout TIKI SDK Flutter"
         uses: actions/checkout@v3
-        with:
-          repository: tiki/tiki-sdk-flutter
-          path: tiki-sdk-flutter
 
       - name: Get Version From Pubspec
         id: tag
