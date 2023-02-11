@@ -16,10 +16,10 @@ import 'request.dart';
 
 class HomeWidget extends StatefulWidget {
   final String origin;
-  final String apiId;
+  final String publishingId;
   final TikiSdk initialTikiSdk;
 
-  const HomeWidget(this.initialTikiSdk, this.apiId, this.origin, {super.key});
+  const HomeWidget(this.initialTikiSdk, this.publishingId, this.origin, {super.key});
 
   @override
   State<StatefulWidget> createState() => HomeWidgetState();
@@ -120,7 +120,7 @@ class HomeWidgetState extends State<HomeWidget> {
   Future<void> _loadTikiSdk([String? address]) async {
     TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
       ..origin(widget.origin)
-      ..apiId(widget.apiId);
+      ..publishingId(widget.publishingId);
     if (address != null) builder.address(address);
     tikiSdk = await builder.build();
     if (address == null) {

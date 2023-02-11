@@ -6,11 +6,10 @@
 /// Not used. Required by Dart Runtime for native implementations
 ///@nodoc
 import 'package:flutter/material.dart';
-
 import 'src/tiki_platform_channel/tiki_platform_channel.dart';
 
-export 'package:tiki_sdk_dart/consent/consent_model.dart';
-export 'package:tiki_sdk_dart/ownership/ownership_model.dart';
+export 'package:tiki_sdk_dart/cache/consent/consent_model.dart';
+export 'package:tiki_sdk_dart/cache/ownership/ownership_model.dart';
 export 'package:tiki_sdk_dart/tiki_sdk.dart';
 export 'package:tiki_sdk_dart/tiki_sdk_data_type_enum.dart';
 export 'package:tiki_sdk_dart/tiki_sdk_destination.dart';
