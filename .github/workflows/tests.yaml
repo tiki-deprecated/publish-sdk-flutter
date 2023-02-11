@@ -59,7 +59,7 @@ jobs:
           export PUBSPEC_VERSION=$(grep version pubspec.yaml |  awk -F  ': ' '/1/ {print $2}')
           echo "PUBSPEC_VERSION=$PUBSPEC_VERSION"
           echo "{PUBSPEC_VERSION}={$PUBSPEC_VERSION}" >> $GITHUB_OUTPUT
-          export TAG_VERSION=$(${{ steps.version.outputs.version }} | awk -F '-' '/1/ {print $1}')
+          export TAG_VERSION=$({{ steps.version.outputs.version }} | awk -F '-' '/1/ {print $1}')
           echo "TAG_VERSION=$TAG_VERSION" >> $GITHUB_OUTPUT
           echo "{TAG_VERSION}={$TAG_VERSION}" >> $GITHUB_OUTPUT
 
