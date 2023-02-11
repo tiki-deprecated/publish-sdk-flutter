@@ -40,10 +40,6 @@ jobs:
           mkdir $XDG_CONFIG_HOME/dart
           echo '${{ secrets.PUB_DEV_CREDENTIALS }}' > "$XDG_CONFIG_HOME/dart/pub-credentials.json"
 
-      - name: 'Publish SDK'
-        run: |
-          flutter pub publish -f
-
       - name: Check a new tag
         id: tag
         run: |
@@ -57,6 +53,10 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{steps.tag.outputs.version }}
+
+      - name: 'Publish SDK'
+        run: |
+          flutter pub publish -f
           
   docs:
     runs-on: ubuntu-latest
