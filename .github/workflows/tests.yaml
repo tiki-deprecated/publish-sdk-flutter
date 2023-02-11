@@ -47,11 +47,11 @@ jobs:
       #   run: |
       #     flutter pub publish --dry-run
       
-      # - name: Git version
-      #   id: version
-      #   uses: codacy/git-version@2.7.1
-      #   with:
-      #     release-branch: "main"
+      - name: Git version
+        id: version
+        uses: codacy/git-version@2.7.1
+        with:
+          release-branch: "main"
 
       - name: Get Versions
         id: get_versions
