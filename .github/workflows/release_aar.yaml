@@ -1,21 +1,30 @@
 name: Publish AARs
 
 on:
-  push:
-    tags:
-      - '*.*.*'
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
 
 jobs:
   publish:
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
     runs-on: ubuntu-latest
     environment: Production
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v2
 
-      - name: Get Version From Tag
+      - name: Get Version From Pubspec
         id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+        run: |
+          export TAG_VERSION=$(grep version pubspec.yaml |  awk -F  ': ' '/1/ {print $2}')
+          echo "tag=$TAG_VERSION" >> $GITHUB_OUTPUT
 
       - name: 'Setup Dart'
         uses: dart-lang/setup-dart@v1

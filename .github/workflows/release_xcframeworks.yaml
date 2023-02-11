@@ -1,12 +1,19 @@
 name: Publish XCFrameworks
 
 on:
-  push:
-    tags:
-      - '*.*.*'
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
 
 jobs:
   publish:
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
     runs-on: macos-latest
     environment: Production
     steps:
