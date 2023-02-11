@@ -30,7 +30,7 @@ The first initialization of the SDK is done without passing a wallet address as 
 Future<void> loadTikiSdk([String? address]) async {
     TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
       ..origin(model.origin)
-      ..apiId(model.apiId);
+      ..publishingId(model.publishingId);
     if (address != null) builder.address(address);
     model.tikiSdk = await builder.build();
     if (address == null) {

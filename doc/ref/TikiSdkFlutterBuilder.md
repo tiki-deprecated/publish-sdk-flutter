@@ -24,7 +24,7 @@ _i.e. com.mycompany.myproduct_
 Defines where the local data (SQLite used for persistence) will be stored.  
 _Defaults to Application Documents Directory._
 
-##### apiId(String? apiId) &#8594; void
+##### publishingId(String? publishingId) &#8594; void
 
 A unique identifier for your account. Create, revoke, and cycle Ids _(not a secret but try and treat
 it with care)_ at [console.mytiki.com](https://console.mytiki.com).
@@ -43,7 +43,7 @@ Example:
 ```
     TikiSdk tiki = await (TikiSdkFlutterBuilder()
           ..origin('com.mycompany.myproduct')
-          ..apiId('565b3268-cdc0-4e5c-94c8-5d8f53d4577c'))
+          ..publishingId('565b3268-cdc0-4e5c-94c8-5d8f53d4577c'))
           .build();
 ```
 

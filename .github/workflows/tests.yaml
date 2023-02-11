@@ -28,6 +28,12 @@ jobs:
           echo $UDID
           xcrun simctl boot "${UDID:?No Simulator with this name found}"
       
+      - name: Load TIKI Credentials    
+        env:
+          TIKI_CREDENTIALS: ${{ secrets.TIKI_CREDENTIALS }}
+        run: |
+          echo "$TIKI_CREDENTIALS" >> integration_test/tiki_credentials.dart
+
       - name: Run iOS Integration Tests
         run: flutter test integration_test/tiki_sdk_flutter_test.dart
 
