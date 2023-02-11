@@ -13,8 +13,11 @@ jobs:
   test:
     runs-on: macos-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: 'main'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
@@ -43,3 +46,24 @@ jobs:
       - name: 'Test Publish SDK'
         run: |
           flutter pub publish --dry-run
+      
+      - name: Git version
+        id: version
+        uses: codacy/git-version@2.7.1
+        with:
+          release-branch: "main"
+
+      - name: Get pubsbec.yaml Version
+        id: pubspec_version
+        run: |
+          export PUBSPEC_VERSION=$(grep version pubspec.yaml |  awk -F  ': ' '/1/ {print $2}')
+          echo "{PUBSPEC_VERSION}={$PUBSPEC_VERSION}" >> $GITHUB_OUTPUT
+          export TAG_VERSION=$(${{ steps.version.outputs.version }} | awk -F '-' '/1/ {print $1}')
+
+      - name: Check Release version
+        if:  ${{ steps.pubspec_version.outputs.TAG_VERSION }} != ${{ steps.pubspec_version.outputs.PUBSPEC_VERSION }}
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('git-version and pubspec version are different!')
+      
