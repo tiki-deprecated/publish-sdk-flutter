@@ -23,6 +23,12 @@ jobs:
           repository: tiki/tiki-sdk-flutter
           path: tiki-sdk-flutter
 
+      - name: Get Version From Pubspec
+        id: tag
+        run: |
+          export TAG_VERSION=$(grep version pubspec.yaml |  awk -F  ': ' '/1/ {print $2}')
+          echo "version=$TAG_VERSION" >> $GITHUB_OUTPUT
+
       - name: "Setup Dart"
         uses: dart-lang/setup-dart@v1
         with:
@@ -100,3 +106,4 @@ jobs:
           artifacts: "tiki-sdk-flutter/Frameworks/Release/*.zip,tiki-sdk-flutter/Frameworks/Release/*.checksum.txt,tiki-sdk-flutter/Frameworks/Debug/*.zip,tiki-sdk-flutter/Frameworks/Debug/*.checksum.txt"
           replacesArtifacts: false
           allowUpdates: true
+          tag: ${{steps.tag.outputs.version }}
