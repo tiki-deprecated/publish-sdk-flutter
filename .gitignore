@@ -56,3 +56,5 @@ app.*.map.json
 
 coverage/
 doc/api/
+
+Generated*

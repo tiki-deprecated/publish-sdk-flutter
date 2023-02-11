@@ -1,3 +1,11 @@
+## 1.1.0
+
+* upgrade tiki_sdk_dart to 1.1.1
+* change export paths to OwnershipModel and ConsentModel
+* change apiId to publishingId
+* add tiki_credentials to integration_test to keep publishingId private.
+* bump version to 1.1.0
+
 ## 1.0.0
 
 * public release
