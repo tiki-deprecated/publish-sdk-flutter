@@ -19,37 +19,36 @@ jobs:
           fetch-depth: 0
           ref: 'main'
 
-      # - name: Setup Flutter
-      #   uses: subosito/flutter-action@v1
-      #   with:
-      #     flutter-version: '3.3.4'
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.3.4'
 
-      # - name: Start iOS Simulator
-      #   run: |
-      #     xcrun xctrace list devices
-      #     UDID=$(xcrun xctrace list devices | grep "^iPhone 14 Simulator (16.2) (" | awk '{gsub(/[()]/,""); print $NF}')
-      #     echo $UDID
-      #     xcrun simctl boot "${UDID:?No Simulator with this name found}"
+      - name: Start iOS Simulator
+        run: |
+          xcrun xctrace list devices
+          UDID=$(xcrun xctrace list devices | grep "^iPhone 14 Simulator (16.2) (" | awk '{gsub(/[()]/,""); print $NF}')
+          echo $UDID
+          xcrun simctl boot "${UDID:?No Simulator with this name found}"
       
-      # - name: Load TIKI Credentials    
-      #   env:
-      #     TIKI_CREDENTIALS: ${{ secrets.TIKI_CREDENTIALS }}
-      #   run: |
-      #     echo "$TIKI_CREDENTIALS" >> integration_test/tiki_credentials.dart
+      - name: Load TIKI Credentials    
+        env:
+          TIKI_CREDENTIALS: ${{ secrets.TIKI_CREDENTIALS }}
+        run: |
+          echo "$TIKI_CREDENTIALS" >> integration_test/tiki_credentials.dart
 
-      # - name: Run iOS Integration Tests
-      #   run: flutter test integration_test/tiki_sdk_flutter_test.dart
+      - name: Run iOS Integration Tests
+        run: flutter test integration_test/tiki_sdk_flutter_test.dart
 
-      # - name: Run iOS TikiSdkPlatform Integration Tests
-      #   run: flutter test integration_test/tiki_sdk_flutter_platform_test.dart
+      - name: Run iOS TikiSdkPlatform Integration Tests
+        run: flutter test integration_test/tiki_sdk_flutter_platform_test.dart
 
-      # - name: 'Test Publish SDK'
-      #   run: |
-      #     flutter pub publish --dry-run
+      - name: 'Test Publish SDK'
+        run: |
+          flutter pub publish --dry-run
 
-      - name: Create a new tag
+      - name: Prints version
         run: |
           export TAG_VERSION=$(grep version pubspec.yaml |  awk -F  ': ' '/1/ {print $2}')
           echo $TAG_VERSION
-          git tag $TAG_VERSION
       
