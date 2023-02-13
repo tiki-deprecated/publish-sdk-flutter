@@ -5,7 +5,7 @@
 
 import 'dart:convert';
 
-import '../../../main.dart';
+import 'package:tiki_sdk_dart/cache/ownership/ownership_model.dart';
 import 'rsp.dart';
 
 /// The response for the `assignOwnership` and `getOwnership` method calls in
