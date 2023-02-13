@@ -5,7 +5,9 @@
 
 import 'dart:convert';
 
-import '../../../main.dart';
+
+import 'package:tiki_sdk_dart/cache/consent/consent_model.dart';
+
 import 'rsp.dart';
 
 /// The response for the `getConsent` and `modifyConsent`method calls in

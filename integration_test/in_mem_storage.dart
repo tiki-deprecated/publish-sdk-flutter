@@ -26,8 +26,4 @@ class InMemL0Storage implements BackupClient{
     storage[address]![id] = obj;
   }
 
-  @override
-  Future<Map<String, Uint8List>> getAll(String address) async {
-    return storage[address] ?? {};
-  }
 }
