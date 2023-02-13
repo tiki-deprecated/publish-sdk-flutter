@@ -5,7 +5,7 @@ import 'body_edit.dart';
 class BodyCard extends StatefulWidget {
   String body;
 
-  BodyCard(this.body, {super.key});
+  BodyCard(this.body, void Function(String body) updateBody, {super.key});
 
   @override
   State<StatefulWidget> createState() => BodyCardState();

@@ -4,7 +4,7 @@ import 'package:tiki_sdk_flutter/main.dart';
 import 'ownership_detail.dart';
 
 class OwnershipCard extends StatelessWidget {
-  final OwnershipModel ownership;
+  final OwnershipModel? ownership;
 
   const OwnershipCard(this.ownership, {super.key});
 
@@ -29,9 +29,9 @@ class OwnershipCard extends StatelessWidget {
                     Icon(Icons.keyboard_arrow_right)
                   ]),
               const Padding(padding: EdgeInsets.all(8.0)),
-              Text(Bytes.base64UrlEncode(ownership.transactionId!))
+              Text(ownership == null ? "" : Bytes.base64UrlEncode(ownership!.transactionId!))
             ]),
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => OwnershipDetail(ownership)))));
+            onTap: () => ownership == null ? null : Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => OwnershipDetail(ownership!)))));
   }
 }

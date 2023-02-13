@@ -7,7 +7,7 @@ class DestinationCard extends StatelessWidget {
   final String httpMethod;
   final int interval;
 
-  const DestinationCard(this.url, this.httpMethod, this.interval, {super.key});
+  const DestinationCard(this.url, this.httpMethod, this.interval, void Function(String url, String httpMethod, int interval) updateDestination, {super.key});
 
   @override
   Widget build(BuildContext context) {
