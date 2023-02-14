@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - main
+    types:
+      - closed
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
