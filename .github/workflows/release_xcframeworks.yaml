@@ -4,8 +4,6 @@ on:
   pull_request:
     branches:
       - main
-    types:
-      - closed
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -25,6 +23,9 @@ jobs:
         run: |
           export TAG_VERSION=$(grep version pubspec.yaml |  awk -F  ': ' '/1/ {print $2}')
           echo "version=$TAG_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Checkout current tag
+        run: git checkout ${{steps.tag.outputs.version }}
 
       - name: "Setup Dart"
         uses: dart-lang/setup-dart@v1
