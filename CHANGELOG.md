@@ -1,3 +1,10 @@
+## 1.1.2
+
+* release binaries with tiki-sdk-dart 1.1.1
+## 1.1.1
+
+* fix release action
+
 ## 1.1.0
 
 * upgrade tiki_sdk_dart to 1.1.1
