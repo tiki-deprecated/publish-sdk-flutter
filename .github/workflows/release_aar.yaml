@@ -73,7 +73,7 @@ jobs:
 
       - name: 'Flutter Build AAR'
         run: |
-          flutter build aar --no-debug --no-profile --build-number ${{ steps.vars.outputs.tag }}
+          flutter build aar --no-debug --no-profile --build-number ${{steps.tag.outputs.version }}
         env:
           GITHUB_USER: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
