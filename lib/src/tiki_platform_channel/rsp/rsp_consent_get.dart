@@ -5,7 +5,6 @@
 
 import 'dart:convert';
 
-
 import 'package:tiki_sdk_dart/cache/consent/consent_model.dart';
 
 import 'rsp.dart';
