@@ -13,7 +13,7 @@ jobs:
   publish:
     # if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
     runs-on: macos-latest
-    environment: Production
+    #environment: Production
     steps:
       - name: "Checkout TIKI SDK Flutter"
         uses: actions/checkout@v3
