@@ -1,21 +1,26 @@
 name: Publish XCFrameworks
 
-on:
-  pull_request:
-    branches:
-      - main
-    types:
-      - closed
+# on:
+#   pull_request:
+#     branches:
+#       - main
+#     types:
+#       - closed
 
-concurrency:
-  group: ${{ github.ref }}-${{ github.workflow }}
-  cancel-in-progress: true
+on:
+  push:
+    branches:
+      - fix/xcframeworks_release
+
+# concurrency:
+#   group: ${{ github.ref }}-${{ github.workflow }}
+#   cancel-in-progress: true
 
 jobs:
   publish:
-    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
+#    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
     runs-on: macos-latest
-    environment: Production
+#    environment: Production
     steps:
       - name: "Checkout TIKI SDK Flutter"
         uses: actions/checkout@v3
@@ -27,80 +32,83 @@ jobs:
           echo "version=$TAG_VERSION" >> $GITHUB_OUTPUT
 
       - name: Checkout current tag
-        run: git checkout ${{steps.tag.outputs.version }}
+        run: | 
+          git checkout tags/${{steps.tag.outputs.version }}
+          git branch
+          git tag
 
-      - name: "Setup Dart"
-        uses: dart-lang/setup-dart@v1
-        with:
-          sdk: 2.18.2
+      # - name: "Setup Dart"
+      #   uses: dart-lang/setup-dart@v1
+      #   with:
+      #     sdk: 2.18.2
 
-      - name: "Setup Flutter"
-        uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '3.3.4'
+      # - name: "Setup Flutter"
+      #   uses: subosito/flutter-action@v1
+      #   with:
+      #     flutter-version: '3.3.4'
 
-      - name: "Setup XCode"
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
+      # - name: "Setup XCode"
+      #   uses: maxim-lobanov/setup-xcode@v1
+      #   with:
+      #     xcode-version: latest-stable
 
-      - name: 'Remove Integration Test Dependency'
-        run: |
-          perl -i -p0e 's/  integration_test:\n    sdk: flutter//s' pubspec.yaml
+      # - name: 'Remove Integration Test Dependency'
+      #   run: |
+      #     perl -i -p0e 's/  integration_test:\n    sdk: flutter//s' pubspec.yaml
 
-      - name: 'Flutter pub get'
-        run: |
-          flutter pub get
+      # - name: 'Flutter pub get'
+      #   run: |
+      #     flutter pub get
 
-      - name: 'Add embed script in Xcode Project Build phases'
-        run: |
-          cd .ios
-          perl -i -p0e 's/shellScript = "\/bin\/sh \\"\$FLUTTER_ROOT\/packages\/flutter_tools\/bin\/xcode_backend\.sh\\" build";/shellScript = "\/bin\/sh \\"\$FLUTTER_ROOT\/packages\/flutter_tools\/bin\/xcode_backend\.sh\\" build\\n\/bin\/sh \\"\$FLUTTER_ROOT\/packages\/flutter_tools\/bin\/xcode_backend\.sh\\" embed\\n";/s' ./Runner.xcodeproj/project.pbxproj
+      # - name: 'Add embed script in Xcode Project Build phases'
+      #   run: |
+      #     cd .ios
+      #     perl -i -p0e 's/shellScript = "\/bin\/sh \\"\$FLUTTER_ROOT\/packages\/flutter_tools\/bin\/xcode_backend\.sh\\" build";/shellScript = "\/bin\/sh \\"\$FLUTTER_ROOT\/packages\/flutter_tools\/bin\/xcode_backend\.sh\\" build\\n\/bin\/sh \\"\$FLUTTER_ROOT\/packages\/flutter_tools\/bin\/xcode_backend\.sh\\" embed\\n";/s' ./Runner.xcodeproj/project.pbxproj
 
-      - name: "Build Frameworks"
-        run: |
-          flutter build ios-framework --output=Frameworks --no-profile
+      # - name: "Build Frameworks"
+      #   run: |
+      #     flutter build ios-framework --output=Frameworks --no-profile
 
-      - name: "Zip release frameworks"
-        run: |
-          cd Frameworks/Release
-          zip -r sqlite3.xcframework.zip sqlite3.xcframework
-          shasum -a 256 sqlite3.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework.checksum.txt
-          zip -r flutter_secure_storage.xcframework.zip flutter_secure_storage.xcframework
-          shasum -a 256 flutter_secure_storage.xcframework.zip | cut -f1 -d' '>> flutter_secure_storage.checksum.txt
-          zip -r path_provider_ios.xcframework.zip path_provider_ios.xcframework
-          shasum -a 256 path_provider_ios.xcframework.zip | cut -f1 -d' '>> path_provider_ios.checksum.txt
-          zip -r App.xcframework.zip App.xcframework
-          shasum -a 256 App.xcframework.zip | cut -f1 -d' '>> App.checksum.txt
-          zip -r Flutter.xcframework.zip Flutter.xcframework
-          shasum -a 256 Flutter.xcframework.zip | cut -f1 -d' '>> Flutter.checksum.txt
-          zip -r sqlite3_flutter_libs.xcframework.zip sqlite3_flutter_libs.xcframework
-          shasum -a 256 sqlite3_flutter_libs.xcframework.zip | cut -f1 -d' '>> sqlite3_flutter_libs.checksum.txt
-          zip -r FlutterPluginRegistrant.xcframework.zip FlutterPluginRegistrant.xcframework
-          shasum -a 256 FlutterPluginRegistrant.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant.checksum.txt
+      # - name: "Zip release frameworks"
+      #   run: |
+      #     cd Frameworks/Release
+      #     zip -r sqlite3.xcframework.zip sqlite3.xcframework
+      #     shasum -a 256 sqlite3.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework.checksum.txt
+      #     zip -r flutter_secure_storage.xcframework.zip flutter_secure_storage.xcframework
+      #     shasum -a 256 flutter_secure_storage.xcframework.zip | cut -f1 -d' '>> flutter_secure_storage.checksum.txt
+      #     zip -r path_provider_ios.xcframework.zip path_provider_ios.xcframework
+      #     shasum -a 256 path_provider_ios.xcframework.zip | cut -f1 -d' '>> path_provider_ios.checksum.txt
+      #     zip -r App.xcframework.zip App.xcframework
+      #     shasum -a 256 App.xcframework.zip | cut -f1 -d' '>> App.checksum.txt
+      #     zip -r Flutter.xcframework.zip Flutter.xcframework
+      #     shasum -a 256 Flutter.xcframework.zip | cut -f1 -d' '>> Flutter.checksum.txt
+      #     zip -r sqlite3_flutter_libs.xcframework.zip sqlite3_flutter_libs.xcframework
+      #     shasum -a 256 sqlite3_flutter_libs.xcframework.zip | cut -f1 -d' '>> sqlite3_flutter_libs.checksum.txt
+      #     zip -r FlutterPluginRegistrant.xcframework.zip FlutterPluginRegistrant.xcframework
+      #     shasum -a 256 FlutterPluginRegistrant.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant.checksum.txt
 
-      - name: "Zip debug frameworks"
-        run: |
-          cd Frameworks/Debug
-          zip -r sqlite3_debug.xcframework.zip sqlite3.xcframework
-          shasum -a 256 sqlite3_debug.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework_debug.checksum.txt
-          zip -r flutter_secure_storage_debug.xcframework.zip flutter_secure_storage.xcframework
-          shasum -a 256 flutter_secure_storage_debug.xcframework.zip | cut -f1 -d' '>> flutter_secure_storage_debug.checksum.txt
-          zip -r path_provider_ios_debug.xcframework.zip path_provider_ios.xcframework
-          shasum -a 256 path_provider_ios_debug.xcframework.zip | cut -f1 -d' '>> path_provider_ios_debug.checksum.txt
-          zip -r App_debug.xcframework.zip App.xcframework
-          shasum -a 256 App_debug.xcframework.zip | cut -f1 -d' '>> App_debug.checksum.txt
-          zip -r Flutter_debug.xcframework.zip Flutter.xcframework
-          shasum -a 256 Flutter_debug.xcframework.zip | cut -f1 -d' '>> Flutter_debug.checksum.txt
-          zip -r sqlite3_flutter_libs_debug.xcframework.zip sqlite3_flutter_libs.xcframework
-          shasum -a 256 sqlite3_flutter_libs_debug.xcframework.zip | cut -f1 -d' '>> sqlite3_flutter_libs_debug.checksum.txt
-          zip -r FlutterPluginRegistrant_debug.xcframework.zip FlutterPluginRegistrant.xcframework
-          shasum -a 256 FlutterPluginRegistrant_debug.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant_debug.checksum.txt
+      # - name: "Zip debug frameworks"
+      #   run: |
+      #     cd Frameworks/Debug
+      #     zip -r sqlite3_debug.xcframework.zip sqlite3.xcframework
+      #     shasum -a 256 sqlite3_debug.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework_debug.checksum.txt
+      #     zip -r flutter_secure_storage_debug.xcframework.zip flutter_secure_storage.xcframework
+      #     shasum -a 256 flutter_secure_storage_debug.xcframework.zip | cut -f1 -d' '>> flutter_secure_storage_debug.checksum.txt
+      #     zip -r path_provider_ios_debug.xcframework.zip path_provider_ios.xcframework
+      #     shasum -a 256 path_provider_ios_debug.xcframework.zip | cut -f1 -d' '>> path_provider_ios_debug.checksum.txt
+      #     zip -r App_debug.xcframework.zip App.xcframework
+      #     shasum -a 256 App_debug.xcframework.zip | cut -f1 -d' '>> App_debug.checksum.txt
+      #     zip -r Flutter_debug.xcframework.zip Flutter.xcframework
+      #     shasum -a 256 Flutter_debug.xcframework.zip | cut -f1 -d' '>> Flutter_debug.checksum.txt
+      #     zip -r sqlite3_flutter_libs_debug.xcframework.zip sqlite3_flutter_libs.xcframework
+      #     shasum -a 256 sqlite3_flutter_libs_debug.xcframework.zip | cut -f1 -d' '>> sqlite3_flutter_libs_debug.checksum.txt
+      #     zip -r FlutterPluginRegistrant_debug.xcframework.zip FlutterPluginRegistrant.xcframework
+      #     shasum -a 256 FlutterPluginRegistrant_debug.xcframework.zip | cut -f1 -d' '>> FlutterPluginRegistrant_debug.checksum.txt
 
-      - name: Publish
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "Frameworks/Release/*.zip,Frameworks/Release/*.checksum.txt,Frameworks/Debug/*.zip,Frameworks/Debug/*.checksum.txt"
-          replacesArtifacts: false
-          allowUpdates: true
-          tag: ${{steps.tag.outputs.version }}
+      # - name: Publish
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     artifacts: "Frameworks/Release/*.zip,Frameworks/Release/*.checksum.txt,Frameworks/Debug/*.zip,Frameworks/Debug/*.checksum.txt"
+      #     replacesArtifacts: false
+      #     allowUpdates: true
+      #     tag: ${{steps.tag.outputs.version }}
