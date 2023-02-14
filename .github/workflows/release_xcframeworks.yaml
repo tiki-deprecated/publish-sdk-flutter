@@ -3,7 +3,7 @@ name: Publish XCFrameworks
 on:
   push:
     branches:
-      - fix/186-release-action-should-checkout-the-release-branch
+      - fix/xcframeworks_release
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
