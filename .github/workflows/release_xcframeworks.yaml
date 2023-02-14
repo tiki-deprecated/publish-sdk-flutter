@@ -24,6 +24,7 @@ jobs:
     steps:
       - name: "Checkout TIKI SDK Flutter"
         uses: actions/checkout@v3
+        run: git fetch --prune --unshallow --tags
 
       - name: Get Version From Pubspec
         id: tag
