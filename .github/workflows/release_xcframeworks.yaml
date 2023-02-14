@@ -33,7 +33,7 @@ jobs:
 
       - name: Checkout current tag
         run: | 
-          git checkout tags/${{steps.tag.outputs.version }}
+#          git checkout tags/${{steps.tag.outputs.version }}
           git branch
           git tag
 
