@@ -68,8 +68,8 @@ jobs:
           shasum -a 256 sqlite3.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework.checksum.txt
           zip -r flutter_secure_storage.xcframework.zip flutter_secure_storage.xcframework
           shasum -a 256 flutter_secure_storage.xcframework.zip | cut -f1 -d' '>> flutter_secure_storage.checksum.txt
-          zip -r path_provider_ios.xcframework.zip path_provider_ios.xcframework
-          shasum -a 256 path_provider_ios.xcframework.zip | cut -f1 -d' '>> path_provider_ios.checksum.txt
+          zip -r path_provider_foundation.xcframework.zip path_provider_foundation.xcframework
+          shasum -a 256 path_provider_foundation.xcframework.zip | cut -f1 -d' '>> path_provider_foundation.checksum.txt
           zip -r App.xcframework.zip App.xcframework
           shasum -a 256 App.xcframework.zip | cut -f1 -d' '>> App.checksum.txt
           zip -r Flutter.xcframework.zip Flutter.xcframework
@@ -86,8 +86,8 @@ jobs:
           shasum -a 256 sqlite3_debug.xcframework.zip | cut -f1 -d' '>> sqlite3.xcframework_debug.checksum.txt
           zip -r flutter_secure_storage_debug.xcframework.zip flutter_secure_storage.xcframework
           shasum -a 256 flutter_secure_storage_debug.xcframework.zip | cut -f1 -d' '>> flutter_secure_storage_debug.checksum.txt
-          zip -r path_provider_ios_debug.xcframework.zip path_provider_ios.xcframework
-          shasum -a 256 path_provider_ios_debug.xcframework.zip | cut -f1 -d' '>> path_provider_ios_debug.checksum.txt
+          zip -r path_provider_foundation_debug.xcframework.zip path_provider_foundation.xcframework
+          shasum -a 256 path_provider_foundation_debug.xcframework.zip | cut -f1 -d' '>> path_provider_foundation_debug.checksum.txt
           zip -r App_debug.xcframework.zip App.xcframework
           shasum -a 256 App_debug.xcframework.zip | cut -f1 -d' '>> App_debug.checksum.txt
           zip -r Flutter_debug.xcframework.zip Flutter.xcframework
