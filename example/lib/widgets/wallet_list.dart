@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiki_sdk_flutter/main.dart';
 
 class WalletList extends StatefulWidget {
   final List<String> wallets;
@@ -23,7 +24,12 @@ class WalletListState extends State<WalletList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+          Navigator.pop(context, [wallets, currentWallet]);
+          return Future.value(false);
+        },
+        child: Scaffold(
       body: SafeArea(
           child: Container(
               color: const Color(0xFFDDDDDD),
@@ -53,10 +59,7 @@ class WalletListState extends State<WalletList> {
                               leading: const Icon(Icons.keyboard_arrow_left,
                                   color: Color(0xFFD2D5D7)),
                               onTap: () {
-                                if (wallet != currentWallet) {
-                                  // TODO load wallet
-                                }
-                                Navigator.of(context).pop();
+                                Navigator.pop(context, [wallets, wallet]);
                               },
                             )),
                         if (wallets.indexOf(wallet) < wallets.length - 1)
@@ -66,11 +69,27 @@ class WalletListState extends State<WalletList> {
                   ])))),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // TODO create new wallet
+          loadTikiSdk();
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.add),
       ),
-    );
+    ));
+  }
+
+  Future<void> loadTikiSdk([String? address]) async {
+      String origin = "com.mytiki.tiki_sdk_example";
+      String publishingId = "e12f5b7b-6b48-4503-8b39-28e4995b5f88";
+      TikiSdkFlutterBuilder builder = TikiSdkFlutterBuilder()
+        ..origin(origin)
+        ..publishingId(publishingId);
+      if (address != null) builder.address(address);
+      TikiSdk tikiSdk = await builder.build();
+      if (address == null) {
+        wallets.add(tikiSdk.address);
+      }
+      setState(() {
+        currentWallet = tikiSdk.address;
+      });
   }
 }

@@ -4,8 +4,9 @@ import 'body_edit.dart';
 
 class BodyCard extends StatefulWidget {
   final String body;
+  final void Function(String body) updateBody;
 
-  const BodyCard(this.body, void Function(String body) updateBody, {super.key});
+  const BodyCard(this.body, this.updateBody, {super.key});
 
   @override
   State<StatefulWidget> createState() => BodyCardState();
@@ -39,7 +40,12 @@ class BodyCardState extends State<BodyCard> {
                 overflow: TextOverflow.ellipsis,
               )
             ]),
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => BodyEdit(widget.body)))));
+            onTap: () async {
+              String body = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BodyEdit(widget.body)));
+              if(body != widget.body) widget.updateBody(body);
+            }));
   }
 }
