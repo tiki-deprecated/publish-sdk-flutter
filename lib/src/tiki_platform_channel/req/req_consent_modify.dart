@@ -18,7 +18,7 @@ class ReqConsentModify {
   ReqConsentModify.fromJson(String jsonReq) {
     Map map = jsonDecode(jsonReq);
     List? paths = map["destination"]?["paths"];
-    List? uses = map["destination"]?["paths"];
+    List? uses = map["destination"]?["uses"];
     Map<String, List<String>> destMap = {
       "paths": paths?.map<String>((e) => e.toString()).toList() ?? [],
       "uses": uses?.map<String>((e) => e.toString()).toList() ?? [],
