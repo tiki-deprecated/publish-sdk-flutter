@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
 const String origin = "com.mytiki.tiki_sdk_example";
-const String publishingId = "2b8de004-cbe0-4bd5-bda6-b266d54f5c90";
+const String publishingId = "e12f5b7b-6b48-4503-8b39-28e4995b5f88";
 
 void main() async {
   TikiSdk tikiSdk = await (TikiSdkFlutterBuilder()..publishingId(publishingId)..origin(origin)).build();

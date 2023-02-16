@@ -34,7 +34,7 @@ class RequestList extends StatelessWidget {
                     children: [
                       ListTile(
                           contentPadding: const EdgeInsets.all(0),
-                          title: Text(request.message,
+                          title: Text(request.message.replaceAll("\n", ""),
                               maxLines: 1, overflow: TextOverflow.ellipsis),
                           leading: Text(request.icon),
                           trailing: Text(request.timeStamp),

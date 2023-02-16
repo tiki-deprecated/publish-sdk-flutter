@@ -45,7 +45,7 @@ android {
     defaultConfig {
         applicationId "com.mytiki.tiki_sdk_flutter.example"
         minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

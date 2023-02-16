@@ -30,6 +30,7 @@ class DestinationEditState extends State<DestinationEdit> {
   @override
   void initState() {
     url = widget.url;
+    urlEditingController.text = url;
     httpMethod = widget.httpMethod;
     interval = widget.interval;
     super.initState();
@@ -42,7 +43,7 @@ class DestinationEditState extends State<DestinationEdit> {
     return Scaffold(
         body: WillPopScope(
             onWillPop: () async {
-              Navigator.pop(context, false);
+              Navigator.pop(context, [url, httpMethod, interval]);
               return false;
             },
             child: SafeArea(
@@ -59,7 +60,7 @@ class DestinationEditState extends State<DestinationEdit> {
                               IconButton(
                                 icon: const Icon(Icons.keyboard_arrow_left),
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+                                  Navigator.pop(context, [url, httpMethod, interval]);
                                 },
                               ),
                               const Text("Destination",
