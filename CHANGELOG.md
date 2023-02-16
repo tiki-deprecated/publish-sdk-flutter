@@ -1,3 +1,6 @@
+## 1.1.3
+
+* update example app architecture
 ## 1.1.2
 
 * release binaries with tiki-sdk-dart 1.1.1
