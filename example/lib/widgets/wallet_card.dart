@@ -4,8 +4,8 @@ import 'wallet_list.dart';
 
 class WalletCard extends StatelessWidget {
   final String currentWallet;
-  final List<String> wallets;
-  final Future<void> Function([String? address]) loadTikiSdk;
+  final List wallets;
+  final Future<void> Function(List wallets, String? wallet) loadTikiSdk;
 
   const WalletCard(this.wallets, this.currentWallet, this.loadTikiSdk, {super.key});
 
@@ -28,11 +28,11 @@ class WalletCard extends StatelessWidget {
                   const Icon(Icons.keyboard_arrow_right)
                 ]),
             onTap: () async {
-              String wallet = await Navigator.push(
+              List walletList = await Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => WalletList(wallets, currentWallet)));
-              if(wallet != currentWallet) loadTikiSdk(wallet);
+              if(walletList[1] != currentWallet) loadTikiSdk(walletList[0], walletList[1] );
             }));
   }
 }

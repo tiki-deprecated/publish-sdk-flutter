@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 
 class WalletList extends StatefulWidget {
-  final List<String> wallets;
+  final List wallets;
   final String currentWallet;
 
   const WalletList(this.wallets, this.currentWallet, {super.key});
@@ -12,7 +12,7 @@ class WalletList extends StatefulWidget {
 }
 
 class WalletListState extends State<WalletList> {
-  late List<String> wallets;
+  late List wallets;
   late String currentWallet;
 
   @override
@@ -34,6 +34,7 @@ class WalletListState extends State<WalletList> {
           child: Container(
               color: const Color(0xFFDDDDDD),
               padding: const EdgeInsets.all(8.0),
+              height: double.infinity,
               child: SingleChildScrollView(
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

@@ -9,7 +9,12 @@ class BodyEdit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      Navigator.pop(context, bodyEditingController.text);
+      return Future.value(false);
+    },
+    child:  Scaffold(
         body: SafeArea(
             child: Container(
                 color: const Color(0xFFDDDDDD),
@@ -22,7 +27,7 @@ class BodyEdit extends StatelessWidget {
                         child: Row(children: [
                           IconButton(
                               icon: const Icon(Icons.keyboard_arrow_left),
-                              onPressed: () => Navigator.of(context).pop()),
+                              onPressed: () => Navigator.pop(context, bodyEditingController.text)),
                           const Text("Body", style: TextStyle(fontSize: 32)),
                         ]),
                       ),
@@ -50,6 +55,6 @@ class BodyEdit extends StatelessWidget {
                                               .text.length);
                                 },
                               ))),
-                    ]))));
+                    ])))));
   }
 }
