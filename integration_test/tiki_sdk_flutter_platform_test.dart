@@ -10,6 +10,8 @@ import 'tiki_credentials.dart' as credentials;
 void main() {
   String publishingId = credentials.publishingId;
   const String origin = 'com.mytiki.test';
+  const List<String> uses = ["Hello", "World"];
+  const List<String> paths = ["path1", "path2"];
 
   Map<String, Completer<String>> completers = {};
 
@@ -55,8 +57,11 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "requestId": requestId,
-        "request":
-            jsonEncode({"publishingId": publishingId, "origin": origin, "address": address})
+        "request": jsonEncode({
+          "publishingId": publishingId,
+          "origin": origin,
+          "address": address
+        })
       });
       jsonResponse = await completer.future;
       expect(address, jsonDecode(jsonResponse)["address"]);
@@ -193,7 +198,8 @@ void main() {
       completer = Completer();
       completers["modify"] = completer;
       String ownershipId = ownershipMap["transactionId"];
-      Map destination = const TikiSdkDestination.all().toMap();
+
+      Map destination = TikiSdkDestination(paths, uses: uses).toMap();
       await channel.invokeMockMethod('modifyConsent', {
         "requestId": "modify",
         "request":
@@ -237,7 +243,8 @@ void main() {
       completer = Completer();
       completers["modify"] = completer;
       String ownershipId = ownershipMap["transactionId"];
-      Map destination = const TikiSdkDestination.all().toMap();
+
+      Map destination = const TikiSdkDestination(paths, uses: uses).toMap();
       await channel.invokeMockMethod('modifyConsent', {
         "requestId": "modify",
         "request":
@@ -254,9 +261,12 @@ void main() {
       });
 
       jsonResponse = await completer.future;
-      expect(jsonDecode(jsonResponse)["consent"]['ownershipId'], ownershipId);
+      expect(
+          jsonDecode(jsonResponse)["consent"]?["destination"]["paths"], paths);
+      expect(jsonDecode(jsonResponse)["consent"]?["destination"]["uses"], uses);
     });
 
+    /// this
     test('Apply Consent', () async {
       Completer<String> completer = Completer();
       String requestId = 'build';
@@ -289,7 +299,9 @@ void main() {
       completer = Completer();
       completers["modify"] = completer;
       String ownershipId = ownershipMap["transactionId"];
-      Map destination = const TikiSdkDestination.all().toMap();
+
+      /// this
+      Map destination = const TikiSdkDestination(paths, uses: uses).toMap();
       await channel.invokeMockMethod('modifyConsent', {
         "requestId": "modify",
         "request":
