@@ -23,15 +23,24 @@ class OwnershipCard extends StatelessWidget {
                   children: const [
                     Expanded(
                         child: Text(
-                      "Ownership",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      "Ownership NFT",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.blue),
                     )),
                     Icon(Icons.keyboard_arrow_right)
                   ]),
               const Padding(padding: EdgeInsets.all(8.0)),
-              Text(ownership == null ? "" : Bytes.base64UrlEncode(ownership!.transactionId!))
+              Text(
+                ownership == null
+                    ? ""
+                    : Bytes.base64UrlEncode(ownership!.transactionId!),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 8))
             ]),
-            onTap: () => ownership == null ? null : Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => OwnershipDetail(ownership!)))));
+            onTap: () => ownership == null
+                ? null
+                : Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => OwnershipDetail(ownership!)))));
   }
 }

@@ -22,30 +22,36 @@ class BodyCardState extends State<BodyCard> {
             border: Border.all(width: 1.0, color: const Color(0xFFCCCCCC)),
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: GestureDetector(
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Expanded(
-                        child: Text(
-                      "Body",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
-                    Icon(Icons.keyboard_arrow_right)
-                  ]),
-              const Padding(padding: EdgeInsets.all(8.0)),
-              Text(
-                widget.body,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              )
-            ]),
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Expanded(
+                            child: Text(
+                          "Body (JSON)",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.blue),
+                        )),
+                        Icon(Icons.keyboard_arrow_right)
+                      ]),
+                  const Padding(padding: EdgeInsets.all(8.0)),
+                  Text(
+                    widget.body,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const Padding(padding: EdgeInsets.only(bottom: 10))
+                ]),
             onTap: () async {
               String body = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => BodyEdit(widget.body)));
-              if(body != widget.body) widget.updateBody(body);
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BodyEdit(widget.body)));
+              if (body != widget.body) widget.updateBody(body);
             }));
   }
 }

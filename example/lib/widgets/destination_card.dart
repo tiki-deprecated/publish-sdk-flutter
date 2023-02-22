@@ -8,8 +8,9 @@ class DestinationCard extends StatelessWidget {
   final int interval;
   final Function(String url, String httpMethod, int interval) updateDestination;
 
-  const DestinationCard(this.url, this.httpMethod, this.interval,
-      this.updateDestination, {super.key});
+  const DestinationCard(
+      this.url, this.httpMethod, this.interval, this.updateDestination,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +28,25 @@ class DestinationCard extends StatelessWidget {
                     Expanded(
                         child: Text(
                       "Destination",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.blue),
                     )),
                     Icon(Icons.keyboard_arrow_right)
                   ]),
               const Padding(padding: EdgeInsets.all(8.0)),
-              Text("$httpMethod $url")
+              Text(
+                "$httpMethod $url",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const Padding(padding: EdgeInsets.only(bottom: 10))
             ]),
             onTap: () async {
-              List destinationDetails = await Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    DestinationEdit(url, httpMethod, interval)));
-              updateDestination(destinationDetails[0], destinationDetails[1], destinationDetails[2]);
+              List destinationDetails = await Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          DestinationEdit(url, httpMethod, interval)));
+              updateDestination(destinationDetails[0], destinationDetails[1],
+                  destinationDetails[2]);
             }));
   }
 }

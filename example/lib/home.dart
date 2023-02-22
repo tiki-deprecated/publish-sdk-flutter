@@ -19,7 +19,8 @@ class HomeWidget extends StatefulWidget {
   final String publishingId;
   final TikiSdk initialTikiSdk;
 
-  const HomeWidget(this.initialTikiSdk, this.publishingId, this.origin, {super.key});
+  const HomeWidget(this.initialTikiSdk, this.publishingId, this.origin,
+      {super.key});
 
   @override
   State<StatefulWidget> createState() => HomeWidgetState();
@@ -45,13 +46,13 @@ class HomeWidgetState extends State<HomeWidget> {
   @override
   void initState() {
     tikiSdk = widget.initialTikiSdk;
-    if(wallets.isEmpty) wallets.add(widget.initialTikiSdk.address);
+    if (wallets.isEmpty) wallets.add(widget.initialTikiSdk.address);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if(ownership == null) _getOrAssignOwnership();
+    if (ownership == null) _getOrAssignOwnership();
     return SafeArea(
         child: Container(
             color: const Color(0xFFDDDDDD),
@@ -61,14 +62,14 @@ class HomeWidgetState extends State<HomeWidget> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Try It Out", style: TextStyle(fontSize: 32)),
-                const Padding(padding: EdgeInsets.all(8)),
-                const Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text(
-                      "Wallet",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
+                const Text("Try It Out",
+                    style:
+                        TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                const Padding(padding: EdgeInsets.all(16)),
+                Text(
+                  "Wallet",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
                 const Padding(padding: EdgeInsets.all(8)),
                 WalletCard(wallets, tikiSdk.address, _loadTikiSdk),
                 const Padding(padding: EdgeInsets.all(8)),
@@ -76,12 +77,10 @@ class HomeWidgetState extends State<HomeWidget> {
                 const Padding(padding: EdgeInsets.all(8)),
                 ConsentCard(consent, toggleState, _modifyConsent),
                 const Padding(padding: EdgeInsets.all(8)),
-                const Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text(
-                      "Outbound Requests",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
+                Text(
+                  "Outbound Request(s)",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
                 const Padding(padding: EdgeInsets.all(8)),
                 DestinationCard(url, httpMethod, interval, _updateDestination),
                 const Padding(padding: EdgeInsets.all(8)),
@@ -106,7 +105,7 @@ class HomeWidgetState extends State<HomeWidget> {
     }
   }
 
-  void _updateDestination(String url, String httpMethod, int interval){
+  void _updateDestination(String url, String httpMethod, int interval) {
     this.url = url;
     this.httpMethod = httpMethod;
     this.interval = interval;
@@ -115,7 +114,7 @@ class HomeWidgetState extends State<HomeWidget> {
     setState(() {});
   }
 
-  void _updateBody(String body){
+  void _updateBody(String body) {
     bodyData = body;
     _getOrAssignOwnership();
   }
@@ -138,7 +137,7 @@ class HomeWidgetState extends State<HomeWidget> {
   }
 
   Future<void> _makeRequest() async {
-    if(ownership == null){
+    if (ownership == null) {
       await _getOrAssignOwnership();
       return;
     }
@@ -187,12 +186,12 @@ class HomeWidgetState extends State<HomeWidget> {
     await tikiSdk
         .assignOwnership(source, TikiSdkDataTypeEnum.stream, ["Test data"]);
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
-      ownership = tikiSdk.getOwnership(source)!;
-    }));
+          ownership = tikiSdk.getOwnership(source)!;
+        }));
   }
 
   Future<void> _modifyConsent(bool allow) async {
-    if(ownership == null){
+    if (ownership == null) {
       await _getOrAssignOwnership();
       return;
     }
@@ -200,13 +199,12 @@ class HomeWidgetState extends State<HomeWidget> {
     String path = uri.host + uri.path;
     consent = await tikiSdk.modifyConsent(
         Bytes.base64UrlEncode(ownership!.transactionId!),
-          allow ?
-          TikiSdkDestination([path], uses: [httpMethod]) :
-          const TikiSdkDestination.none());
+        allow
+            ? TikiSdkDestination([path], uses: [httpMethod])
+            : const TikiSdkDestination.none());
 
     setState(() {
       toggleState = allow;
     });
   }
-
 }

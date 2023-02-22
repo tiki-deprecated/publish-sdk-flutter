@@ -7,7 +7,8 @@ class WalletCard extends StatelessWidget {
   final List wallets;
   final Future<void> Function(List wallets, String? wallet) loadTikiSdk;
 
-  const WalletCard(this.wallets, this.currentWallet, this.loadTikiSdk, {super.key});
+  const WalletCard(this.wallets, this.currentWallet, this.loadTikiSdk,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +25,20 @@ class WalletCard extends StatelessWidget {
                   Expanded(
                       child: Padding(
                           padding: const EdgeInsets.all(8),
-                          child: Text(currentWallet))),
+                          child: Text(
+                            currentWallet,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ))),
                   const Icon(Icons.keyboard_arrow_right)
                 ]),
             onTap: () async {
               List walletList = await Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => WalletList(wallets, currentWallet)));
-              if(walletList[1] != currentWallet) loadTikiSdk(walletList[0], walletList[1] );
+                      builder: (context) =>
+                          WalletList(wallets, currentWallet)));
+              if (walletList[1] != currentWallet)
+                loadTikiSdk(walletList[0], walletList[1]);
             }));
   }
 }

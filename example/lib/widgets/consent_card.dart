@@ -20,30 +20,39 @@ class ConsentCard extends StatelessWidget {
             border: Border.all(width: 1.0, color: const Color(0xFFCCCCCC)),
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: GestureDetector(
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Expanded(
-                        child: Text(
-                      "Consent",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
-                    Icon(Icons.keyboard_arrow_right)
-                  ]),
-              const Padding(padding: EdgeInsets.all(8.0)),
-              Text(consent == null
-                  ? ""
-                  : Bytes.base64UrlEncode(consent!.transactionId!)),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                const Text("Toggle Consent"),
-                Switch(
-                  value: toggleStatus,
-                  activeColor: Colors.green,
-                  onChanged: (bool allow) => modifyConsent(allow),
-                )
-              ])
-            ]),
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Expanded(
+                            child: Text(
+                          "Consent NFT",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.blue),
+                        )),
+                        Icon(Icons.keyboard_arrow_right)
+                      ]),
+                  const Padding(padding: EdgeInsets.all(8.0)),
+                  Text(
+                    consent == null
+                        ? "No consent"
+                        : Bytes.base64UrlEncode(consent!.transactionId!),
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Toggle Consent"),
+                        Switch(
+                          value: toggleStatus,
+                          activeColor: Colors.green,
+                          onChanged: (bool allow) => modifyConsent(allow),
+                        )
+                      ])
+                ]),
             onTap: () => consent != null
                 ? Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ConsentDetail(consent!)))
