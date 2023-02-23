@@ -1,9 +1,12 @@
 /// {@category UI}
 import 'package:flutter/material.dart';
 import 'package:tiki_sdk_flutter/ui/completion_sheet.dart';
+import 'package:tiki_sdk_flutter/ui/offer_bullets.dart';
+import 'package:tiki_sdk_flutter/ui/offer_card.dart';
 import 'package:tiki_sdk_flutter/ui/text_viewer.dart';
 
 import 'assets/icons/tiki_sdk_icons_icons.dart';
+import 'button.dart';
 import 'offer.dart';
 
 /// A dismissible bottom sheet that shows an [Offer] to the user.
@@ -74,166 +77,22 @@ class OfferSheet extends StatelessWidget {
                             ]))),
                     IconButton(
                         onPressed: () => print("learnmore"),
-                        icon: Icon(TikiSdkIcons.icon_circle_question)),
+                        icon: Icon(TikiSdkIcons.icon_circle_question, color: Color.fromARGB(153, 0, 0, 0))),
                   ])),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
-            child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color.fromARGB(13, 0, 0, 0),
-                          offset: Offset(4, 4))
-                    ],
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(bottom: 5),
-                            child: Image.asset("lib/ui/assets/images/offer_sample.png", package: "tiki_sdk_flutter")),
-                        RichText(
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            text: TextSpan(
-                                text:
-                                    "Trade your IDFA (kind of like a serial # for your phone) for a discount.",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    height: 1.2,
-                                    color: Color.fromARGB(150, 0, 0, 0),
-                                    fontFamily: "SpaceGrotesk",
-                                    package: "tiki_sdk_flutter"))),
-                      ],
-                    ))),
-          ),
-          Padding(
-              padding: EdgeInsets.only(top: 24.0, bottom:32),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                                padding: EdgeInsets.only(bottom: 16),
-                                child: Text(
-                                  "HOW YOUR DATA WILL BE USED",
-                                  style: TextStyle(
-                                      fontFamily: "SpaceGrotesk",
-                                      package: "tiki_sdk_flutter",
-                                      fontSize: 16,
-                                      height: 1.8,
-                                      fontWeight: FontWeight.bold,
-                                      color: primaryColor),
-                                )),
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 16),
-                              child: Row(children: [
-                                Padding(
-                                    padding: EdgeInsets.only(right: 10),
-                                    child: Icon(TikiSdkIcons.check_icon,
-                                        color: Color.fromRGBO(0, 178, 114, 1),
-                                        size: 12)),
-                                Text(
-                                  "Learn how our ads perform",
-                                  style: TextStyle(
-                                      fontFamily: "SpaceGrotesk",
-                                      package: "tiki_sdk_flutter",
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(0, 0, 0, 0.6)),
-                                )
-                              ]),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 16),
-                              child: Row(children: [
-                                Padding(
-                                    padding: EdgeInsets.only(right: 10),
-                                    child: Icon(TikiSdkIcons.x_icon,
-                                        color: Color.fromRGBO(199, 48, 0, 1),
-                                        size: 12)),
-                                Text(
-                                  "Reach you on other platforms",
-                                  style: TextStyle(
-                                      fontFamily: "SpaceGrotesk",
-                                      package: "tiki_sdk_flutter",
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(0, 0, 0, 0.6)),
-                                )
-                              ]),
-                            ),
-                            Row(children: [
-                                Padding(
-                                    padding: EdgeInsets.only(right: 10),
-                                    child: Icon(TikiSdkIcons.x_icon,
-                                        color: Color.fromRGBO(199, 48, 0, 1),
-                                        size: 12)),
-                                Text(
-                                  "Sold to other companies",
-                                  style: TextStyle(
-                                      fontFamily: "SpaceGrotesk",
-                                      package: "tiki_sdk_flutter",
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(0, 0, 0, 0.6)),
-                                )
-                              ]),
-                          ]))
-                ],
-              )),
+          OfferCard(offer: offer),
+          OfferBullets(offer, primaryColor),
           Padding(padding: EdgeInsets.only(bottom: 50, left: 15, right: 15), child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              GestureDetector(
-                onTap: () => print("Back Off"),
-                child: Container(
-                    width: 170,
-                padding: EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(width: 1.0, color: accentColor),
-                  borderRadius: BorderRadius.circular(10)
-                ),
-                child: Center(child: Text("Back Off", style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                  height: 1.2,
-                  color: Color.fromRGBO(28, 0, 0, 1),
-                  fontFamily: "SpaceGrotesk",
-                  package: "tiki_sdk_flutter")))),
+              Button(
+                "Back off",
+                () => print("no"),
+                primaryColor,
+                accentColor
               ),
-              GestureDetector(
-                onTap: () => print("I'm in!"),
-                child: Container(
-                    width: 170,
-                    padding: EdgeInsets.all(14),
-                    decoration: BoxDecoration(
-                        color: accentColor,
-                        border: Border.all(width: 1.0, color: accentColor),
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Center(child: Text("I'm in", style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                        height: 1.2,
-                        color: Colors.white,
-                        fontFamily: "SpaceGrotesk",
-                        package: "tiki_sdk_flutter")))),
+              Button.solid(
+                "I'm in",
+                () => print("ok"),
+                accentColor
               )
             ])
           )

@@ -1,4 +1,5 @@
 /// {@category UI}
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 /// The button used in Tiki SDK UIs.
@@ -28,35 +29,51 @@ class Button extends StatelessWidget {
   /// The button's text color.
   final Color textColor;
 
-  /// The default constructor.
+  /// The default constructor for outlined button.
   ///
   /// The parameters are the button's [text] and its on tap [callback].
   /// The background color is white, the text color is the [primaryColor]
   /// and the border color is the [accentColor]. The [font] can be customized,
   /// default is `SpaceGrotesk`
-  const Button(this.text, this.callback, primaryColor,
+  Button(this.text, this.callback, primaryColor,
       accentColor, {
         super.key, this.font = "SpaceGrotesk"})
       :
         borderColor = accentColor,
         textColor = primaryColor,
-        backgroundColor = const Color(0x00FFFFFF);
+        backgroundColor = const Color(0xFFFFFFFF);
 
-  /// The constructor for a collored button.
+  /// The constructor for a solid button.
   ///
   /// The parameters are the button's [text] and its on tap [callback].
   /// The background color and the border color is the [accentColor]. The text
   /// color is white. The [font] can be customized,vdefault is `SpaceGrotesk`.
-  const Button.color(this.text, this.callback, accentColor,
+  Button.solid(this.text, this.callback, accentColor,
       {super.key, this.font = "SpaceGrotesk"})
       :
         backgroundColor = accentColor,
         borderColor = accentColor,
-        textColor = const Color(0x00FFFFFF);
+        textColor = const Color(0xFFFFFFFF);
 
   @override
-  Widget build(BuildContext context) {
-    // TODO: https://github.com/tiki/tiki-sdk-flutter/issues/201
-    throw UnimplementedError();
-  }
+  Widget build(BuildContext context) =>
+    GestureDetector(
+      onTap: () => callback,
+      child: Container(
+          width: 170,
+          padding: EdgeInsets.all(14),
+          decoration: BoxDecoration(
+              color: backgroundColor,
+              border: Border.all(width: 1.0, color: borderColor),
+              borderRadius: BorderRadius.circular(10)
+          ),
+          child: Center(child: Text(text, style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
+              height: 1.2,
+              color: textColor,
+              fontFamily: "SpaceGrotesk",
+              package: "tiki_sdk_flutter")))),
+    );
+
 }

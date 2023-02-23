@@ -7,12 +7,12 @@ import 'offer_item.dart';
 class TikiFlow{
   
   Offer offer = Offer(
-    "test Offer",
-    Image.network("https://via.placeholder.com/320x100"),
+      "Trade your IDFA (kind of like a serial # for your phone) for a discount.",
+      Image.asset("lib/ui/assets/images/offer_sample.png", package: "tiki_sdk_flutter"),
     [
-      OfferItem("test", true),
-      OfferItem("no", true),
-      OfferItem("no", true)
+      OfferItem("Learn how our ads perform", true),
+      OfferItem("Reach you on other platforms", false),
+      OfferItem("Sold to other companies", false)
     ]
   );
   
