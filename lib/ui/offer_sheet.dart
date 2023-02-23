@@ -43,7 +43,7 @@ class OfferSheet extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(40), topRight: Radius.circular(40)),
       ),
       child: Column(
@@ -52,12 +52,13 @@ class OfferSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 15.0),
+              padding: const EdgeInsets.only(
+                  top: 20.0, left: 15.0, right: 15, bottom: 15),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                        padding: EdgeInsets.only(left: 15.0),
+                        padding: const EdgeInsets.only(left: 15.0),
                         child: RichText(
                             text: TextSpan(
                                 text: titleVerb,
@@ -75,27 +76,21 @@ class OfferSheet extends StatelessWidget {
                                   text: "DATA",
                                   style: TextStyle(color: primaryColor)),
                             ]))),
-                    IconButton(
-                        onPressed: () => print("learnmore"),
-                        icon: Icon(TikiSdkIcons.icon_circle_question, color: Color.fromARGB(153, 0, 0, 0))),
+                    const IconButton(
+                        onPressed: null,
+                        icon: Icon(TikiSdkIcons.icon_circle_question,
+                            color: Color.fromARGB(153, 0, 0, 0))),
                   ])),
           OfferCard(offer: offer),
           OfferBullets(offer, primaryColor),
-          Padding(padding: EdgeInsets.only(bottom: 50, left: 15, right: 15), child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Button(
-                "Back off",
-                () => print("no"),
-                primaryColor,
-                accentColor
-              ),
-              Button.solid(
-                "I'm in",
-                () => print("ok"),
-                accentColor
-              )
-            ])
-          )
+          Padding(
+              padding: const EdgeInsets.only(bottom: 50, left: 15, right: 15),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Button("Back Off", () => null, primaryColor, accentColor),
+                    Button.solid("I'm in", () => null, accentColor)
+                  ]))
         ],
       ),
     );

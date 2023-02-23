@@ -15,7 +15,7 @@ class OfferBullets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-      padding: const EdgeInsets.only(top: 24.0, bottom: 32),
+      padding: const EdgeInsets.only(top: 20.0, bottom: 32),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,

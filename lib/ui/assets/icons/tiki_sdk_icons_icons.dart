@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/TikiSdkIcons.ttf
 ///
-/// 
+///
 ///
 import 'package:flutter/widgets.dart';
 
@@ -21,7 +21,10 @@ class TikiSdkIcons {
   static const _kFontFam = 'TikiSdkIcons';
   static const String _kFontPkg = 'tiki_sdk_flutter';
 
-  static const IconData x_icon = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData check_icon = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData icon_circle_question = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData x_icon =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData check_icon =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData icon_circle_question =
+      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

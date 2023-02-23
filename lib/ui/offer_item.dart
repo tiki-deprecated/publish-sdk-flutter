@@ -1,8 +1,7 @@
 /// {@category UI}
 
 /// An item that describes what can be done with the user data.
-class OfferItem{
-
+class OfferItem {
   /// Description of the data usage.
   final String description;
 

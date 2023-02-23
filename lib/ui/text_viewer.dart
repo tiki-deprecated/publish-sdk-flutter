@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 
 /// A MarkDown text viewer with optional callback button.
-class TextViewer extends StatelessWidget{
+class TextViewer extends StatelessWidget {
   /// The color that will be used in the color Button.
   final Color accentColor;
 
@@ -35,20 +35,18 @@ class TextViewer extends StatelessWidget{
   /// - primaryColor: The text color. Default #2D2D2D
   /// - backgroundColor: default #FFFFFF
   /// - font: the fontFamily from pubspec. Default "SpaceGrotesk"
-  const TextViewer(
-      this.text, {super.key,
-        this.callback,
-        this.buttonText = "I agree",
-        this.accentColor = const Color(0x0024956a),
-        this.primaryColor = const Color(0x002D2D2D),
-        this.backgroundColor = const Color(0x00ffffff),
-        this.font = "SpaceGrotesk"
-      });
+  const TextViewer(this.text,
+      {super.key,
+      this.callback,
+      this.buttonText = "I agree",
+      this.accentColor = const Color(0x0024956a),
+      this.primaryColor = const Color(0x002D2D2D),
+      this.backgroundColor = const Color(0x00ffffff),
+      this.font = "SpaceGrotesk"});
 
   @override
   Widget build(BuildContext context) {
     // TODO:https://github.com/tiki/tiki-sdk-flutter/issues/203
     throw UnimplementedError();
   }
-
 }

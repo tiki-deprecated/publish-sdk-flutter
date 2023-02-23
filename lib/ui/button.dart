@@ -10,7 +10,6 @@ import 'package:flutter/widgets.dart';
 /// the [accentColor] and the text color is white.
 /// The font can be customized. The default is `SpaceGrotesk`
 class Button extends StatelessWidget {
-
   /// The text of the button.
   final String text;
 
@@ -35,11 +34,9 @@ class Button extends StatelessWidget {
   /// The background color is white, the text color is the [primaryColor]
   /// and the border color is the [accentColor]. The [font] can be customized,
   /// default is `SpaceGrotesk`
-  Button(this.text, this.callback, primaryColor,
-      accentColor, {
-        super.key, this.font = "SpaceGrotesk"})
-      :
-        borderColor = accentColor,
+  Button(this.text, this.callback, primaryColor, accentColor,
+      {super.key, this.font = "SpaceGrotesk"})
+      : borderColor = accentColor,
         textColor = primaryColor,
         backgroundColor = const Color(0xFFFFFFFF);
 
@@ -50,30 +47,28 @@ class Button extends StatelessWidget {
   /// color is white. The [font] can be customized,vdefault is `SpaceGrotesk`.
   Button.solid(this.text, this.callback, accentColor,
       {super.key, this.font = "SpaceGrotesk"})
-      :
-        backgroundColor = accentColor,
+      : backgroundColor = accentColor,
         borderColor = accentColor,
         textColor = const Color(0xFFFFFFFF);
 
   @override
-  Widget build(BuildContext context) =>
-    GestureDetector(
-      onTap: () => callback,
-      child: Container(
-          width: 170,
-          padding: EdgeInsets.all(14),
-          decoration: BoxDecoration(
-              color: backgroundColor,
-              border: Border.all(width: 1.0, color: borderColor),
-              borderRadius: BorderRadius.circular(10)
-          ),
-          child: Center(child: Text(text, style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 20,
-              height: 1.2,
-              color: textColor,
-              fontFamily: "SpaceGrotesk",
-              package: "tiki_sdk_flutter")))),
-    );
-
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: () => callback,
+        child: Container(
+            width: 170,
+            padding: EdgeInsets.all(14),
+            decoration: BoxDecoration(
+                color: backgroundColor,
+                border: Border.all(width: 1.0, color: borderColor),
+                borderRadius: BorderRadius.circular(10)),
+            child: Center(
+                child: Text(text,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        height: 1.2,
+                        color: textColor,
+                        fontFamily: "SpaceGrotesk",
+                        package: "tiki_sdk_flutter")))),
+      );
 }
