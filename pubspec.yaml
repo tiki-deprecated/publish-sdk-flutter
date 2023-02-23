@@ -31,3 +31,22 @@ flutter:
     androidX: true
     androidPackage: com.mytiki.tiki_sdk_flutter
     iosBundleIdentifier: com.mytiki.tiki-sdk-flutter
+
+  assets:
+    - lib/ui/assets/images/offer_sample.png
+  fonts:
+    - family: SpaceGrotesk
+      fonts:
+        - asset: lib/ui/assets/fonts/SpaceGrotesk-Light.ttf
+          weight: 300
+        - asset: lib/ui/assets/fonts/SpaceGrotesk-Regular.ttf
+          weight: 400
+        - asset: lib/ui/assets/fonts/SpaceGrotesk-Medium.ttf
+          weight: 500
+        - asset: lib/ui/assets/fonts/SpaceGrotesk-SemiBold.ttf
+          weight: 600
+        - asset: lib/ui/assets/fonts/SpaceGrotesk-Bold.ttf
+          weight: 700
+    - family: TikiSdkIcons
+      fonts:
+        - asset: lib/ui/assets/fonts/TikiSdkIcons.ttf
