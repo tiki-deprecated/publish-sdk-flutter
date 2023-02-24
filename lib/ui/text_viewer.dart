@@ -18,7 +18,7 @@ class TextViewer extends StatelessWidget {
   final Color? backgroundColor;
 
   /// The fontFamily from pubspec.
-  final String? font;
+  final String? fontFamily;
 
   final String? package;
 
@@ -44,37 +44,39 @@ class TextViewer extends StatelessWidget {
       this.buttonColor,
       this.textColor,
       this.backgroundColor,
-      this.font, this.package});
+      this.fontFamily,
+      this.package});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    title: 'TIKI SDK Example App',
-    home: WillPopScope(
+  Widget build(BuildContext context) => WillPopScope(
       onWillPop: () {
         Navigator.of(context).pop(false);
         return Future.value(false);
       },
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).pop() ),
-          title: Text(title),
-          actions: [LearnMoreButton()],
-        ),
-        body: SafeArea(child:
-          Column(
-            children: [
-              Expanded(child: FutureBuilder(
-              future: DefaultAssetBundle.of(context).loadString(mdAsset),
-                builder: (context, snapshot) {
-                  return Markdown(data: snapshot.data!);
-                    }
-                ),
+          appBar: AppBar(
+            leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pop()),
+            title: Text(title),
+          ),
+          body: SafeArea(
+              child: Column(children: [
+            Expanded(
+              child: FutureBuilder(
+                  future: DefaultAssetBundle.of(context).loadString(mdAsset),
+                  builder: (context, snapshot) {
+                    return Markdown(data: snapshot.data!);
+                  }),
             ),
-            if(buttonText != null) Padding(
-              padding: const EdgeInsets.only(top: 40, bottom: 50, left:15, right:15),
-              child: Button.solid(buttonText!, () {
-                Navigator.of(context).pop(true);
-              }, buttonColor))
-            ])
-        ))));
+            if (buttonText != null)
+              Padding(
+                  padding: const EdgeInsets.only(
+                      top: 40, bottom: 50, left: 15, right: 15),
+                  child: Button.solid(buttonText!, () {
+                    Navigator.of(context).pop(true);
+                  }, buttonColor))
+          ]))));
 }
+
+class

@@ -21,10 +21,10 @@ class TikiSdkIcons {
   static const _kFontFam = 'TikiSdkIcons';
   static const String _kFontPkg = 'tiki_sdk_flutter';
 
-  static const IconData x_icon =
+  static const IconData x =
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData check_icon =
+  static const IconData check =
       IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData icon_circle_question =
+  static const IconData circleQuestion =
       IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tiki_sdk_flutter/ui/decision_sheet.dart';
+import 'package:tiki_sdk_flutter/ui/offer.dart';
 import 'package:tiki_sdk_flutter/ui/used_bullet.dart';
 
 const String origin = "com.mytiki.tiki_sdk_example";
@@ -29,9 +29,9 @@ class MyApp extends StatelessWidget {
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) => DecisionSheet(
-          description: "Trade your IDFA (kind of like a serial # for your phone) for a discount.",
-          image: Image.asset("lib/ui/assets/images/offer_sample.png"),
-          bullets: [
+          "Trade your IDFA (kind of like a serial # for your phone) for a discount.",
+          Image.asset("lib/ui/assets/images/offer_sample.png"),
+          [
             UsedBullet("Learn how our ads perform", true),
             UsedBullet("Reach you on other platforms", false),
             UsedBullet("Sold to other companies", false),

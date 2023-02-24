@@ -10,12 +10,13 @@ import 'offer.dart';
 /// A `X` represents the not allowed [OfferItem] and a `V` represents an allowed one.
 ///
 class UsedFor extends StatelessWidget {
-  final Color? textColor;
   final List<UsedBullet> bullets;
+  final Color? textColor;
   final String? fontFamily;
-  final String? package;
+  final String? fontPackage;
 
-  const UsedFor(this.bullets, this.textColor, {super.key, this.fontFamily, this.package});
+  const UsedFor(this.bullets,
+      {super.key, this.textColor, this.fontFamily, this.fontPackage});
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -36,7 +37,7 @@ class UsedFor extends StatelessWidget {
                       "HOW YOUR DATA WILL BE USED",
                       style: TextStyle(
                           fontFamily: fontFamily,
-                          package: package,
+                          package: fontPackage,
                           fontSize: 16,
                           height: 1.8,
                           fontWeight: FontWeight.bold,
@@ -48,17 +49,17 @@ class UsedFor extends StatelessWidget {
                             Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: item.isUsed
-                                    ? const Icon(TikiSdkIcons.check_icon,
+                                    ? const Icon(TikiSdkIcons.check,
                                         color: Color.fromRGBO(0, 178, 114, 1),
                                         size: 12)
-                                    : const Icon(TikiSdkIcons.x_icon,
+                                    : const Icon(TikiSdkIcons.x,
                                         color: Color.fromRGBO(199, 48, 0, 1),
                                         size: 12)),
                             Text(
                               item.text,
                               style: TextStyle(
                                   fontFamily: fontFamily,
-                                  package: package,
+                                  package: fontPackage,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: textColor),

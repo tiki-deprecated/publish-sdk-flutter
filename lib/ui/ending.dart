@@ -1,7 +1,7 @@
 /// {@category UI}
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
-import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 /// A dismissible bottom sheet that will be shown after the TIKI flow is complete.
 class CompletionSheet extends StatelessWidget {
@@ -53,21 +53,19 @@ class CompletionSheet extends StatelessWidget {
   /// - textColor: The text color. Default #2D2D2D
   /// - backgroundColor: default #FFFFFF
   /// - font: the fontFamily from pubspec. Default "SpaceGrotesk"
-  const CompletionSheet(this.title,
-      this.footerText,
-      this.linkText,
-      this.beforeLinkText, {super.key,
-        this.headerTextBeforeAccent = "",
-        this.headerTextAccent = "",
-        this.headerTextAfterAccent = "",
-        this.accentColor,
-        this.textColor,
-        this.secondaryTextColor,
-        this.backgroundColor,
-        this.onTap,
-        this.fontFamily,
-        this.package
-      });
+  const CompletionSheet(
+      this.title, this.footerText, this.linkText, this.beforeLinkText,
+      {super.key,
+      this.headerTextBeforeAccent = "",
+      this.headerTextAccent = "",
+      this.headerTextAfterAccent = "",
+      this.accentColor,
+      this.textColor,
+      this.secondaryTextColor,
+      this.backgroundColor,
+      this.onTap,
+      this.fontFamily,
+      this.package});
 
   /// The CompletionSheet to be shown after user denies the use of data.
   ///
@@ -102,12 +100,12 @@ class CompletionSheet extends StatelessWidget {
   /// - font: the fontFamily from pubspec. Default "SpaceGrotesk"
   const CompletionSheet.awesome(
       {super.key,
-        this.textColor,
-        this.secondaryTextColor,
-        this.accentColor,
-        this.backgroundColor,
-        this.fontFamily,
-        this.package})
+      this.textColor,
+      this.secondaryTextColor,
+      this.accentColor,
+      this.backgroundColor,
+      this.fontFamily,
+      this.package})
       : title = "Awesome! You’re in",
         footerText = "We’re on it, stay tuned.",
         linkText = "settings",
@@ -124,25 +122,27 @@ class CompletionSheet extends StatelessWidget {
   /// - textColor: The text color. Default #2D2D2D
   /// - backgroundColor: default #FFFFFF
   /// - font: the fontFamily from pubspec. Default "SpaceGrotesk"
-  CompletionSheet.requestPermissions(
-      Map<String, Permission> requiredPermissions,
-      {super.key,
-        this.headerTextBeforeAccent = "",
-        this.headerTextAccent = "WHOOPS",
-        this.headerTextAfterAccent = "",
-        this.textColor,
-        this.secondaryTextColor,
-        this.accentColor,
-        this.backgroundColor,
-        this.fontFamily,
-        this.package,
-        }) : assert(requiredPermissions.isEmpty, "A least one permission should be requested"),
-          title = "Permission Required",
-          footerText = "Offer declined.",
-          beforeLinkText = "To proceed, allow ",
-          linkText = requiredPermissions.length == 1 ? requiredPermissions.keys.single : "permissions",
-          onTap = _requestPermissions(requiredPermissions.values.toList());
-
+  CompletionSheet.error(
+    Map<String, Permission> requiredPermissions, {
+    super.key,
+    this.headerTextBeforeAccent = "",
+    this.headerTextAccent = "WHOOPS",
+    this.headerTextAfterAccent = "",
+    this.textColor,
+    this.secondaryTextColor,
+    this.accentColor,
+    this.backgroundColor,
+    this.fontFamily,
+    this.package,
+  })  : assert(requiredPermissions.isEmpty,
+            "A least one permission should be requested"),
+        title = "Permission Required",
+        footerText = "Offer declined.",
+        beforeLinkText = "To proceed, allow ",
+        linkText = requiredPermissions.length == 1
+            ? requiredPermissions.keys.single
+            : "permissions",
+        onTap = _requestPermissions(requiredPermissions.values.toList());
 
   @override
   Widget build(BuildContext context) {
@@ -162,14 +162,12 @@ class CompletionSheet extends StatelessWidget {
                   child: RichText(
                       text: TextSpan(
                           text: headerTextBeforeAccent,
-                          style:
-                          TextStyle(
+                          style: TextStyle(
                               fontFamily: fontFamily,
                               package: package,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: textColor)
-                          ,
+                              color: textColor),
                           children: [
                         TextSpan(
                             text: " $headerTextAccent ",
@@ -213,8 +211,8 @@ class CompletionSheet extends StatelessWidget {
                           children: [
                         TextSpan(
                           text: linkText,
-                          style:
-                              const TextStyle(decoration: TextDecoration.underline),
+                          style: const TextStyle(
+                              decoration: TextDecoration.underline),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => onTap,
                         ),
@@ -226,9 +224,6 @@ class CompletionSheet extends StatelessWidget {
   }
 }
 
-_requestPermissions(List<Permission> list) {
-}
+_requestPermissions(List<Permission> list) {}
 
-void _goToSettings(){
-
-}
+void _goToSettings() {}

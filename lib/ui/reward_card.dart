@@ -2,18 +2,20 @@
 import 'package:flutter/material.dart';
 
 /// The card that represents an offer
-class OfferCard extends StatelessWidget {
-  final Image image;
+class RewardCard extends StatelessWidget {
+  final Image reward;
   final String description;
   final Color? textColor;
   final Color? backgroundColor;
   final String? fontFamily;
-  final String? package;
+  final String? fontPackage;
 
-  const OfferCard(this.image, this.description, {super.key,
-    this.textColor,
-    this.backgroundColor,
-    this.fontFamily, this.package});
+  const RewardCard(this.reward, this.description,
+      {super.key,
+      this.textColor,
+      this.backgroundColor,
+      this.fontFamily,
+      this.fontPackage});
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -35,11 +37,8 @@ class OfferCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: SizedBox(
-                            width: 300,
-                            height: 86,
-                            child: image),
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: SizedBox(width: 300, height: 86, child: reward),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15),
@@ -54,7 +53,7 @@ class OfferCard extends StatelessWidget {
                                   height: 1.2,
                                   color: textColor,
                                   fontFamily: fontFamily,
-                                  package: package))),
+                                  package: fontPackage))),
                     )
                   ],
                 ))),
