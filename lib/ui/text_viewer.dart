@@ -1,5 +1,9 @@
 /// {@category UI}
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+
+import 'assets/icons/tiki_sdk_icons_icons.dart';
+import 'button.dart';
 
 /// A MarkDown text viewer with optional callback button.
 class TextViewer extends StatelessWidget {
@@ -26,6 +30,8 @@ class TextViewer extends StatelessWidget {
   /// If null, the button will not be shown.
   final Function? callback;
 
+  final String title;
+
   /// Default constructor for TextViewer
   ///
   /// The TextViewer is fully customizable using this constructor
@@ -35,7 +41,7 @@ class TextViewer extends StatelessWidget {
   /// - primaryColor: The text color. Default #2D2D2D
   /// - backgroundColor: default #FFFFFF
   /// - font: the fontFamily from pubspec. Default "SpaceGrotesk"
-  const TextViewer(this.text,
+  const TextViewer(this.text, this.title,
       {super.key,
       this.callback,
       this.buttonText = "I agree",
@@ -45,8 +51,31 @@ class TextViewer extends StatelessWidget {
       this.font = "SpaceGrotesk"});
 
   @override
-  Widget build(BuildContext context) {
-    // TODO:https://github.com/tiki/tiki-sdk-flutter/issues/203
-    throw UnimplementedError();
-  }
+  Widget build(BuildContext context) => MaterialApp(
+    title: 'TIKI SDK Example App',
+    home: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).pop() ),
+          title: Text(title),
+          actions: [
+            IconButton(icon: const Icon(TikiSdkIcons.icon_circle_question,
+                color: Color.fromARGB(153, 0, 0, 0)), onPressed: () => "Learnmore"
+            )
+          ],
+        ),
+        body: SafeArea(child:
+          Column(
+            children: [
+              Expanded(child: FutureBuilder(
+              future: DefaultAssetBundle.of(context).loadString('assets/data/text.md'),
+                builder: (context, snapshot) {
+                  return Markdown(data: snapshot.data!);
+                    }
+                ),
+            ),
+            if(callback != null) Padding(
+              padding: const EdgeInsets.only(top: 40, bottom: 50, left:15, right:15),
+              child: Button.solid(buttonText, callback!, accentColor))
+            ])
+        )));
 }

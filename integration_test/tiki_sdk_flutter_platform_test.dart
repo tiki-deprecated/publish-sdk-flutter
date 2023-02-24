@@ -199,7 +199,7 @@ void main() {
       completers["modify"] = completer;
       String ownershipId = ownershipMap["transactionId"];
 
-      Map destination = TikiSdkDestination(paths, uses: uses).toMap();
+      Map destination = const TikiSdkDestination(paths, uses: uses).toMap();
       await channel.invokeMockMethod('modifyConsent', {
         "requestId": "modify",
         "request":

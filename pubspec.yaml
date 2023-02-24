@@ -13,11 +13,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_markdown: ^0.6.14
   flutter_secure_storage: ^8.0.0
-  path_provider: ^2.0.12
+  path_provider: ^2.0.13
   sqlite3: ^1.9.1
-  sqlite3_flutter_libs: ^0.5.12
+  sqlite3_flutter_libs: ^0.5.13
   tiki_sdk_dart: ^1.1.1
+  permission_handler: ^10.2.0
 
 dev_dependencies:
   integration_test:
@@ -32,21 +34,7 @@ flutter:
     androidPackage: com.mytiki.tiki_sdk_flutter
     iosBundleIdentifier: com.mytiki.tiki-sdk-flutter
 
-  assets:
-    - lib/ui/assets/images/offer_sample.png
   fonts:
-    - family: SpaceGrotesk
-      fonts:
-        - asset: lib/ui/assets/fonts/SpaceGrotesk-Light.ttf
-          weight: 300
-        - asset: lib/ui/assets/fonts/SpaceGrotesk-Regular.ttf
-          weight: 400
-        - asset: lib/ui/assets/fonts/SpaceGrotesk-Medium.ttf
-          weight: 500
-        - asset: lib/ui/assets/fonts/SpaceGrotesk-SemiBold.ttf
-          weight: 600
-        - asset: lib/ui/assets/fonts/SpaceGrotesk-Bold.ttf
-          weight: 700
     - family: TikiSdkIcons
       fonts:
         - asset: lib/ui/assets/fonts/TikiSdkIcons.ttf

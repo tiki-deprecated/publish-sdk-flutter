@@ -1,5 +1,6 @@
 /// {@category UI}
 import 'package:flutter/cupertino.dart';
+import 'package:tiki_sdk_flutter/ui/used_bullet.dart';
 
 import 'assets/icons/tiki_sdk_icons_icons.dart';
 import 'offer.dart';
@@ -7,11 +8,12 @@ import 'offer.dart';
 /// The list of [OfferItem] of the [Offer].
 ///
 /// A `X` represents the not allowed [OfferItem] and a `V` represents an allowed one.
-class OfferBullets extends StatelessWidget {
-  final Offer offer;
-  final Color primaryColor;
+///
+class UsedFor extends StatelessWidget {
+  final Color? textColor;
+  final List<UsedBullet> bullets;
 
-  const OfferBullets(this.offer, this.primaryColor, {super.key});
+  const UsedFor(this.bullets, this.textColor, {super.key});
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -31,19 +33,19 @@ class OfferBullets extends StatelessWidget {
                     Text(
                       "HOW YOUR DATA WILL BE USED",
                       style: TextStyle(
-                          fontFamily: "SpaceGrotesk",
-                          package: "tiki_sdk_flutter",
+                          fontFamily: fontFamily,
+                          package: package,
                           fontSize: 16,
                           height: 1.8,
                           fontWeight: FontWeight.bold,
-                          color: primaryColor),
+                          color: textColor),
                     ),
-                    ...offer.items.map((item) => Padding(
+                    ...bullets.map((item) => Padding(
                           padding: const EdgeInsets.only(top: 16),
                           child: Row(children: [
                             Padding(
                                 padding: const EdgeInsets.only(right: 10),
-                                child: item.allow
+                                child: item.isUsed
                                     ? const Icon(TikiSdkIcons.check_icon,
                                         color: Color.fromRGBO(0, 178, 114, 1),
                                         size: 12)
@@ -51,10 +53,10 @@ class OfferBullets extends StatelessWidget {
                                         color: Color.fromRGBO(199, 48, 0, 1),
                                         size: 12)),
                             Text(
-                              item.description,
+                              item.text,
                               style: const TextStyle(
-                                  fontFamily: "SpaceGrotesk",
-                                  package: "tiki_sdk_flutter",
+                                  fontFamily: fontFamily,
+                                  package: package,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromRGBO(0, 0, 0, 0.6)),

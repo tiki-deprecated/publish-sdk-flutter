@@ -1,12 +1,12 @@
 /// {@category UI}
 import 'package:flutter/material.dart';
-import 'offer.dart';
 
-/// The card that represents an [Offer]
+/// The card that represents an offer
 class OfferCard extends StatelessWidget {
-  final Offer offer;
+  final Image image;
+  final String description;
 
-  const OfferCard({super.key, required this.offer});
+  const OfferCard(this.image, this.description, {super.key});
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -29,21 +29,21 @@ class OfferCard extends StatelessWidget {
                   children: [
                     Padding(
                         padding: const EdgeInsets.only(bottom: 10),
-                        child: offer.image),
+                        child: image),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15),
                       child: RichText(
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           text: TextSpan(
-                              text: offer.description,
+                              text: description,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                   height: 1.2,
                                   color: Color.fromARGB(150, 0, 0, 0),
-                                  fontFamily: "SpaceGrotesk",
-                                  package: "tiki_sdk_flutter"))),
+                                  fontFamily: fontFamily,
+                                  package: package))),
                     )
                   ],
                 ))),
