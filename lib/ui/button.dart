@@ -1,15 +1,10 @@
 /// {@category UI}
 import 'package:flutter/material.dart';
 
-/// The button used in Tiki SDK UIs.
 class Button extends StatelessWidget {
-  /// The text of the button.
   final String text;
-
-  /// The callback function for button tap.
   final Function onTap;
 
-  /// The button's background color.
   final Color? backgroundColor;
 
   /// The button's border color.
@@ -22,16 +17,16 @@ class Button extends StatelessWidget {
   final String? fontFamily;
 
   /// The package that contains the [font] assets.
-  final String? package;
+  final String? fontPackage;
 
   /// The default constructor for outlined button.
   const Button(this.text, this.onTap, this.textColor, this.borderColor,
-      {super.key, this.fontFamily, this.package})
+      {super.key, this.fontFamily, this.fontPackage})
       : backgroundColor = const Color(0xFFFFFFFF);
 
   /// The constructor for a solid color button.
   const Button.solid(this.text, this.onTap, this.backgroundColor,
-      {super.key, this.textColor = Colors.white, this.fontFamily, this.package})
+      {super.key, this.textColor = Colors.white, this.fontFamily, this.fontPackage})
       : borderColor = backgroundColor;
 
   @override
@@ -53,6 +48,6 @@ class Button extends StatelessWidget {
                     height: 1.2,
                     color: textColor,
                     fontFamily: fontFamily,
-                    package: package))),
+                    package: fontPackage))),
       ));
 }

@@ -2,15 +2,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:tiki_sdk_flutter/ui/used_bullet.dart';
 
-import 'assets/icons/tiki_sdk_icons_icons.dart';
-import 'offer.dart';
+import '../src/assets/icons/tiki_sdk_icons_icons.dart';
 
-/// The list of [OfferItem] of the [Offer].
-///
-/// A `X` represents the not allowed [OfferItem] and a `V` represents an allowed one.
-///
 class UsedFor extends StatelessWidget {
+
   final List<UsedBullet> bullets;
+
   final Color? textColor;
   final String? fontFamily;
   final String? fontPackage;

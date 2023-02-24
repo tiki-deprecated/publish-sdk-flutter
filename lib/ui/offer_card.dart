@@ -1,16 +1,18 @@
 /// {@category UI}
 import 'package:flutter/material.dart';
 
-/// The card that represents an offer
-class RewardCard extends StatelessWidget {
+class OfferCard extends StatelessWidget {
+
   final Image reward;
   final String description;
+
   final Color? textColor;
   final Color? backgroundColor;
+
   final String? fontFamily;
   final String? fontPackage;
 
-  const RewardCard(this.reward, this.description,
+  const OfferCard(this.reward, this.description,
       {super.key,
       this.textColor,
       this.backgroundColor,

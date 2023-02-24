@@ -1,42 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:tiki_sdk_flutter/ui/learn_more_btn.dart';
-import 'package:tiki_sdk_flutter/ui/offer.dart';
+import 'package:tiki_sdk_flutter/ui/offer_card.dart';
 
 import 'button.dart';
-import 'used_bullet.dart';
+import 'markdown.dart';
+import 'used_for.dart';
 
 class Settings extends StatefulWidget {
 
   final bool isIn;
 
-  final Offer offer;
-  final Markdown terms;
+  final RichText title;
+
+  final OfferCard rewardCard;
+  final UsedFor usedFor;
+  final MarkdownViewer terms;
 
   final String? fontFamily;
   final String? fontPackage;
-
-  final RichText title;
 
   final Color? primaryTextColor;
   final Color? secondaryTextColor;
   final Color? accentColor;
 
-  const Settings(this.isAccepted,
+  const Settings(this.isIn, this.title, this.rewardCard, this.usedFor, this.terms,
       {super.key,
-      required this.offerImage,
-      required this.offerDescription,
-      required this.title,
-      required this.offerItems,
-      required this.mdText,
-      this.headerTextBeforeAccent,
-      this.headerTextAccent,
-      this.headerTextAfterAccent,
-      this.package,
-      this.textColor,
       this.accentColor,
+      this.primaryTextColor,
       this.secondaryTextColor,
-      this.fontFamily});
+      this.fontFamily,
+      this.fontPackage});
 
   @override
   State<StatefulWidget> createState() => SettingsState();
@@ -47,7 +40,7 @@ class SettingsState extends State<Settings> {
 
   @override
   void initState() {
-    isAccepted = widget.isAccepted;
+    isAccepted = widget.isIn;
     super.initState();
   }
 
@@ -57,23 +50,7 @@ class SettingsState extends State<Settings> {
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop()),
-        title: RichText(
-            text: TextSpan(
-                text: widget.headerTextBeforeAccent,
-                style: TextStyle(
-                    fontFamily: widget.fontFamily,
-                    package: widget.fontPackage,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: widget.textColor),
-                children: [
-              TextSpan(
-                  text: " ${widget.headerTextAccent} ",
-                  style: TextStyle(color: widget.accentColor)),
-              TextSpan(
-                  text: widget.headerTextAfterAccent,
-                  style: TextStyle(color: widget.textColor)),
-            ])),
+        title: widget.title,
         actions: [
           LearnMoreButton(
             iconColor: widget.secondaryTextColor,
@@ -84,7 +61,10 @@ class SettingsState extends State<Settings> {
           child: Column(children: [
         Padding(
           padding: const EdgeInsets.only(top: 30.0),
-          child: offer),
+          child: Column(children: [
+            widget.rewardCard,
+            widget.usedFor
+          ]),
         ),
         Padding(
             padding: const EdgeInsets.only(top: 30.0),
@@ -92,13 +72,8 @@ class SettingsState extends State<Settings> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(Terms and Conditions),
-                FutureBuilder(
-                    future: DefaultAssetBundle.of(context)
-                        .loadString(widget.mdText),
-                    builder: (context, snapshot) {
-                      return Markdown(data: snapshot.data!);
-                    }),
+                const Text("Terms and Conditions"),
+                widget.terms
               ],
             )),
         Padding(
@@ -107,13 +82,13 @@ class SettingsState extends State<Settings> {
                 ? Button(
                     "Opt Out",
                     _change,
-                    widget.textColor,
+                    widget.primaryTextColor,
                     widget.accentColor,
                     fontFamily: widget.fontFamily,
-                    package: widget.fontPackage,
+                    fontPackage: widget.fontPackage,
                   )
                 : Button.solid("Opt In", _change, widget.accentColor,
-                    fontFamily: widget.fontFamily, package: widget.fontPackage))
+                    fontFamily: widget.fontFamily, fontPackage: widget.fontPackage))
       ])));
 
   Future<void> _change() async {

@@ -1,13 +1,14 @@
 /// {@category UI}
 import 'package:flutter/material.dart';
+import 'package:tiki_sdk_flutter/ui/terms.dart';
 
 import 'button.dart';
 import 'learn_more_btn.dart';
-import 'reward_card.dart';
+import 'offer_card.dart';
 import 'used_bullet.dart';
 import 'used_for.dart';
 
-class DecisionSheet extends StatelessWidget {
+class Offer extends StatelessWidget {
 
   final RichText title;
 
@@ -15,8 +16,8 @@ class DecisionSheet extends StatelessWidget {
   final String description;
   final List<UsedBullet> usedFor;
 
-  final Function backOff;
-  final Function imIn;
+  final Function onOptIn;
+  final Function onOptOut;
 
   final Color? primaryTextColor;
   final Color? secondaryTextColor;
@@ -28,9 +29,8 @@ class DecisionSheet extends StatelessWidget {
   final String? fontPackage;
 
 
-  const DecisionSheet(this.title, this.description, this.reward, this.usedFor,
-    this.backOff, this.imIn, {
-    super.key,
+  const Offer(this.title, this.description, this.reward, this.usedFor,
+    this.onOptOut, this.onOptIn, {super.key,
     this.primaryTextColor,
     this.secondaryTextColor,
     this.primaryBackgroundColor,
@@ -65,7 +65,7 @@ class DecisionSheet extends StatelessWidget {
                     ),
                     LearnMoreButton(iconColor: secondaryTextColor)
                   ])),
-          RewardCard(
+          OfferCard(
             reward,
             description,
             textColor: primaryTextColor,
@@ -82,16 +82,29 @@ class DecisionSheet extends StatelessWidget {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Button("Back Off", () => backOff, primaryTextColor,
-                        accentColor,
-                        fontFamily: fontFamily, package: fontPackage),
+                    Button("Back Off", () => onOptOut, primaryTextColor, accentColor,
+                        fontFamily: fontFamily, fontPackage: fontPackage),
                     Button.solid(
-                      "I'm in", () => imIn, accentColor, fontFamily: fontFamily,
-                      package: fontPackage,
+                      "I'm in", () => _optIn(context), accentColor, fontFamily: fontFamily,
+                      fontPackage: fontPackage,
                     )
                   ]))
         ],
       ),
     );
+  }
+
+  Future<void> _optIn(BuildContext context) async{
+    bool termsAccepted = await Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) =>
+            Terms("lib/src/assets/data/terms.md",
+                buttonColor : accentColor,
+                textColor : Colors.white,
+                backgroundColor : primaryBackgroundColor,
+                fontFamily : fontFamily,
+                fontPackage : fontPackage)));
+    if(termsAccepted){
+      onOptIn();
+    }
   }
 }

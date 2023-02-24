@@ -38,3 +38,6 @@ flutter:
     - family: TikiSdkIcons
       fonts:
         - asset: lib/ui/assets/fonts/TikiSdkIcons.ttf
+
+  assets:
+    - lib/src/assets/data
