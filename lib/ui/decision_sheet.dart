@@ -6,6 +6,7 @@ import 'package:tiki_sdk_flutter/ui/text_viewer.dart';
 
 import 'assets/icons/tiki_sdk_icons_icons.dart';
 import 'button.dart';
+import 'learn_more_btn.dart';
 import 'offer.dart';
 import 'used_bullet.dart';
 
@@ -19,6 +20,7 @@ import 'used_bullet.dart';
 ///  true, it will show the [TextViewer] with [termsText] for the user accept the
 ///  terms before the [CompletionSheet.awesome] screen is shown.
 class DecisionSheet extends StatelessWidget {
+
 
   /// A description of the data usage.
   ///
@@ -35,7 +37,7 @@ class DecisionSheet extends StatelessWidget {
   ///
   /// Maximum 3 items.
   final List<UsedBullet> bullets;
-  final List<Permission> requiredPermissions;
+  final Map<String, Permission> requiredPermissions;
   final String titleVerb;
   final Color? primaryTextColor;
   final Color? secondaryTextColor;
@@ -45,11 +47,15 @@ class DecisionSheet extends StatelessWidget {
   final Color? backgroundColor;
   final String? fontFamily;
   final String? package;
+  final String headerTextAccent;
+  final String headerTextAfterAccent;
 
-  const DecisionSheet(this.description,  this.image,  this.bullets,
+  bool termsAccepted = false;
+
+  DecisionSheet(this.description,  this.image,  this.bullets,
       {super.key,
-      this.requiredPermissions = const [],
-      this.titleVerb = "YOUR",
+      this.requiredPermissions = const {},
+      this.titleVerb = "TRADE",
       this.primaryTextColor,
       this.secondaryTextColor,
       this.primaryBackgroundColor,
@@ -58,6 +64,8 @@ class DecisionSheet extends StatelessWidget {
       this.backgroundColor,
       this.fontFamily,
       this.package,
+        this.headerTextAccent = "YOUR",
+        this.headerTextAfterAccent = "DATA",
       });
 
   @override
@@ -97,18 +105,15 @@ class DecisionSheet extends StatelessWidget {
                                     color: primaryTextColor),
                                 children: [
                               TextSpan(
-                                  text: " YOUR ",
+                                  text: headerTextAccent,
                                   style: TextStyle(color: accentColor)),
                               TextSpan(
-                                  text: "DATA",
+                                  text: headerTextAfterAccent,
                                   style: TextStyle(color: primaryTextColor)),
                             ]))),
-                    const IconButton(
-                        onPressed: null,
-                        icon: Icon(TikiSdkIcons.icon_circle_question,
-                            color: Color.fromARGB(153, 0, 0, 0))),
+                      LearnMoreButton(iconColor: secondaryTextColor)
                   ])),
-          Offer(image: image, description: description, bullets: bullets, textColor: primaryTextColor),
+          Offer(image, description, bullets, textColor: primaryTextColor, backGroundColor: backgroundColor, fontFamily: fontFamily, package: package,),
           Padding(
               padding: const EdgeInsets.only(bottom: 50, left: 15, right: 15),
               child: Row(
@@ -118,28 +123,55 @@ class DecisionSheet extends StatelessWidget {
                       Navigator.pop(context);
                       showModalBottomSheet<dynamic>(
                           context: context,
-                          isScrollControlled: true,
                           backgroundColor: Colors.transparent,
-                          builder: (BuildContext context) => requireTerms ?
-                            CompletionSheet.error(
-                                this.title,
-                                this.footerText,
-                                this.linkText,
-                                this.beforeLinkText,
-                                requiredPermissions: requiredPermissions) :
-                            CompletionSheet.awesome());
+                          builder: (BuildContext context) =>
+                              CompletionSheet.backoff());
                     }, primaryTextColor, accentColor),
                     Button.solid("I'm in", () {
-                      Navigator.pop(context);
-                      showModalBottomSheet<dynamic>(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        builder: (BuildContext context) => const CompletionSheet.backoff());
+                        _handleCompletion(context);
                       }, accentColor)
                   ]))
         ],
       ),
     );
+  }
+
+  Future<void> _handleCompletion(BuildContext context) async {
+    if(!termsAccepted){
+      bool accepted = await Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) =>
+              TextViewer('assets/data/text.md', "Terms and Conditions",
+                  textColor: primaryTextColor,
+                  buttonColor: accentColor,
+                  backgroundColor: backgroundColor)));
+      if(accepted) {
+        Navigator.pop(context);
+        showModalBottomSheet<dynamic>(
+            context: context,
+            backgroundColor: Colors.transparent,
+            builder: (BuildContext context) =>
+                CompletionSheet.awesome());
+      }
+      return;
+    }
+    for(Permission permission in requiredPermissions.values){
+      var status = await permission.status;
+      if (status != PermissionStatus.granted) {
+        Navigator.pop(context);
+        showModalBottomSheet<dynamic>(
+            context: context,
+            backgroundColor: Colors.transparent,
+            builder: (BuildContext context) =>
+                CompletionSheet.requestPermissions(requiredPermissions));
+        return;
+      }
+    }
+    Navigator.pop(context);
+    showModalBottomSheet<dynamic>(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext context) =>
+          CompletionSheet.awesome());
+
   }
 }

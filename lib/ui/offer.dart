@@ -13,13 +13,24 @@ class Offer extends StatelessWidget{
   final List<UsedBullet> bullets;
   final Color? textColor;
 
-  const Offer({super.key, required this.image, required this.description, required this.bullets, required this.textColor});
+  final String? fontFamily;
+
+  final String? package;
+
+  final Color? backGroundColor;
+
+  const Offer(this.image, this.description, this.bullets,{ super.key,
+        this.textColor,
+        this.fontFamily,
+        this.package,
+        this.backGroundColor});
 
   @override
   Widget build(BuildContext context) {
     return Column(children:[
-      OfferCard(image, description),
-      UsedFor(bullets, textColor),
+      OfferCard(image, description, textColor: textColor,
+          backgroundColor: backGroundColor, fontFamily: fontFamily, package: package),
+      UsedFor(bullets, textColor, fontFamily: fontFamily, package: package),
     ]);
   }
 }

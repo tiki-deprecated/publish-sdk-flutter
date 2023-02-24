@@ -5,8 +5,15 @@ import 'package:flutter/material.dart';
 class OfferCard extends StatelessWidget {
   final Image image;
   final String description;
+  final Color? textColor;
+  final Color? backgroundColor;
+  final String? fontFamily;
+  final String? package;
 
-  const OfferCard(this.image, this.description, {super.key});
+  const OfferCard(this.image, this.description, {super.key,
+    this.textColor,
+    this.backgroundColor,
+    this.fontFamily, this.package});
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -14,7 +21,7 @@ class OfferCard extends StatelessWidget {
         child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
-                color: Colors.white,
+                color: backgroundColor,
                 boxShadow: const [
                   BoxShadow(
                       color: Color.fromARGB(13, 0, 0, 0), offset: Offset(4, 4))
@@ -29,7 +36,11 @@ class OfferCard extends StatelessWidget {
                   children: [
                     Padding(
                         padding: const EdgeInsets.only(bottom: 10),
-                        child: image),
+                        child: SizedBox(
+                            width: 300,
+                            height: 86,
+                            child: image),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15),
                       child: RichText(
@@ -37,11 +48,11 @@ class OfferCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           text: TextSpan(
                               text: description,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                   height: 1.2,
-                                  color: Color.fromARGB(150, 0, 0, 0),
+                                  color: textColor,
                                   fontFamily: fontFamily,
                                   package: package))),
                     )

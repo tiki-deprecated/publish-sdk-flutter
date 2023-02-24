@@ -12,8 +12,10 @@ import 'offer.dart';
 class UsedFor extends StatelessWidget {
   final Color? textColor;
   final List<UsedBullet> bullets;
+  final String? fontFamily;
+  final String? package;
 
-  const UsedFor(this.bullets, this.textColor, {super.key});
+  const UsedFor(this.bullets, this.textColor, {super.key, this.fontFamily, this.package});
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -54,12 +56,12 @@ class UsedFor extends StatelessWidget {
                                         size: 12)),
                             Text(
                               item.text,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontFamily: fontFamily,
                                   package: package,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(0, 0, 0, 0.6)),
+                                  color: textColor),
                             )
                           ]),
                         ))

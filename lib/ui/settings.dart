@@ -16,9 +16,19 @@ class Settings extends StatelessWidget{
   @override
   Widget build(BuildContext context) => MaterialApp(
   title: 'TIKI SDK Example App',
-  home: Scaffold(body: SafeArea(child:
-    Column(
-      children: [
+  home: Scaffold(
+      appBar: AppBar(
+        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).pop() ),
+        title: Text(title),
+        actions: [
+          IconButton(icon: const Icon(TikiSdkIcons.icon_circle_question,
+              color: Color.fromARGB(153, 0, 0, 0)), onPressed: () => "Learnmore"
+          )
+        ],
+      ),
+      body: SafeArea(child:
+      Column(
+          children: [
         //title
         Offer(
             image: offerImage,

@@ -1,6 +1,7 @@
 /// {@category UI}
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:tiki_sdk_flutter/ui/learn_more_btn.dart';
 
 import 'assets/icons/tiki_sdk_icons_icons.dart';
 import 'button.dart';
@@ -8,29 +9,25 @@ import 'button.dart';
 /// A MarkDown text viewer with optional callback button.
 class TextViewer extends StatelessWidget {
   /// The color that will be used in the color Button.
-  final Color accentColor;
+  final Color? buttonColor;
 
   /// The text color.
-  final Color primaryColor;
+  final Color? textColor;
 
   /// The color used in background and in color Button text.
-  final Color backgroundColor;
-
-  /// The text to be shown in the viewer.
-  final String text;
+  final Color? backgroundColor;
 
   /// The fontFamily from pubspec.
-  final String font;
+  final String? font;
+
+  final String? package;
 
   /// The button text.
-  final String buttonText;
-
-  /// The callback function to the button tap.
-  ///
-  /// If null, the button will not be shown.
-  final Function? callback;
+  final String? buttonText;
 
   final String title;
+
+  final String mdAsset;
 
   /// Default constructor for TextViewer
   ///
@@ -41,41 +38,43 @@ class TextViewer extends StatelessWidget {
   /// - primaryColor: The text color. Default #2D2D2D
   /// - backgroundColor: default #FFFFFF
   /// - font: the fontFamily from pubspec. Default "SpaceGrotesk"
-  const TextViewer(this.text, this.title,
+  const TextViewer(this.mdAsset, this.title,
       {super.key,
-      this.callback,
-      this.buttonText = "I agree",
-      this.accentColor = const Color(0x0024956a),
-      this.primaryColor = const Color(0x002D2D2D),
-      this.backgroundColor = const Color(0x00ffffff),
-      this.font = "SpaceGrotesk"});
+      this.buttonText,
+      this.buttonColor,
+      this.textColor,
+      this.backgroundColor,
+      this.font, this.package});
 
   @override
   Widget build(BuildContext context) => MaterialApp(
     title: 'TIKI SDK Example App',
-    home: Scaffold(
+    home: WillPopScope(
+      onWillPop: () {
+        Navigator.of(context).pop(false);
+        return Future.value(false);
+      },
+      child: Scaffold(
         appBar: AppBar(
           leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).pop() ),
           title: Text(title),
-          actions: [
-            IconButton(icon: const Icon(TikiSdkIcons.icon_circle_question,
-                color: Color.fromARGB(153, 0, 0, 0)), onPressed: () => "Learnmore"
-            )
-          ],
+          actions: [LearnMoreButton()],
         ),
         body: SafeArea(child:
           Column(
             children: [
               Expanded(child: FutureBuilder(
-              future: DefaultAssetBundle.of(context).loadString('assets/data/text.md'),
+              future: DefaultAssetBundle.of(context).loadString(mdAsset),
                 builder: (context, snapshot) {
                   return Markdown(data: snapshot.data!);
                     }
                 ),
             ),
-            if(callback != null) Padding(
+            if(buttonText != null) Padding(
               padding: const EdgeInsets.only(top: 40, bottom: 50, left:15, right:15),
-              child: Button.solid(buttonText, callback!, accentColor))
+              child: Button.solid(buttonText!, () {
+                Navigator.of(context).pop(true);
+              }, buttonColor))
             ])
-        )));
+        ))));
 }
