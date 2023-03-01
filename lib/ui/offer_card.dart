@@ -1,23 +1,36 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
 /// {@category UI}
 import 'package:flutter/material.dart';
 
+import '../offer.dart';
+import '../tiki_sdk.dart';
+
+/// A card that represents an [Offer] to the user.
 class OfferCard extends StatelessWidget {
 
-  final Image reward;
-  final String description;
+  /// The offer to be shown.
+  final Offer offer;
 
-  final Color? textColor;
-  final Color? backgroundColor;
+  late final Color? textColor;
+  late final Color? backgroundColor;
 
-  final String? fontFamily;
-  final String? fontPackage;
+  late final String? fontFamily;
+  late final String? fontPackage;
 
-  const OfferCard(this.reward, this.description,
+  OfferCard(this.offer,
       {super.key,
-      this.textColor,
-      this.backgroundColor,
-      this.fontFamily,
-      this.fontPackage});
+      textColor,
+      backgroundColor,
+      fontFamily,
+      fontPackage}){
+    this.textColor = textColor ?? TikiSdk.theme.primaryTextColor;
+    this.backgroundColor = backgroundColor ?? TikiSdk.theme.primaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
+  }
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -40,7 +53,7 @@ class OfferCard extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child: SizedBox(width: 300, height: 86, child: reward),
+                      child: SizedBox(width: 300, height: 86, child: offer.reward),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15),
@@ -48,7 +61,7 @@ class OfferCard extends StatelessWidget {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           text: TextSpan(
-                              text: description,
+                              text: offer.description,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,

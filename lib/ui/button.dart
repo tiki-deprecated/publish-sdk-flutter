@@ -1,33 +1,52 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
 /// {@category UI}
 import 'package:flutter/material.dart';
 
+import '../tiki_sdk.dart';
+
+/// The TikiSdk UI button.
 class Button extends StatelessWidget {
+
+  /// The button's text label .
   final String text;
+
+  /// The function to be called on user tap.
   final Function onTap;
 
-  final Color? backgroundColor;
+  /// The button's background color.
+  late final Color? backgroundColor;
 
   /// The button's border color.
-  final Color? borderColor;
+  late final Color? borderColor;
 
   /// The button's text color.
-  final Color? textColor;
+  late final Color? textColor;
 
   /// The font family of the button's text from pubspec.
-  final String? fontFamily;
+  late final String? fontFamily;
 
-  /// The package that contains the [font] assets.
-  final String? fontPackage;
+  /// The package that contains the [fontFamily] assets.
+  late final String? fontPackage;
 
   /// The default constructor for outlined button.
-  const Button(this.text, this.onTap, this.textColor, this.borderColor,
-      {super.key, this.fontFamily, this.fontPackage})
-      : backgroundColor = const Color(0xFFFFFFFF);
+  Button(this.text, this.onTap, {super.key, textColor, borderColor, fontFamily, fontPackage}){
+    this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
+    this.textColor = textColor ?? TikiSdk.theme.primaryTextColor;
+    this.borderColor = borderColor ?? TikiSdk.theme.accentColor;
+    backgroundColor = const Color(0xFFFFFFFF);
+  }
 
   /// The constructor for a solid color button.
-  const Button.solid(this.text, this.onTap, this.backgroundColor,
-      {super.key, this.textColor = Colors.white, this.fontFamily, this.fontPackage})
-      : borderColor = backgroundColor;
+  Button.solid(this.text, this.onTap, {super.key, color, fontFamily, fontPackage}){
+    this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
+    backgroundColor = color ?? TikiSdk.theme.accentColor;
+    borderColor = borderColor ?? TikiSdk.theme.accentColor;
+  }
 
   @override
   Widget build(BuildContext context) => GestureDetector(

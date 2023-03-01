@@ -1,30 +1,37 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
 /// {@category UI}
 import 'package:flutter/cupertino.dart';
 
+import '../tiki_sdk.dart';
+
 /// A dismissible bottom sheet that will be shown after the TIKI flow is complete.
 class CompletionSheet extends StatelessWidget {
-  final String title;
-  final RichText subtitle;
 
-  final Color? accentColor;
-  final Color? primaryTextColor;
-  final Color? secondaryTextColor;
-  final Color? backgroundColor;
+  /// A [RichText] title to be shown in he top of the bottom sheet.
+  final RichText title;
 
-  final RichText? header;
-  final String? fontFamily;
-  final String? fontPackage;
+  /// The center message of the ending screen.
+  final String message;
 
-  const CompletionSheet(
-      this.title, this.subtitle,
-      {super.key,
-      this.header,
-      this.primaryTextColor,
-      this.accentColor,
-      this.secondaryTextColor,
-      this.backgroundColor,
-      this.fontFamily,
-      this.fontPackage});
+  /// The sub text shown below the message.
+  final RichText footnote;
+
+  late final Color? primaryTextColor;
+  late final Color? backgroundColor;
+  late final String? fontFamily;
+  late final String? fontPackage;
+
+  /// Completion Sheet Builder
+  CompletionSheet(this.title, this.message, this.footnote, {super.key,
+      fontFamily, fontPackage, primaryTextColor, backgroundColor}){
+    this.primaryTextColor = primaryTextColor ?? TikiSdk.theme.primaryTextColor;
+    this.backgroundColor = backgroundColor ?? TikiSdk.theme.primaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +48,10 @@ class CompletionSheet extends StatelessWidget {
             children: <Widget>[
               Padding(
                   padding: const EdgeInsets.only(top: 28.0),
-                  child: header),
+                  child: title),
               Padding(
                   padding: const EdgeInsets.only(top: 36.0),
-                  child: Text(title,
+                  child: Text(message,
                       style: TextStyle(
                           fontFamily: fontFamily,
                           package: fontPackage,
@@ -54,7 +61,7 @@ class CompletionSheet extends StatelessWidget {
                           color: primaryTextColor))),
               Padding(
                   padding: const EdgeInsets.only(top: 36.0),
-                  child: subtitle),
+                  child: footnote),
             ]));
   }
 }

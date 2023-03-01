@@ -1,22 +1,34 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
 /// {@category UI}
 import 'package:flutter/material.dart';
 import 'package:tiki_sdk_flutter/ui/markdown.dart';
 
+import '../tiki_sdk.dart';
+
+/// The Learn More screen with user information of how TIKI SDK works.
 class LearnMore extends StatelessWidget {
 
+  /// The source asset for the Learn More text.
   final String src;
 
-  final Color? textColor;
-  final Color? backgroundColor;
+  late final Color? textColor;
+  late final Color? backgroundColor;
+  late final String? fontFamily;
+  late final String? fontPackage;
 
-  final String? fontFamily;
-  final String? fontPackage;
-
-  const LearnMore(this.src, {super.key,
-    this.textColor,
-    this.backgroundColor,
-    this.fontFamily,
-    this.fontPackage});
+  LearnMore(this.src, {super.key,
+    textColor,
+    backgroundColor,
+    fontFamily,
+    fontPackage}){
+    this.textColor = textColor ?? TikiSdk.theme.primaryTextColor;
+    this.backgroundColor = backgroundColor ?? TikiSdk.theme.primaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
+  }
 
   @override
   Widget build(BuildContext context) => WillPopScope(

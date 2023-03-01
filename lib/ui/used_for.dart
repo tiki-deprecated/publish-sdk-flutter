@@ -1,19 +1,33 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
 /// {@category UI}
 import 'package:flutter/cupertino.dart';
 import 'package:tiki_sdk_flutter/ui/used_bullet.dart';
 
 import '../src/assets/icons/tiki_sdk_icons_icons.dart';
+import '../tiki_sdk.dart';
 
+/// A list of how user data will be used.
 class UsedFor extends StatelessWidget {
 
+  /// The [usedBullet] list of how the data will be used.
   final List<UsedBullet> bullets;
 
-  final Color? textColor;
-  final String? fontFamily;
-  final String? fontPackage;
+  late final Color? textColor;
+  late final String? fontFamily;
+  late final String? fontPackage;
 
-  const UsedFor(this.bullets,
-      {super.key, this.textColor, this.fontFamily, this.fontPackage});
+  UsedFor(this.bullets,
+      {super.key,
+        textColor,
+        fontFamily,
+        fontPackage}){
+    this.textColor = textColor ?? TikiSdk.theme.primaryTextColor;
+    this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
+  }
 
   @override
   Widget build(BuildContext context) => Padding(

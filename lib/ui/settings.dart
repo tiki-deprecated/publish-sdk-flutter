@@ -1,46 +1,65 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+/// {@category UI}
 import 'package:flutter/material.dart';
+import 'package:tiki_sdk_flutter/tiki_sdk.dart';
 import 'package:tiki_sdk_flutter/ui/learn_more_btn.dart';
-import 'package:tiki_sdk_flutter/ui/offer_card.dart';
+import 'package:tiki_sdk_flutter/ui/markdown.dart';
 
+import '../offer.dart';
 import 'button.dart';
-import 'markdown.dart';
+import 'offer_card.dart';
 import 'used_for.dart';
 
 class Settings extends StatefulWidget {
 
-  final bool isIn;
+  final RichText? title;
 
-  final RichText title;
+  final List<Offer> offers;
 
-  final OfferCard rewardCard;
-  final UsedFor usedFor;
-  final MarkdownViewer terms;
+  late final Color primaryTextColor;
+  late final Color secondaryTextColor;
+  late final Color btnOutlineTextColor;
+  late final Color btnOutlineBorderColor;
+  late final Color btnSolidColor;
 
-  final String? fontFamily;
-  final String? fontPackage;
+  late final String? fontPackage;
+  late final String? fontFamily;
 
-  final Color? primaryTextColor;
-  final Color? secondaryTextColor;
-  final Color? accentColor;
-
-  const Settings(this.isIn, this.title, this.rewardCard, this.usedFor, this.terms,
-      {super.key,
-      this.accentColor,
-      this.primaryTextColor,
-      this.secondaryTextColor,
-      this.fontFamily,
-      this.fontPackage});
+  Settings(this.offers, {super.key, this.title,
+    Color? primaryTextColor,
+    Color? secondaryTextColor,
+    Color? btnOutlineTextColor,
+    Color? btnOutlineBorderColor,
+    Color? btnSolidColor,
+    String? fontPackage,
+    String? fontFamily,
+  }){
+    primaryTextColor = primaryTextColor ?? TikiSdk.theme.primaryTextColor;
+    secondaryTextColor = secondaryTextColor ?? TikiSdk.theme.secondaryTextColor;
+    btnOutlineTextColor = btnOutlineTextColor ?? TikiSdk.theme.primaryTextColor;
+    btnOutlineBorderColor = btnOutlineBorderColor ?? TikiSdk.theme.accentColor;
+    btnSolidColor = btnSolidColor ?? TikiSdk.theme.accentColor;
+    fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
+    fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
+  }
 
   @override
   State<StatefulWidget> createState() => SettingsState();
 }
 
 class SettingsState extends State<Settings> {
+
+  int offerIndex = 0;
   bool isAccepted = false;
 
   @override
   void initState() {
-    isAccepted = widget.isIn;
+    TikiSdk.guard(widget.offers[offerIndex].ptr, widget.offers[offerIndex].uses,
+        () => setState(() => isAccepted = true),
+        () => setState(() => isAccepted = false));
     super.initState();
   }
 
@@ -62,8 +81,8 @@ class SettingsState extends State<Settings> {
         Padding(
           padding: const EdgeInsets.only(top: 30.0),
           child: Column(children: [
-            widget.rewardCard,
-            widget.usedFor
+            OfferCard(widget.offers[offerIndex]),
+            UsedFor(widget.offers[offerIndex].usedBullet)
           ]),
         ),
         Padding(
@@ -73,7 +92,7 @@ class SettingsState extends State<Settings> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Text("Terms and Conditions"),
-                widget.terms
+                MarkdownViewer(widget.offers[offerIndex].terms)
               ],
             )),
         Padding(
@@ -82,18 +101,19 @@ class SettingsState extends State<Settings> {
                 ? Button(
                     "Opt Out",
                     _change,
-                    widget.primaryTextColor,
-                    widget.accentColor,
+                    textColor: widget.btnOutlineTextColor,
+                    borderColor: widget.btnOutlineBorderColor,
                     fontFamily: widget.fontFamily,
                     fontPackage: widget.fontPackage,
                   )
-                : Button.solid("Opt In", _change, widget.accentColor,
+                : Button.solid("Opt In", _change, color: widget.btnSolidColor,
                     fontFamily: widget.fontFamily, fontPackage: widget.fontPackage))
       ])));
 
   Future<void> _change() async {
-    setState(() {
-      isAccepted = !isAccepted;
-    });
+    // TODO await change license
+    TikiSdk.guard(widget.offers[offerIndex].ptr, widget.offers[offerIndex].uses,
+            () => setState(() => isAccepted = true),
+            () => setState(() => isAccepted = false));
   }
 }
