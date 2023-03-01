@@ -32,6 +32,8 @@ class Button extends StatelessWidget {
   late final String? fontPackage;
 
   /// The default constructor for outlined button.
+  ///
+  /// [TikiSdk.theme] is used for default styling.
   Button(this.text, this.onTap, {super.key, textColor, borderColor, fontFamily, fontPackage}){
     this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
     this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
@@ -41,6 +43,8 @@ class Button extends StatelessWidget {
   }
 
   /// The constructor for a solid color button.
+  ///
+  /// [TikiSdk.theme] is used for default styling.
   Button.solid(this.text, this.onTap, {super.key, color, fontFamily, fontPackage}){
     this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
     this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;

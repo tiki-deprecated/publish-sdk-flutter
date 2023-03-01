@@ -19,6 +19,9 @@ class UsedFor extends StatelessWidget {
   late final String? fontFamily;
   late final String? fontPackage;
 
+  /// Builds the UsedFor Widget.
+  ///
+  /// [TikiSdk.theme] is used for default styling.
   UsedFor(this.bullets,
       {super.key,
         textColor,

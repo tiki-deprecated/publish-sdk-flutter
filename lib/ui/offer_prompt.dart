@@ -28,6 +28,9 @@ class OfferPrompt extends StatelessWidget {
   final String? fontPackage;
   final Color? accentColor;
 
+  /// Builds the [OfferPropt].
+  ///
+  /// [TikiSdk.theme] is used for default styling.
   const OfferPrompt(this.offers, {super.key,
     this.title,
     this.primaryBackgroundColor,

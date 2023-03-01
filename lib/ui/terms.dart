@@ -8,8 +8,10 @@ import '../tiki_sdk.dart';
 import 'button.dart';
 import 'markdown.dart';
 
+/// The license terms screen.
 class Terms extends StatelessWidget {
 
+  /// The asset with the license terms markdown.
   late final String src;
 
   late final Color? buttonColor;
@@ -19,6 +21,9 @@ class Terms extends StatelessWidget {
   late final String? fontFamily;
   late final String? fontPackage;
 
+  /// Builds the Terms screen with the [src] text.
+  ///
+  /// [TikiSdk.theme] is used for default styling.
   Terms(this.src, {super.key,
         buttonColor,
         textColor,

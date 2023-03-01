@@ -19,6 +19,9 @@ class LearnMore extends StatelessWidget {
   late final String? fontFamily;
   late final String? fontPackage;
 
+  /// Builds the Learn More screen.
+  ///
+  /// [TikiSdk.theme] is used for default styling.
   LearnMore(this.src, {super.key,
     textColor,
     backgroundColor,

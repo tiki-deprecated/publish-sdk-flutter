@@ -20,6 +20,9 @@ class OfferCard extends StatelessWidget {
   late final String? fontFamily;
   late final String? fontPackage;
 
+  /// Builds the OfferCard.
+  ///
+  /// [TikiSdk.theme] is used for default styling.
   OfferCard(this.offer,
       {super.key,
       textColor,

@@ -13,10 +13,13 @@ import 'button.dart';
 import 'offer_card.dart';
 import 'used_for.dart';
 
+/// The settings UI that shows the [offers] and let the user update its preferences.
 class Settings extends StatefulWidget {
 
+  /// A title to be shown in the top of the screen.
   final RichText? title;
 
+  /// The list of [Offfer] to be displayed for the user.
   final List<Offer> offers;
 
   late final Color primaryTextColor;
@@ -28,6 +31,9 @@ class Settings extends StatefulWidget {
   late final String? fontPackage;
   late final String? fontFamily;
 
+  /// Builds the settings screen.
+  ///
+  /// [TikiSdk.theme] is used for default styling.
   Settings(this.offers, {super.key, this.title,
     Color? primaryTextColor,
     Color? secondaryTextColor,

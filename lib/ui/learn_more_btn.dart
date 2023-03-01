@@ -10,6 +10,8 @@ import '../src/assets/icons/tiki_sdk_icons_icons.dart';
 import '../tiki_sdk.dart';
 
 /// A help button that shows the [LearnMore] widget on tap.
+///
+/// [TikiSdk.theme] is used for default styling.
 class LearnMoreButton extends StatelessWidget {
 
   late final Color? iconColor;

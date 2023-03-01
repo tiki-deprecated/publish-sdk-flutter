@@ -25,6 +25,8 @@ class CompletionSheet extends StatelessWidget {
   late final String? fontPackage;
 
   /// Completion Sheet Builder
+  ///
+  /// [TikiSdk.theme] is used for default styling.
   CompletionSheet(this.title, this.message, this.footnote, {super.key,
       fontFamily, fontPackage, primaryTextColor, backgroundColor}){
     this.primaryTextColor = primaryTextColor ?? TikiSdk.theme.primaryTextColor;
