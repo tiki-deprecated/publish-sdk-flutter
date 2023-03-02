@@ -15,7 +15,6 @@ import 'used_for.dart';
 
 /// The settings UI that shows the [offers] and let the user update its preferences.
 class Settings extends StatefulWidget {
-
   /// A title to be shown in the top of the screen.
   final RichText? title;
 
@@ -34,7 +33,10 @@ class Settings extends StatefulWidget {
   /// Builds the settings screen.
   ///
   /// [TikiSdk.theme] is used for default styling.
-  Settings(this.offers, {super.key, this.title,
+  Settings(
+    this.offers, {
+    super.key,
+    this.title,
     Color? primaryTextColor,
     Color? secondaryTextColor,
     Color? btnOutlineTextColor,
@@ -42,14 +44,18 @@ class Settings extends StatefulWidget {
     Color? btnSolidColor,
     String? fontPackage,
     String? fontFamily,
-  }){
-    primaryTextColor = primaryTextColor ?? TikiSdk.theme.primaryTextColor;
-    secondaryTextColor = secondaryTextColor ?? TikiSdk.theme.secondaryTextColor;
-    btnOutlineTextColor = btnOutlineTextColor ?? TikiSdk.theme.primaryTextColor;
-    btnOutlineBorderColor = btnOutlineBorderColor ?? TikiSdk.theme.accentColor;
-    btnSolidColor = btnSolidColor ?? TikiSdk.theme.accentColor;
-    fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
-    fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
+  }) {
+    primaryTextColor =
+        primaryTextColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
+    secondaryTextColor =
+        secondaryTextColor ?? TikiSdk.instance.activeTheme.secondaryTextColor;
+    btnOutlineTextColor =
+        btnOutlineTextColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
+    btnOutlineBorderColor =
+        btnOutlineBorderColor ?? TikiSdk.instance.activeTheme.accentColor;
+    btnSolidColor = btnSolidColor ?? TikiSdk.instance.activeTheme.accentColor;
+    fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
+    fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
   }
 
   @override
@@ -57,7 +63,6 @@ class Settings extends StatefulWidget {
 }
 
 class SettingsState extends State<Settings> {
-
   int offerIndex = 0;
   bool isAccepted = false;
 
@@ -65,7 +70,9 @@ class SettingsState extends State<Settings> {
 
   @override
   void initState() {
-    TikiSdk.guard(widget.offers.values.toList()[offerIndex].ptr, widget.offers.values.toList()[offerIndex].uses,
+    TikiSdk.guard(
+        widget.offers.values.toList()[offerIndex].ptr,
+        widget.offers.values.toList()[offerIndex].uses,
         () => setState(() => isAccepted = true),
         () => setState(() => isAccepted = false));
     super.initState();
@@ -100,7 +107,9 @@ class SettingsState extends State<Settings> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Text("Terms and Conditions"),
-                MarkdownViewer(widget.offers.values.toList()[offerIndex].terms ?? defaultTerms)
+                MarkdownViewer(
+                    widget.offers.values.toList()[offerIndex].terms ??
+                        defaultTerms)
               ],
             )),
         Padding(
@@ -114,14 +123,18 @@ class SettingsState extends State<Settings> {
                     fontFamily: widget.fontFamily,
                     fontPackage: widget.fontPackage,
                   )
-                : Button.solid("Opt In", _change, color: widget.btnSolidColor,
-                    fontFamily: widget.fontFamily, fontPackage: widget.fontPackage))
+                : Button.solid("Opt In", _change,
+                    color: widget.btnSolidColor,
+                    fontFamily: widget.fontFamily,
+                    fontPackage: widget.fontPackage))
       ])));
 
   Future<void> _change() async {
     // TODO await change license
-    TikiSdk.guard(widget.offers.values.toList()[offerIndex].ptr, widget.offers.values.toList()[offerIndex].uses,
-            () => setState(() => isAccepted = true),
-            () => setState(() => isAccepted = false));
+    TikiSdk.guard(
+        widget.offers.values.toList()[offerIndex].ptr,
+        widget.offers.values.toList()[offerIndex].uses,
+        () => setState(() => isAccepted = true),
+        () => setState(() => isAccepted = false));
   }
 }

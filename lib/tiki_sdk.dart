@@ -14,61 +14,74 @@ import 'package:tiki_sdk_dart/tiki_sdk_builder.dart';
 import 'package:tiki_sdk_flutter/src/flutter_key_storage.dart';
 import 'package:tiki_sdk_flutter/ui/offer_prompt.dart';
 import 'offer.dart';
-import 'ui/tiki_sdk_theme.dart';
+import 'theme.dart' as tiki_theme;
 
 /// The TIKI SDK main class. Use this to add tokenized data ownership, consent, and rewards.
 ///
 /// TikiSdk is a singleton that keeps the latest initialized instance. All the
 /// parameters are kept when a new instance is created, except for the address
 class TikiSdk {
+  static TikiSdk? _instance;
 
-  /// Callback function for an accepted offer.
-  ///
-  /// The onAccpet(...) event is triggered on the user's successful acceptance
-  /// of the licensing offer. This happens after accepting the terms, not just
-  /// on selecting "I'm In." The License Record is passed as a parameter to the
-  /// callback function.
-  static Function(Offer)? onAccept;
+  final tiki_theme.Theme _theme = tiki_theme.Theme.light();
+  tiki_theme.Theme? _dark;
 
-  /// Callback function for a declined offer
-  ///
-  /// he onDecline() event is triggered when the user declines the licensing offer.
-  /// This happens on dismissal of the flow or when "Back Off" is selected.
-  static Function(Offer)? onDecline;
+  tiki_sdk_dart.TikiSdk? _core;
 
-  /// Callback function for user selecting the "settings" option in ending widget.
-  ///
-  /// The onSettings() event is triggered when the user selects "settings" in the
-  /// ending screen. If a callback function is not registered, the SDK defaults to
-  /// calling the TikiSdk.settings() method.
-  static Function(Offer)? onSettings;
+  Function(Offer)? _onAccept;
+  Function(Offer)? _onDecline;
+  Function(Offer)? _onSettings;
+
+  bool _isAcceptEndingDisabled = false;
+  bool _isDeclineEndingDisabled = false;
+
+  final Map<String, Offer> _offers = {};
+
+  TikiSdk._();
 
   /// TikiSdkDart instance. The core blockchain.
-  final tiki_sdk_dart.TikiSdk? _core;
+  tiki_sdk_dart.TikiSdk get core {
+    if (_core == null)
+      throw StateError("Call TikiSdk.init() to initialize the TikiSdk core.");
+    return _core!;
+  }
+
+  /// Callback function for an accepted offer.
+  Function(Offer)? get onAccept => _onAccept;
+
+  /// Callback function for a declined offer.
+  Function(Offer)? get onDecline => _onDecline;
+
+  /// Callback function for user tapping in settings in the settings link in
+  /// ending screen.
+  Function(Offer)? get onSettings => _onSettings;
+
+  /// Check if the ending screen is disabled for an accepted [Offer].
+  bool get isAcceptEndingDisabled => _isAcceptEndingDisabled;
+
+  /// Check if the ending screen is disabled for an declined [Offer].
+  bool get isDeclineEndingDisabled => _isDeclineEndingDisabled;
+
+  /// Creates a new Offer to be added in TikiSdk.
+  Offer get offer => Offer();
 
   /// The map of possible [Offer] for the user, with its [Offer.id] as key.
-  static final Map<String, Offer> offers = {};
+  Map<String, Offer> get offers => _offers;
 
-  static TikiSdk? _instance;
-  static bool _disableAcceptEnding = false;
-  static bool _disableDeclineEnding = false;
+  /// The default light theme for TikiSdk pre-built UIs.
+  tiki_theme.Theme get theme => _theme;
 
-  /// The light theme for TikiSdk pre-built UIs.
-  static final TikiSdkTheme light = TikiSdkTheme.light();
-  static TikiSdkTheme? _dark;
-
-  /// The dark theme for TikiSdk pre-built UIs. Jus used if is set in TikiSdk.
-  static TikiSdkTheme get dark {
-    _dark ??= TikiSdkTheme.dark();
+  /// The dark theme for TikiSdk pre-built UIs. Just used if is set in TikiSdk.
+  tiki_theme.Theme get dark {
+    _dark ??= tiki_theme.Theme.dark();
     return _dark!;
   }
 
-  TikiSdk._(this._core);
-
-  /// The current [TikiSdkTheme] that will be used in the prebuilt UIs.
-  static TikiSdkTheme get theme{
-    var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
-    return brightness == Brightness.dark && _dark != null ? dark : light;
+  /// The current [tiki_theme.Theme] that will be used in the prebuilt UIs.
+  tiki_theme.Theme get activeTheme {
+    var brightness =
+        SchedulerBinding.instance.platformDispatcher.platformBrightness;
+    return brightness == Brightness.dark && _dark != null ? dark : theme;
   }
 
   /// The wallet address that is in use.
@@ -76,9 +89,7 @@ class TikiSdk {
 
   /// The TikiSdk singleton instance.
   static TikiSdk get instance {
-    if(_instance == null){
-      throw StateError("Call TikiSdk.init() to initialize the TikiSdk.");
-    }
+    _instance ??= TikiSdk._();
     return _instance!;
   }
 
@@ -88,21 +99,17 @@ class TikiSdk {
   /// A new blockchain address will be defined if no [address] provided.
   /// Identification of the [origin] is done automatically through the app's
   /// package name, and can be overriden in this method.
-  static init(String publishingId, {
-    String? address,
-    String? origin,
-    String? databaseDir
-  }) async {
+  Future<TikiSdk> init(String publishingId,
+      {String? address, String? origin, String? databaseDir}) async {
     WidgetsFlutterBinding.ensureInitialized();
     TikiSdkBuilder sdkBuilder = TikiSdkBuilder()
       ..databaseDir(await _dbDir())
       ..keyStorage(FlutterKeyStorage())
       ..address(address)
       ..publishingId(publishingId)
-      ..origin(origin ??  (await PackageInfo.fromPlatform()).packageName);
-    tiki_sdk_dart.TikiSdk tikiSdkDart = await sdkBuilder.build();
-    _instance = TikiSdk._(tikiSdkDart);
-    return _instance;
+      ..origin(origin ?? (await PackageInfo.fromPlatform()).packageName);
+    _core = await sdkBuilder.build();
+    return this;
   }
 
   /// Creates a new License, based on the the user choice about the [offer].
@@ -119,7 +126,8 @@ class TikiSdk {
   /// identified by [ptr].
   ///
   /// Optional [onSuccess] and [onDenied] callbacks can be defined.
-  static Future<bool> guard(String ptr, List<String> uses, onSuccess, onDenied) async {
+  static Future<bool> guard(
+      String ptr, List<String> uses, onSuccess, onDenied) async {
     throw UnimplementedError();
   }
 
@@ -130,7 +138,7 @@ class TikiSdk {
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
-        builder: (BuildContext context) => OfferPrompt(offers));
+        builder: (BuildContext context) => OfferPrompt(instance.offers));
   }
 
   /// Shows the pre built Settings UI
@@ -138,23 +146,64 @@ class TikiSdk {
     TikiSdk tikiSdk = instance;
   }
 
+  /// Starts the TikiSdk configuration.
+  static TikiSdk config() {
+    return instance;
+  }
+
   /// Adds a new [Offer] for the user;
-  static void addOffer(Offer offer) {
-    offers[offer.id]  = offer;
+  TikiSdk addOffer(Offer offer) {
+    _offers[offer.id] = offer;
+    return instance;
   }
 
   /// Disables the ending screen for accepted [Offer]
-  static disableAcceptEnding(bool disable) => _disableAcceptEnding = disable;
+  TikiSdk disableAcceptEnding(bool disable) {
+    _isAcceptEndingDisabled = disable;
+    return this;
+  }
 
   /// Disables the ending screen for decline [Offer]
-  static disableDeclineEnding(bool disable) => _disableDeclineEnding = disable;
+  TikiSdk disableDeclineEnding(bool disable) {
+    _isDeclineEndingDisabled = disable;
+    return this;
+  }
 
-  static Future<String> _dbDir() async {
+  /// Sets the callback function for an accepted offer.
+  ///
+  /// The onAccpet(...) event is triggered on the user's successful acceptance
+  /// of the licensing offer. This happens after accepting the terms, not just
+  /// on selecting "I'm In." The License Record is passed as a parameter to the
+  /// callback function.
+  TikiSdk setOnAccept(Function(Offer) onAccept) {
+    _onAccept = onAccept;
+    return this;
+  }
+
+  /// Sets the callback function for a declined offer
+  ///
+  /// he onDecline() event is triggered when the user declines the licensing offer.
+  /// This happens on dismissal of the flow or when "Back Off" is selected.
+  TikiSdk setOnDecline(Function(Offer) onDecline) {
+    _onDecline = onDecline;
+    return this;
+  }
+
+  /// Sets the callback function for user selecting the "settings" option in ending widget.
+  ///
+  /// The onSettings() event is triggered when the user selects "settings" in the
+  /// ending screen. If a callback function is not registered, the SDK defaults to
+  /// calling the TikiSdk.settings() method.
+  TikiSdk setOnSettings(Function(Offer) onSettings) {
+    _onSettings = onSettings;
+    return this;
+  }
+
+  Future<String> _dbDir() async {
     final dir = await getApplicationDocumentsDirectory();
     if (!await dir.exists()) {
       await dir.create(recursive: true);
     }
     return dir.path;
   }
-
 }

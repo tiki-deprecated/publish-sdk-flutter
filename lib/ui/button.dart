@@ -9,7 +9,6 @@ import '../tiki_sdk.dart';
 
 /// The TikiSdk UI button.
 class Button extends StatelessWidget {
-
   /// The button's text label .
   final String text;
 
@@ -34,22 +33,24 @@ class Button extends StatelessWidget {
   /// The default constructor for outlined button.
   ///
   /// [TikiSdk.theme] is used for default styling.
-  Button(this.text, this.onTap, {super.key, textColor, borderColor, fontFamily, fontPackage}){
-    this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
-    this.textColor = textColor ?? TikiSdk.theme.primaryTextColor;
-    this.borderColor = borderColor ?? TikiSdk.theme.accentColor;
+  Button(this.text, this.onTap,
+      {super.key, textColor, borderColor, fontFamily, fontPackage}) {
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
+    this.textColor = textColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
+    this.borderColor = borderColor ?? TikiSdk.instance.activeTheme.accentColor;
     backgroundColor = const Color(0xFFFFFFFF);
   }
 
   /// The constructor for a solid color button.
   ///
   /// [TikiSdk.theme] is used for default styling.
-  Button.solid(this.text, this.onTap, {super.key, color, fontFamily, fontPackage}){
-    this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
-    backgroundColor = color ?? TikiSdk.theme.accentColor;
-    borderColor = borderColor ?? TikiSdk.theme.accentColor;
+  Button.solid(this.text, this.onTap,
+      {super.key, color, fontFamily, fontPackage}) {
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
+    backgroundColor = color ?? TikiSdk.instance.activeTheme.accentColor;
+    borderColor = borderColor ?? TikiSdk.instance.activeTheme.accentColor;
   }
 
   @override

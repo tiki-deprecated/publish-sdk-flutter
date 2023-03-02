@@ -9,7 +9,6 @@ import '../tiki_sdk.dart';
 
 /// A dismissible bottom sheet that will be shown after the TIKI flow is complete.
 class CompletionSheet extends StatelessWidget {
-
   /// A [RichText] title to be shown in he top of the bottom sheet.
   final RichText title;
 
@@ -27,12 +26,14 @@ class CompletionSheet extends StatelessWidget {
   /// Completion Sheet Builder
   ///
   /// [TikiSdk.theme] is used for default styling.
-  CompletionSheet(this.title, this.message, this.footnote, {super.key,
-      fontFamily, fontPackage, primaryTextColor, backgroundColor}){
-    this.primaryTextColor = primaryTextColor ?? TikiSdk.theme.primaryTextColor;
-    this.backgroundColor = backgroundColor ?? TikiSdk.theme.primaryBackgroundColor;
-    this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
+  CompletionSheet(this.title, this.message, this.footnote,
+      {super.key, fontFamily, fontPackage, primaryTextColor, backgroundColor}) {
+    this.primaryTextColor =
+        primaryTextColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
+    this.backgroundColor =
+        backgroundColor ?? TikiSdk.instance.activeTheme.primaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
   }
 
   @override
@@ -48,9 +49,7 @@ class CompletionSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(top: 28.0),
-                  child: title),
+              Padding(padding: const EdgeInsets.only(top: 28.0), child: title),
               Padding(
                   padding: const EdgeInsets.only(top: 36.0),
                   child: Text(message,
@@ -62,8 +61,7 @@ class CompletionSheet extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: primaryTextColor))),
               Padding(
-                  padding: const EdgeInsets.only(top: 36.0),
-                  child: footnote),
+                  padding: const EdgeInsets.only(top: 36.0), child: footnote),
             ]));
   }
 }

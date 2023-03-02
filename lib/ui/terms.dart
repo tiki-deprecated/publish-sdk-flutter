@@ -10,7 +10,6 @@ import 'markdown.dart';
 
 /// The license terms screen.
 class Terms extends StatelessWidget {
-
   /// The asset with the license terms markdown.
   late final String src;
 
@@ -24,17 +23,19 @@ class Terms extends StatelessWidget {
   /// Builds the Terms screen with the [src] text.
   ///
   /// [TikiSdk.theme] is used for default styling.
-  Terms(this.src, {super.key,
-        buttonColor,
-        textColor,
-        backgroundColor,
-        fontFamily,
-        fontPackage}){
-    this.buttonColor = buttonColor ?? TikiSdk.theme.accentColor;
-    this.textColor = textColor ?? TikiSdk.theme.primaryTextColor;
-    this.backgroundColor = backgroundColor ?? TikiSdk.theme.primaryBackgroundColor;
-    this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
+  Terms(this.src,
+      {super.key,
+      buttonColor,
+      textColor,
+      backgroundColor,
+      fontFamily,
+      fontPackage}) {
+    this.buttonColor = buttonColor ?? TikiSdk.instance.activeTheme.accentColor;
+    this.textColor = textColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
+    this.backgroundColor =
+        backgroundColor ?? TikiSdk.instance.activeTheme.primaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
   }
 
   @override
@@ -52,22 +53,22 @@ class Terms extends StatelessWidget {
           ),
           body: SafeArea(
               child: Column(children: [
-                Expanded(
-                  child: FutureBuilder(
-                      future: DefaultAssetBundle.of(context).loadString(src),
-                      builder: (context, snapshot) {
-                        return MarkdownViewer(snapshot.data!,
-                            textColor: textColor,
-                            fontSize: 20,
-                            fontPackage: fontPackage,
-                            fontFamily: fontFamily);
-                      }),
-                ),
-                  Padding(
-                      padding: const EdgeInsets.only(
-                          top: 40, bottom: 50, left: 15, right: 15),
-                      child: Button.solid("I agree", () {
-                        Navigator.of(context).pop(true);
-                      }, color: buttonColor))
-              ]))));
+            Expanded(
+              child: FutureBuilder(
+                  future: DefaultAssetBundle.of(context).loadString(src),
+                  builder: (context, snapshot) {
+                    return MarkdownViewer(snapshot.data!,
+                        textColor: textColor,
+                        fontSize: 20,
+                        fontPackage: fontPackage,
+                        fontFamily: fontFamily);
+                  }),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(
+                    top: 40, bottom: 50, left: 15, right: 15),
+                child: Button.solid("I agree", () {
+                  Navigator.of(context).pop(true);
+                }, color: buttonColor))
+          ]))));
 }

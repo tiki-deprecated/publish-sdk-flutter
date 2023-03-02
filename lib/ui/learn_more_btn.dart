@@ -13,7 +13,6 @@ import '../tiki_sdk.dart';
 ///
 /// [TikiSdk.theme] is used for default styling.
 class LearnMoreButton extends StatelessWidget {
-
   late final Color? iconColor;
   late final Color? textColor;
   late final Color? backgroundColor;
@@ -26,12 +25,13 @@ class LearnMoreButton extends StatelessWidget {
       textColor,
       backgroundColor,
       fontFamily,
-      fontPackage}){
-    iconColor = iconColor ?? TikiSdk.theme.secondaryTextColor;
-    textColor = textColor ?? TikiSdk.theme.primaryTextColor;
-    backgroundColor = backgroundColor ?? TikiSdk.theme.primaryBackgroundColor;
-    fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
-    fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
+      fontPackage}) {
+    iconColor = iconColor ?? TikiSdk.instance.activeTheme.secondaryTextColor;
+    textColor = textColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
+    backgroundColor =
+        backgroundColor ?? TikiSdk.instance.activeTheme.primaryBackgroundColor;
+    fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
+    fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
   }
 
   @override
@@ -40,9 +40,11 @@ class LearnMoreButton extends StatelessWidget {
       icon: IconButton(
           icon: Icon(TikiSdkIcons.circleQuestion, color: iconColor),
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => LearnMore("lib/src/assets/data/learn_more.md",
-              textColor: textColor,
-              backgroundColor: backgroundColor,
-              fontFamily: fontFamily,
-              fontPackage: fontPackage,)))));
+              builder: (context) => LearnMore(
+                    "lib/src/assets/data/learn_more.md",
+                    textColor: textColor,
+                    backgroundColor: backgroundColor,
+                    fontFamily: fontFamily,
+                    fontPackage: fontPackage,
+                  )))));
 }

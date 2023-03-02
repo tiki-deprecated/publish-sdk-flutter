@@ -10,7 +10,6 @@ import '../tiki_sdk.dart';
 
 /// A card that represents an [Offer] to the user.
 class OfferCard extends StatelessWidget {
-
   /// The offer to be shown.
   final Offer offer;
 
@@ -24,15 +23,12 @@ class OfferCard extends StatelessWidget {
   ///
   /// [TikiSdk.theme] is used for default styling.
   OfferCard(this.offer,
-      {super.key,
-      textColor,
-      backgroundColor,
-      fontFamily,
-      fontPackage}){
-    this.textColor = textColor ?? TikiSdk.theme.primaryTextColor;
-    this.backgroundColor = backgroundColor ?? TikiSdk.theme.primaryBackgroundColor;
-    this.fontFamily = fontFamily ?? TikiSdk.theme.fontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.theme.fontPackage;
+      {super.key, textColor, backgroundColor, fontFamily, fontPackage}) {
+    this.textColor = textColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
+    this.backgroundColor =
+        backgroundColor ?? TikiSdk.instance.activeTheme.primaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
   }
 
   @override
@@ -56,7 +52,8 @@ class OfferCard extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child: SizedBox(width: 300, height: 86, child: offer.reward),
+                      child:
+                          SizedBox(width: 300, height: 86, child: offer.reward),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15),
