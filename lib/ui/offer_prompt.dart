@@ -15,8 +15,8 @@ import 'used_for.dart';
 /// A bottom sheet that will prompt user with [Offer] options.
 class OfferPrompt extends StatelessWidget {
 
-  /// The list of [Offer] to be displayed to the user.
-  final List<Offer> offers;
+  /// The map [Offer.id] and [Offer] to be displayed as options for the client.
+  final Map<String, Offer> offers;
 
   /// A title that will be displayed in the top of the list.
   final RichText? title;
@@ -65,13 +65,13 @@ class OfferPrompt extends StatelessWidget {
                     ),
                     LearnMoreButton(iconColor: secondaryTextColor ?? TikiSdk.theme.secondaryTextColor)
                   ])),
-          OfferCard(offers[0],
+          OfferCard(offers.values.toList()[0],
             textColor: primaryTextColor ?? TikiSdk.theme.primaryTextColor,
             backgroundColor: primaryBackgroundColor ?? TikiSdk.theme.primaryBackgroundColor,
             fontFamily: fontFamily ?? TikiSdk.theme.fontFamily,
             fontPackage: fontPackage ?? TikiSdk.theme.fontPackage,
           ),
-          UsedFor(offers[0].usedBullet,
+          UsedFor(offers.values.toList()[0].usedBullet,
               textColor: primaryTextColor ?? TikiSdk.theme.primaryTextColor,
               fontFamily: fontFamily ?? TikiSdk.theme.fontFamily,
               fontPackage: fontPackage ?? TikiSdk.theme.fontPackage),
@@ -80,13 +80,13 @@ class OfferPrompt extends StatelessWidget {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Button("Back Off", () => _decline(context, offers[0]),
+                    Button("Back Off", () => _decline(context, offers.values.toList()[0]),
                         textColor: primaryTextColor ?? TikiSdk.theme.primaryTextColor,
                         borderColor: accentColor ?? TikiSdk.theme.accentColor,
                         fontFamily: fontFamily ?? TikiSdk.theme.fontFamily,
                         fontPackage: fontPackage ?? TikiSdk.theme.fontPackage),
                     Button.solid(
-                      "I'm in", () => _accept(context, offers[0]), color: accentColor ?? TikiSdk.theme.accentColor, fontFamily: fontFamily ?? TikiSdk.theme.fontFamily,
+                      "I'm in", () => _accept(context, offers.values.toList()[0]), color: accentColor ?? TikiSdk.theme.accentColor, fontFamily: fontFamily ?? TikiSdk.theme.fontFamily,
                       fontPackage: fontPackage ?? TikiSdk.theme.fontPackage,
                     )
                   ]))

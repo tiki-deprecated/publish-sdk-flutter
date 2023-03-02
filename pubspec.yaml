@@ -21,6 +21,7 @@ dependencies:
   tiki_sdk_dart: ^1.1.1
   permission_handler: ^10.2.0
   package_info_plus: ^3.0.3
+  uuid: ^3.0.7
 
 dev_dependencies:
   integration_test:
@@ -38,7 +39,7 @@ flutter:
   fonts:
     - family: TikiSdkIcons
       fonts:
-        - asset: lib/ui/assets/fonts/TikiSdkIcons.ttf
+        - asset: lib/src/assets/fonts/TikiSdkIcons.ttf
 
   assets:
-    - lib/src/assets/data
+    - lib/src/assets/data/

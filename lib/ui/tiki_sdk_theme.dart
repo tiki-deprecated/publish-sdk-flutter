@@ -4,6 +4,9 @@
  */
 /// {@category UI}
 import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
+
+import '../tiki_sdk.dart';
 
 /// Controls the UI theming for TikiSdk.
 class TikiSdkTheme{
@@ -75,4 +78,7 @@ class TikiSdkTheme{
         _accentColor = const Color(0x0000B272),
         _fontFamily = "SpaceGrotesk",
         _fontPackage = "tiki_sdk_flutter";
+
+  get dark => TikiSdk.dark;
+  get light => TikiSdk.light;
 }

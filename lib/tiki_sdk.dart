@@ -43,34 +43,41 @@ class TikiSdk {
   /// calling the TikiSdk.settings() method.
   static Function(Offer)? onSettings;
 
-  /// TikiSdkDart instance.
-  final tiki_sdk_dart.TikiSdk? core;
+  /// TikiSdkDart instance. The core blockchain.
+  final tiki_sdk_dart.TikiSdk? _core;
 
-  /// The list of possible [Offer] for the user.
-  static final List<Offer> offers = [];
-
+  /// The map of possible [Offer] for the user, with its [Offer.id] as key.
+  static final Map<String, Offer> offers = {};
 
   static TikiSdk? _instance;
   static bool _disableAcceptEnding = false;
   static bool _disableDeclineEnding = false;
-  static TikiSdkTheme _lightTheme = TikiSdkTheme.light();
-  static TikiSdkTheme _darkTheme = TikiSdkTheme.dark();
 
-  TikiSdk._(this.core);
+  /// The light theme for TikiSdk pre-built UIs.
+  static final TikiSdkTheme light = TikiSdkTheme.light();
+  static TikiSdkTheme? _dark;
+
+  /// The dark theme for TikiSdk pre-built UIs. Jus used if is set in TikiSdk.
+  static TikiSdkTheme get dark {
+    _dark ??= TikiSdkTheme.dark();
+    return _dark!;
+  }
+
+  TikiSdk._(this._core);
 
   /// The current [TikiSdkTheme] that will be used in the prebuilt UIs.
   static TikiSdkTheme get theme{
     var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
-    return brightness == Brightness.dark ? _darkTheme : _lightTheme;
+    return brightness == Brightness.dark && _dark != null ? dark : light;
   }
 
   /// The wallet address that is in use.
-  String? get address => core?.address;
+  String? get address => _core?.address;
 
   /// The TikiSdk singleton instance.
   static TikiSdk get instance {
     if(_instance == null){
-      throw StateError("TikiSdk was not initialized.");
+      throw StateError("Call TikiSdk.init() to initialize the TikiSdk.");
     }
     return _instance!;
   }
@@ -116,7 +123,7 @@ class TikiSdk {
     throw UnimplementedError();
   }
 
-  /// Shows the UI Offer flow
+  /// Shows the pre built UI Offer Flow.
   static Future<void> present(BuildContext context) async {
     TikiSdk tikiSdk = instance;
     showModalBottomSheet<dynamic>(
@@ -126,50 +133,14 @@ class TikiSdk {
         builder: (BuildContext context) => OfferPrompt(offers));
   }
 
-  /// Shows the Settings UI
+  /// Shows the pre built Settings UI
   static Future<void> settings(BuildContext context) async {
     TikiSdk tikiSdk = instance;
   }
 
   /// Adds a new [Offer] for the user;
   static void addOffer(Offer offer) {
-    offers.add(offer);
-  }
-
-  /// Sets the [theme] as the default light theme, overriding the current one.
-  static setLightTheme(TikiSdkTheme theme) => _lightTheme = theme;
-
-  /// Sets the [theme] as the default dark theme, overriding the current one.
-  static setDarkTheme(TikiSdkTheme theme) => _darkTheme = theme;
-
-  /// Sets the [primaryTextColor] of the current active [theme]
-  static TikiSdkTheme setPrimaryTextColor(Color primaryTextColor){
-    theme.setPrimaryTextColor(primaryTextColor);
-    return theme;
-  }
-
-  /// Sets the [primaryBackgroundColor] of the current active [theme]
-  static TikiSdkTheme setPrimaryBackgroundColor(Color primaryBackgroundColor){
-    theme.setPrimaryBackgroundColor(primaryBackgroundColor);
-    return theme;
-  }
-
-  /// Sets the [secondaryBackgroundColor] of the current active [theme]
-  static TikiSdkTheme setSecondaryBackgroundColor(Color secondaryBackgroundColor){
-    theme.setSecondaryBackgroundColor(secondaryBackgroundColor);
-    return theme;
-  }
-
-  /// Sets the [fontFamily] of the current active [theme]
-  static TikiSdkTheme setFontFamily(String fontFamily){
-    theme.setFontFamily(fontFamily);
-    return theme;
-  }
-
-  /// Sets the [fontPackage] of the current active [theme]
-  static TikiSdkTheme setFontPackage(String fontPackage){
-    theme.setFontPackage(fontPackage);
-    return theme;
+    offers[offer.id]  = offer;
   }
 
   /// Disables the ending screen for accepted [Offer]

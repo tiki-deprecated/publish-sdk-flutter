@@ -20,7 +20,7 @@ class Settings extends StatefulWidget {
   final RichText? title;
 
   /// The list of [Offfer] to be displayed for the user.
-  final List<Offer> offers;
+  final Map<String, Offer> offers;
 
   late final Color primaryTextColor;
   late final Color secondaryTextColor;
@@ -61,9 +61,11 @@ class SettingsState extends State<Settings> {
   int offerIndex = 0;
   bool isAccepted = false;
 
+  String defaultTerms = "path to default terms";
+
   @override
   void initState() {
-    TikiSdk.guard(widget.offers[offerIndex].ptr, widget.offers[offerIndex].uses,
+    TikiSdk.guard(widget.offers.values.toList()[offerIndex].ptr, widget.offers.values.toList()[offerIndex].uses,
         () => setState(() => isAccepted = true),
         () => setState(() => isAccepted = false));
     super.initState();
@@ -87,8 +89,8 @@ class SettingsState extends State<Settings> {
         Padding(
           padding: const EdgeInsets.only(top: 30.0),
           child: Column(children: [
-            OfferCard(widget.offers[offerIndex]),
-            UsedFor(widget.offers[offerIndex].usedBullet)
+            OfferCard(widget.offers.values.toList()[offerIndex]),
+            UsedFor(widget.offers.values.toList()[offerIndex].usedBullet)
           ]),
         ),
         Padding(
@@ -98,7 +100,7 @@ class SettingsState extends State<Settings> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Text("Terms and Conditions"),
-                MarkdownViewer(widget.offers[offerIndex].terms)
+                MarkdownViewer(widget.offers.values.toList()[offerIndex].terms ?? defaultTerms)
               ],
             )),
         Padding(
@@ -118,7 +120,7 @@ class SettingsState extends State<Settings> {
 
   Future<void> _change() async {
     // TODO await change license
-    TikiSdk.guard(widget.offers[offerIndex].ptr, widget.offers[offerIndex].uses,
+    TikiSdk.guard(widget.offers.values.toList()[offerIndex].ptr, widget.offers.values.toList()[offerIndex].uses,
             () => setState(() => isAccepted = true),
             () => setState(() => isAccepted = false));
   }
