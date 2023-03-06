@@ -47,7 +47,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 
-import 'src/flutter_key_storage.dart';
+import 'flutter_key_storage.dart';
 
 /// The TIKI SDK Flutter Builder
 ///
