@@ -5,13 +5,13 @@
 
 import 'dart:convert';
 
-import '../../../main.dart';
-
 class ReqLicenseAll {
   String? ptr;
+  String? origin;
 
   ReqLicenseAll.fromJson(String jsonReq) {
     Map map = jsonDecode(jsonReq);
     ptr = map["ptr"];
+    origin = map["origin"];
   }
 }

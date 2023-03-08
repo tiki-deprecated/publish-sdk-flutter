@@ -17,5 +17,5 @@ class RspBuild extends Rsp {
   RspBuild({this.address, this.requestId});
 
   @override
-  String toJson() => jsonEncode({"address": address, "request_id" : requestId});
+  String toJson() => jsonEncode({"address": address, "request_id": requestId});
 }

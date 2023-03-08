@@ -10,10 +10,11 @@ import '../../../main.dart';
 class ReqLicense {
   String? ptr;
   String? terms;
-  List<LicenseUse> uses = const [];
-  List<TitleTag> tags = const [];
   String? titleDescription;
   String? licenseDescription;
+  String? origin;
+  List<LicenseUse> uses = [];
+  List<TitleTag> tags = [];
   DateTime? expiry;
 
   ReqLicense.fromJson(String jsonReq) {
@@ -22,20 +23,23 @@ class ReqLicense {
     terms = map["terms"];
     titleDescription = map["titleDescription"];
     licenseDescription = map["licenseDescription"];
-    expiry = DateTime.fromMillisecondsSinceEpoch(map["expiry"]);
+    expiry = map["expiry"] != null ? DateTime.fromMillisecondsSinceEpoch(map["expiry"]) : null;
+    origin = map["origin"];
 
-    List<Map<String, List<String>>> useCasesList = map["usecase"] ?? [];
-    for(Map<String, List<String>?> usecase in useCasesList){
+    List useCasesList = map["uses"] ?? [];
+    for (var usecase in useCasesList) {
       List? destinationsList = usecase["destinations"];
-      List? usesList = usecase["uses"];
+      List? usesList = usecase["usecases"];
       Map<String, List<String>> usesMap = {
-        "destinations": usesList?.map<String>((e) => e.toString()).toList() ?? [],
-        "uses": destinationsList?.map<String>((e) => e.toString()).toList() ?? [],
+        "destinations":
+          destinationsList?.map<String>((e) => e.toString()).toList() ?? [],
+        "usecases":
+          usesList?.map<String>((e) => e.toString()).toList() ?? [],
       };
       uses.add(LicenseUse.fromMap(usesMap));
     }
 
-    for(String tag in map["tags"]){
+    for (String tag in map["tags"]) {
       tags.add(TitleTag.from(tag));
     }
   }

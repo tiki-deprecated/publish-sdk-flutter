@@ -9,15 +9,17 @@ import '../../../main.dart';
 
 class ReqTitle {
   String? ptr;
-  List<TitleTag> tags = const [];
+  List<TitleTag> tags = [];
   String? description;
+  String? origin;
 
   ReqTitle.fromJson(String jsonReq) {
     Map map = jsonDecode(jsonReq);
     ptr = map["ptr"];
+    origin = map["origin"];
     description = map["description"];
 
-    for(String tag in map["tags"]){
+    for (String tag in map["tags"]) {
       tags.add(TitleTag.from(tag));
     }
   }

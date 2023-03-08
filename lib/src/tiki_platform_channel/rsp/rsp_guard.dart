@@ -14,5 +14,5 @@ class RspGuard extends Rsp {
   RspGuard({this.success = false, this.reason});
 
   @override
-  String toJson() => jsonEncode({"success": success, "reason" : reason});
+  String toJson() => jsonEncode({"success": success, "reason": reason});
 }

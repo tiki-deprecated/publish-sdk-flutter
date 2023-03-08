@@ -9,21 +9,19 @@ import '../../../main.dart';
 
 class ReqGuard {
   String? ptr;
-  List<LicenseUse> uses = const [];
+  List<LicenseUsecase> uses = [];
+  List<String>? destinations;
+  String? origin;
 
   ReqGuard.fromJson(String jsonReq) {
     Map map = jsonDecode(jsonReq);
     ptr = map["ptr"];
-
-    List<Map<String, List<String>>> useCasesList = map["usecase"] ?? [];
-    for(Map<String, List<String>?> usecase in useCasesList){
-      List? destinationsList = usecase["destinations"];
-      List? usesList = usecase["uses"];
-      Map<String, List<String>> usesMap = {
-        "destinations": usesList?.map<String>((e) => e.toString()).toList() ?? [],
-        "uses": destinationsList?.map<String>((e) => e.toString()).toList() ?? [],
-      };
-      uses.add(LicenseUse.fromMap(usesMap));
-    }
+    destinations =
+        map["destinations"]?.map<String>((e) => e.toString()).toList() ?? [];
+    uses = map["usecases"]
+            .map<LicenseUsecase>((e) => LicenseUsecase.from(e.toString()))
+            .toList() ??
+        [];
+    origin = map["origin"];
   }
 }

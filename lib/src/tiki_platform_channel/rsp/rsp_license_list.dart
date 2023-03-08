@@ -13,12 +13,15 @@ class RspLicenseList extends Rsp {
   RspLicenseList({this.licenseList = const [], this.requestId});
 
   @override
-  String toJson() => jsonEncode({"license": jsonEncondeLicenseList(licenseList), "request_id" : requestId});
+  String toJson() => jsonEncode({
+        "license": jsonEncondeLicenseList(licenseList),
+        "request_id": requestId
+      });
 
   String? jsonEncondeLicenseList(List<LicenseRecord> licenseList) {
-    if(licenseList.isEmpty) return "[]";
+    if (licenseList.isEmpty) return "[]";
     List<Map> returnList = [];
-    for(LicenseRecord license in licenseList) {
+    for (LicenseRecord license in licenseList) {
       Map licenseMap = {
         "id": license.id,
         "title": {

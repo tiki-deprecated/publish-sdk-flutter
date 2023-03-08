@@ -45,6 +45,7 @@ library tiki_sdk_flutter_builder;
 
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqlite3/sqlite3.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart';
 
 import 'flutter_key_storage.dart';
@@ -52,7 +53,7 @@ import 'flutter_key_storage.dart';
 /// The TIKI SDK Flutter Builder
 ///
 /// It handles [TikiSdk] initialization and defines default values for Flutter SDK.
-class TikiSdkFlutterBuilder {
+class TikiSdkBuilder {
   String? _address;
   String? _origin;
   String? _publishingId;
@@ -76,14 +77,14 @@ class TikiSdkFlutterBuilder {
 
   /// Builds a new [TikiSdk] for Flutter.
   Future<TikiSdk> build() async {
+    FlutterKeyStorage keyStorage = FlutterKeyStorage();
     WidgetsFlutterBinding.ensureInitialized();
-    TikiSdkBuilder sdkBuilder = TikiSdkBuilder()
-      ..databaseDir(_databaseDir ?? await _dbDir())
-      ..keyStorage(FlutterKeyStorage())
-      ..address(_address)
-      ..publishingId(_publishingId)
-      ..origin(_origin!);
-    return sdkBuilder.build();
+    String addr = await TikiSdk.withAddress(keyStorage, address: _address);
+    String dbDir = _databaseDir ?? await _dbDir();
+    Database database = sqlite3.open("$dbDir/$addr.db");
+    TikiSdk tikiSdk = await TikiSdk.init(
+        _publishingId!, _origin!, keyStorage, addr, database);
+    return tikiSdk;
   }
 
   Future<String> _dbDir() async {

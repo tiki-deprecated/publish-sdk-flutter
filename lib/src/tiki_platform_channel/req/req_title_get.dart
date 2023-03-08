@@ -5,13 +5,13 @@
 
 import 'dart:convert';
 
-import '../../../main.dart';
-
 class ReqTitleGet {
-  String? ptr;
+  String? id;
+  String? origin;
 
   ReqTitleGet.fromJson(String jsonReq) {
     Map map = jsonDecode(jsonReq);
-    ptr = map["ptr"];
+    id = map["id"];
+    origin = map["origin"];
   }
 }

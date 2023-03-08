@@ -13,26 +13,31 @@ class RspLicense extends Rsp {
   RspLicense({this.license, this.requestId});
 
   @override
-  String toJson() => jsonEncode({"license": jsonEncondeLicense(license), "request_id" : requestId});
+  String toJson() => jsonEncode(
+      {"license": mapLicense(license), "request_id": requestId});
 
-  String? jsonEncondeLicense(LicenseRecord? license) {
-    if(license == null) return "null";
+  Map? mapLicense(LicenseRecord? license) {
+    if (license == null) return null;
     Map licenseMap = {
-        "id" : license.id,
-        "title" : {
-          "ptr" : license.title.ptr,
-          "description" : license.title.description,
-          "tags" : license.title.tags.map<String>((titletag) => titletag.value).toList(),
-          "origin" : license.title.origin
-        },
-        "uses" : license.uses.map<Map<String, List<String>>>((LicenseUse use) => {
-          "usecases" : use.usecases.map<String>((LicenseUsecase usecase) => usecase.value).toList(),
-          "destinations": use.destinations ?? []
-        }),
-        "terms" : license.terms,
-        "description" : license.description,
-        "expiry" : license.expiry?.millisecondsSinceEpoch
+      "id": license.id,
+      "title": {
+        "ptr": license.title.ptr,
+        "description": license.title.description,
+        "tags": license.title.tags
+            .map<String>((titletag) => titletag.value)
+            .toList(),
+        "origin": license.title.origin
+      },
+      "uses": license.uses.map<Map<String, List<String>>>((LicenseUse use) => {
+            "usecases": use.usecases
+                .map<String>((LicenseUsecase usecase) => usecase.value)
+                .toList(),
+            "destinations": use.destinations ?? []
+          }).toList(),
+      "terms": license.terms,
+      "description": license.description,
+      "expiry": license.expiry?.millisecondsSinceEpoch
     };
-    return jsonEncode(licenseMap);
+    return licenseMap;
   }
 }

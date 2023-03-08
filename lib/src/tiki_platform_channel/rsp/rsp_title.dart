@@ -11,16 +11,17 @@ class RspTitle extends Rsp {
   RspTitle({this.title, this.requestId});
 
   @override
-  String toJson() => jsonEncode({"license": jsonEncondeTitle(title), "request_id" : requestId});
+  String toJson() =>
+      jsonEncode({"license": jsonEncondeTitle(title), "request_id": requestId});
 
   String? jsonEncondeTitle(TitleRecord? title) {
-    if(title == null) return "null";
+    if (title == null) return "null";
     Map titleMap = {
-        "ptr" : title.ptr,
-        "description" : title.description,
-        "tags" : title.tags.map<String>((titletag) => titletag.value).toList(),
-        "origin" : title.origin
-      };
+      "ptr": title.ptr,
+      "description": title.description,
+      "tags": title.tags.map<String>((titletag) => titletag.value).toList(),
+      "origin": title.origin
+    };
     return jsonEncode(titleMap);
   }
 }
