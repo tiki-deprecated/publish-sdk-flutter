@@ -11,7 +11,6 @@
 library tiki_sdk_flutter_platform;
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:tiki_sdk_flutter/main.dart';
@@ -55,42 +54,41 @@ class TikiPlatformChannel {
   Future<void> methodHandler(MethodCall call) async {
     String jsonReq = call.arguments['request'];
     String requestId = call.arguments['requestId'];
-    //runZonedGuarded(() async {
-      switch (call.method) {
-        case "build":
-          await _handle(requestId, ReqBuild.fromJson(jsonReq), _buildSdk);
-          break;
-        case "license":
-          await _handle(requestId, ReqLicense.fromJson(jsonReq), _license);
-          break;
-        case "latest":
-          await _handle(
-              requestId, ReqLicenseLatest.fromJson(jsonReq), _licenseLatest);
-          break;
-        case "all":
-          await _handle(
-              requestId, ReqLicenseAll.fromJson(jsonReq), _licenseAll);
-          break;
-        case "getLicense":
-          await _handle(
-              requestId, ReqLicenseGet.fromJson(jsonReq), _licenseGet);
-          break;
-        case "title":
-          await _handle(requestId, ReqTitle.fromJson(jsonReq), _title);
-          break;
-        case "getTitle":
-          await _handle(requestId, ReqTitleGet.fromJson(jsonReq), _titleGet);
-          break;
-        case "guard":
-          await _handle(requestId, ReqGuard.fromJson(jsonReq), _guard);
-          break;
-        default:
-          _error(
-              requestId,
-              RspError(
-                  message: 'no method handler for method ${call.method}',
-                  stackTrace: StackTrace.current));
-      }
+    print(call.method);
+    print(jsonReq);
+    switch (call.method) {
+      case "build":
+        await _handle(requestId, ReqBuild.fromJson(jsonReq), _buildSdk);
+        break;
+      case "license":
+        await _handle(requestId, ReqLicense.fromJson(jsonReq), _license);
+        break;
+      case "latest":
+        await _handle(
+            requestId, ReqLicenseLatest.fromJson(jsonReq), _licenseLatest);
+        break;
+      case "all":
+        await _handle(requestId, ReqLicenseAll.fromJson(jsonReq), _licenseAll);
+        break;
+      case "getLicense":
+        await _handle(requestId, ReqLicenseGet.fromJson(jsonReq), _licenseGet);
+        break;
+      case "title":
+        await _handle(requestId, ReqTitle.fromJson(jsonReq), _title);
+        break;
+      case "getTitle":
+        await _handle(requestId, ReqTitleGet.fromJson(jsonReq), _titleGet);
+        break;
+      case "guard":
+        await _handle(requestId, ReqGuard.fromJson(jsonReq), _guard);
+        break;
+      default:
+        _error(
+            requestId,
+            RspError(
+                message: 'no method handler for method ${call.method}',
+                stackTrace: StackTrace.current));
+    }
     // }, (error, stack) {
     //   _error(
     //       requestId,
@@ -114,7 +112,9 @@ class TikiPlatformChannel {
   Future<void> _handle<S, D extends Rsp>(
       String requestId, S req, Future<D> Function(S) process) async {
     try {
+      print("process");
       D rsp = await process(req);
+      print(rsp.toJson());
       _success(requestId, rsp);
     } catch (e) {
       RspError error = RspError.fromError(e as Error);
@@ -123,15 +123,18 @@ class TikiPlatformChannel {
     }
   }
 
-  Future<void> _success(String requestId, Rsp rsp) async =>
-      await methodChannel.invokeMethod(
-          'success', {'requestId': requestId, 'response': rsp.toJson()});
+  Future<void> _success(String requestId, Rsp rsp) async {
+    print("success ${rsp.toJson}");
+    await methodChannel.invokeMethod(
+        'success', {'requestId': requestId, 'response': rsp.toJson()});
+  }
 
   Future<void> _error(String requestId, RspError rsp) async =>
       await methodChannel.invokeMethod(
           'error', {'requestId': requestId, 'response': rsp.toJson()});
 
   Future<RspLicense> _license(ReqLicense reqLicense) async {
+    print("license");
     LicenseRecord licenseRecord = await _tikiSdk!.license(
         reqLicense.ptr!, reqLicense.uses, reqLicense.terms!,
         origin: reqLicense.origin,
@@ -139,6 +142,7 @@ class TikiPlatformChannel {
         titleDescription: reqLicense.titleDescription,
         licenseDescription: reqLicense.licenseDescription,
         expiry: reqLicense.expiry);
+    print(licenseRecord);
     return RspLicense(license: licenseRecord);
   }
 

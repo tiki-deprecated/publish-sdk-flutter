@@ -18,33 +18,39 @@ class RspLicenseList extends Rsp {
         "request_id": requestId
       });
 
-  String? jsonEncondeLicenseList(List<LicenseRecord> licenseList) {
-    if (licenseList.isEmpty) return "[]";
+  List jsonEncondeLicenseList(List<LicenseRecord> licenseList) {
+    if (licenseList.isEmpty) return [];
     List<Map> returnList = [];
     for (LicenseRecord license in licenseList) {
-      Map licenseMap = {
-        "id": license.id,
-        "title": {
-          "ptr": license.title.ptr,
-          "description": license.title.description,
-          "tags": license.title.tags
-              .map<String>((titletag) => titletag.value)
+        Map licenseMap = {
+          "id": license.id,
+          "title": {
+            "id": license.title.id,
+            "ptr": license.title.ptr,
+            "description": license.title.description,
+            "tags": license.title.tags
+                .map<Map<String, String>>((titleTag) =>
+            {
+              "titleTagEnum": titleTag.value
+            })
+                .toList(),
+            "origin": license.title.origin
+          },
+          "uses": license.uses
+              .map<Map<String, List>>((LicenseUse use) =>
+          {
+            "usecases": use.usecases.map<Map<String, String>>((
+                LicenseUsecase usecase) => {"usecaseEnum": usecase.value})
+                .toList(),
+            "destinations": use.destinations ?? []
+          })
               .toList(),
-          "origin": license.title.origin
-        },
-        "uses":
-            license.uses.map<Map<String, List<String>>>((LicenseUse use) => {
-                  "usecases": use.usecases
-                      .map<String>((LicenseUsecase usecase) => usecase.value)
-                      .toList(),
-                  "destinations": use.destinations ?? []
-                }),
-        "terms": license.terms,
-        "description": license.description,
-        "expiry": license.expiry?.millisecondsSinceEpoch
-      };
-      returnList.add(licenseMap);
+          "terms": license.terms,
+          "description": license.description,
+          "expiry": license.expiry?.millisecondsSinceEpoch
+        };
+        returnList.add(licenseMap);
     }
-    return jsonEncode(returnList);
+    return returnList;
   }
 }
