@@ -5,14 +5,13 @@
 
 import 'dart:convert';
 
-/// The request for the `getOwnership` method call in the Platform Channel.
-class ReqOwnershipGet {
-  late String source;
+class ReqTitleGet {
+  String? id;
   String? origin;
 
-  ReqOwnershipGet.fromJson(String jsonReq) {
+  ReqTitleGet.fromJson(String jsonReq) {
     Map map = jsonDecode(jsonReq);
-    source = map["source"]!;
+    id = map["id"];
     origin = map["origin"];
   }
 }

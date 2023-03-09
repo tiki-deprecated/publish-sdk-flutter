@@ -8,11 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:tiki_sdk_dart/cache/consent/consent_model.dart';
+import 'package:sqlite3/sqlite3.dart';
+import 'package:tiki_sdk_dart/license_record.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart' as tiki_sdk_dart;
-import 'package:tiki_sdk_dart/tiki_sdk_builder.dart';
+import 'package:tiki_sdk_dart/utils/bytes.dart';
 import 'package:tiki_sdk_flutter/src/flutter_key_storage.dart';
 import 'package:tiki_sdk_flutter/ui/offer_prompt.dart';
+
 import 'offer.dart';
 import 'theme.dart' as tiki_theme;
 
@@ -102,13 +104,18 @@ class TikiSdk {
   Future<TikiSdk> init(String publishingId,
       {String? address, String? origin, String? databaseDir}) async {
     WidgetsFlutterBinding.ensureInitialized();
-    TikiSdkBuilder sdkBuilder = TikiSdkBuilder()
-      ..databaseDir(await _dbDir())
-      ..keyStorage(FlutterKeyStorage())
-      ..address(address)
-      ..publishingId(publishingId)
-      ..origin(origin ?? (await PackageInfo.fromPlatform()).packageName);
-    _core = await sdkBuilder.build();
+    FlutterKeyStorage keyStorage = FlutterKeyStorage();
+    WidgetsFlutterBinding.ensureInitialized();
+    String addr =
+        await tiki_sdk_dart.TikiSdk.withAddress(keyStorage, address: address);
+    String dbDir = databaseDir ?? await _dbDir();
+    Database database = sqlite3.open("$dbDir/$addr.db");
+    _core = await tiki_sdk_dart.TikiSdk.init(
+        publishingId,
+        origin ?? (await PackageInfo.fromPlatform()).packageName,
+        keyStorage,
+        addr,
+        database);
     return this;
   }
 
@@ -118,7 +125,7 @@ class TikiSdk {
   /// If not the License will have no uses.
   /// Creates a new Title record or retrieves an existing one before creating
   /// the License.
-  static Future<ConsentModel> license(Offer offer, bool accepted) async {
+  static Future<LicenseRecord> license(Offer offer, bool accepted) async {
     throw UnimplementedError();
   }
 

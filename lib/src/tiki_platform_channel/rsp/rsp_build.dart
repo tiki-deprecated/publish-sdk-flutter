@@ -12,9 +12,10 @@ import 'rsp.dart';
 /// It returns the [address] of the built node.
 class RspBuild extends Rsp {
   final String? address;
+  final String? requestId;
 
-  RspBuild({this.address, String? requestId});
+  RspBuild({this.address, this.requestId});
 
   @override
-  String toJson() => jsonEncode({"address": address});
+  String toJson() => jsonEncode({"address": address, "request_id": requestId});
 }
