@@ -1,3 +1,7 @@
+## 1.1.4
+
+* update APIs to 2.0 
+
 ## 1.1.3
 
 * update example app architecture
