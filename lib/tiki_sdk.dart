@@ -9,9 +9,9 @@ import 'package:flutter/scheduler.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
+import 'package:tiki_sdk_dart/cache/license/license_usecase.dart';
 import 'package:tiki_sdk_dart/license_record.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart' as tiki_sdk_dart;
-import 'package:tiki_sdk_dart/utils/bytes.dart';
 import 'package:tiki_sdk_flutter/src/flutter_key_storage.dart';
 import 'package:tiki_sdk_flutter/ui/offer_prompt.dart';
 
@@ -43,8 +43,9 @@ class TikiSdk {
 
   /// TikiSdkDart instance. The core blockchain.
   tiki_sdk_dart.TikiSdk get core {
-    if (_core == null)
+    if (_core == null) {
       throw StateError("Call TikiSdk.init() to initialize the TikiSdk core.");
+    }
     return _core!;
   }
 
@@ -126,16 +127,16 @@ class TikiSdk {
   /// Creates a new Title record or retrieves an existing one before creating
   /// the License.
   static Future<LicenseRecord> license(Offer offer, bool accepted) async {
-    throw UnimplementedError();
+    return await instance.core.license(offer.ptr, offer.uses, offer.terms);
   }
 
-  /// Verifies if there is an active License for the [uses] of the Title
+  /// Verifies if there is an active License for the [usecases] of the Title
   /// identified by [ptr].
   ///
-  /// Optional [onSuccess] and [onDenied] callbacks can be defined.
-  static Future<bool> guard(
-      String ptr, List<String> uses, onSuccess, onDenied) async {
-    throw UnimplementedError();
+  /// Optional [onFail] and [onDenied] callbacks can be defined.
+  static Future<bool> guard(String ptr, List<LicenseUsecase> usecases,
+      {onPass, onFail}) async {
+    return instance.core.guard(ptr, usecases, onFail: onFail, onPass: onPass);
   }
 
   /// Shows the pre built UI Offer Flow.

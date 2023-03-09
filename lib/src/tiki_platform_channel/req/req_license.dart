@@ -23,7 +23,9 @@ class ReqLicense {
     terms = map["terms"];
     titleDescription = map["titleDescription"];
     licenseDescription = map["licenseDescription"];
-    expiry = map["expiry"] != null ? DateTime.fromMillisecondsSinceEpoch(map["expiry"]) : null;
+    expiry = map["expiry"] != null
+        ? DateTime.fromMillisecondsSinceEpoch(map["expiry"])
+        : null;
     origin = map["origin"];
 
     List useCasesList = map["uses"] ?? [];
@@ -32,14 +34,12 @@ class ReqLicense {
       List? usesList = usecase["usecases"];
       Map<String, List<String>> usesMap = {
         "destinations":
-          destinationsList?.map<String>((e) => e.toString()).toList() ?? [],
-        "usecases":
-          usesList?.map<String>((e) => e.toString()).toList() ?? [],
-      };
+            destinationsList?.map<String>((e) => e.toString()).toList() ?? [],
+        "usecases": usesList?.map<String>((e) => e["usecaseEnum"].toString()).toList() ?? []};
       uses.add(LicenseUse.fromMap(usesMap));
     }
 
-    for (String tag in map["tags"]) {
+    for (String tag in map["tags"]?.map<String>((e) => e["titleTagEnum"].toString()).toList() ?? []) {
       tags.add(TitleTag.from(tag));
     }
   }

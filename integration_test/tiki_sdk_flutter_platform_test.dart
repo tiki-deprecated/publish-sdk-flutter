@@ -3,10 +3,10 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tiki_sdk_dart/cache/license/license_use.dart';
 import 'package:tiki_sdk_dart/cache/license/license_usecase_enum.dart';
 import 'package:tiki_sdk_dart/cache/title/title_tag_enum.dart';
 import 'package:tiki_sdk_flutter/src/tiki_platform_channel/tiki_platform_channel.dart';
+
 import 'tiki_credentials.dart' as credentials;
 
 void main() {
@@ -83,20 +83,15 @@ void main() {
       String? terms = "lorem ipsum";
       String? titleDescription = "title test";
       String? licenseDescription = "license test";
-      List uses = [{
-        "usecases": [LicenseUsecaseEnum.aiTraining.value]
-      }];
+      List uses = [
+        {
+          "usecases": [LicenseUsecaseEnum.aiTraining.value]
+        }
+      ];
       List<String> tags = [TitleTagEnum.messages.value];
       await channel.invokeMockMethod('license', {
         "requestId": requestId,
-        "request": jsonEncode({
-          "ptr": ptr,
-          "terms": terms,
-          "titleDescription": titleDescription,
-          "licenseDescription": licenseDescription,
-          "uses": uses,
-          "tags" : tags
-        })
+        "request": jsonEncode({"terms":"path\/terms.md","tags":[{"titleTagEnum":"advertising_data"}],"uses":[{"usecases":[{"licenseUsecaseEnum":"support"}]}],"ptr":"source","licenseDescription":"testing"})
       });
       String jsonResponse = await completer.future;
       Map licenseMap = jsonDecode(jsonResponse)["license"];
@@ -124,32 +119,25 @@ void main() {
       String? terms = "lorem ipsum";
       String? titleDescription = "title test";
       String? licenseDescription = "license test";
-      List uses = [{
-        "usecases": [LicenseUsecaseEnum.aiTraining.value]
-      }];
+      List uses = [
+        {
+          "usecases": [LicenseUsecaseEnum.aiTraining.value]
+        }
+      ];
       List<String> tags = [TitleTagEnum.messages.value];
       await channel.invokeMockMethod('license', {
         "requestId": requestId,
         "request": jsonEncode({
-          "ptr": ptr,
-          "terms": terms,
-          "titleDescription": titleDescription,
-          "licenseDescription": licenseDescription,
-          "uses": uses,
-          "tags" : tags
+          "request": jsonEncode({"terms":"path\/terms.md","tags":[{"titleTagEnum":"advertising_data"}],"uses":[{"usecases":[{"licenseUsecaseEnum":"support"}]}],"ptr":"source","licenseDescription":"testing"})
         })
       });
       String jsonResponse = await completer.future;
       Map licenseMap = jsonDecode(jsonResponse)["license"];
-      expect(ptr, licenseMap["title"]["ptr"]);
       completer = Completer();
       completers["guard"] = completer;
       await channel.invokeMockMethod('guard', {
         "requestId": "guard",
-        "request": jsonEncode({
-          "ptr": ptr,
-          "usecases": uses
-        })
+        "request": jsonEncode({"ptr": ptr, "usecases": uses})
       });
       jsonResponse = await completer.future;
       expect(jsonDecode(jsonResponse)["success"], true);

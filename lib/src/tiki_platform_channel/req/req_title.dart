@@ -19,7 +19,7 @@ class ReqTitle {
     origin = map["origin"];
     description = map["description"];
 
-    for (String tag in map["tags"]) {
+    for (String tag in map["tags"].map<String>((e) => e.toString()).toList() ?? []) {
       tags.add(TitleTag.from(tag));
     }
   }
