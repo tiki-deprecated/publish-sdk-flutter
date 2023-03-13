@@ -35,11 +35,18 @@ class ReqLicense {
       Map<String, List<String>> usesMap = {
         "destinations":
             destinationsList?.map<String>((e) => e.toString()).toList() ?? [],
-        "usecases": usesList?.map<String>((e) => e["usecaseEnum"].toString()).toList() ?? []};
+        "usecases": usesList
+                ?.map<String>((e) => e["usecaseEnum"].toString())
+                .toList() ??
+            []
+      };
       uses.add(LicenseUse.fromMap(usesMap));
     }
 
-    for (String tag in map["tags"]?.map<String>((e) => e["titleTagEnum"].toString()).toList() ?? []) {
+    for (String tag in map["tags"]
+            ?.map<String>((e) => e["titleTagEnum"].toString())
+            .toList() ??
+        []) {
       tags.add(TitleTag.from(tag));
     }
   }
