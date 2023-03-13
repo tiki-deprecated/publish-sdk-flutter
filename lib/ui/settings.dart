@@ -2,6 +2,7 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
+
 /// {@category UI}
 import 'package:flutter/material.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk.dart';
@@ -70,11 +71,7 @@ class SettingsState extends State<Settings> {
 
   @override
   void initState() {
-    TikiSdk.guard(
-        widget.offers.values.toList()[offerIndex].ptr,
-        widget.offers.values.toList()[offerIndex].uses,
-        () => setState(() => isAccepted = true),
-        () => setState(() => isAccepted = false));
+    // TODO VERIFY LICENSE STATUS
     super.initState();
   }
 
@@ -107,9 +104,7 @@ class SettingsState extends State<Settings> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Text("Terms and Conditions"),
-                MarkdownViewer(
-                    widget.offers.values.toList()[offerIndex].terms ??
-                        defaultTerms)
+                MarkdownViewer(widget.offers.values.toList()[offerIndex].terms)
               ],
             )),
         Padding(
@@ -131,10 +126,5 @@ class SettingsState extends State<Settings> {
 
   Future<void> _change() async {
     // TODO await change license
-    TikiSdk.guard(
-        widget.offers.values.toList()[offerIndex].ptr,
-        widget.offers.values.toList()[offerIndex].uses,
-        () => setState(() => isAccepted = true),
-        () => setState(() => isAccepted = false));
   }
 }

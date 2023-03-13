@@ -4,9 +4,10 @@
  */
 
 import 'dart:typed_data';
+
 import 'package:tiki_sdk_dart/node/backup/backup_client.dart';
 
-class InMemL0Storage implements BackupClient{
+class InMemL0Storage implements BackupClient {
   Map<String, Map<String, Uint8List>> storage = {};
 
   @override
@@ -25,5 +26,4 @@ class InMemL0Storage implements BackupClient{
     if (storage[address] == null) storage[address] = {};
     storage[address]![id] = obj;
   }
-
 }

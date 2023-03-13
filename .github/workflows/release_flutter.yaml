@@ -14,16 +14,19 @@ concurrency:
 jobs:
   release:
     if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
-    runs-on: ubuntu-latest
     environment: Production
+    runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.tag.outputs.version }}
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: 'main'
 
       - name: 'Setup Dart'
-        uses: dart-lang/setup-dart@v1
+        uses: dart-lang/setup-dart@v1.3
         with:
           sdk: 2.18.2
 
@@ -40,34 +43,16 @@ jobs:
       - name: Check a new tag
         id: tag
         run: |
-          export TAG_VERSION=$(grep version pubspec.yaml |  awk -F  ': ' '/1/ {print $2}')
+          export TAG_VERSION=$(grep version pubspec.yaml |  awk -F  ': ' '{print $2}')
           echo "version=$TAG_VERSION" >> $GITHUB_OUTPUT
           echo $TAG_VERSION
           git tag $TAG_VERSION
           git push origin $TAG_VERSION
-      
+
+      - name: 'Publish'
+        run: dart pub publish -f
+
       - name: Create a Release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{steps.tag.outputs.version }}
-
-      - name: 'Publish SDK'
-        run: |
-          flutter pub publish -f
-          
-  docs:
-    runs-on: ubuntu-latest
-    needs: [ release ]
-    steps:
-      - name: 'Checkout'
-        uses: actions/checkout@v3
-
-      - name: Guide
-        uses: readmeio/rdme@8.3.0
-        with:
-          rdme: docs doc/guide --key=${{ secrets.README_API_KEY }}
-
-      - name: Ref
-        uses: readmeio/rdme@8.3.0
-        with:
-          rdme: docs doc/ref --key=${{ secrets.README_API_KEY }}
+          tag: ${{ steps.tag.outputs.version }}
