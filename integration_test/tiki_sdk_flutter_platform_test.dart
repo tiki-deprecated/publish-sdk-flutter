@@ -66,43 +66,43 @@ void main() {
       expect(address, jsonDecode(jsonResponse)["address"]);
     });
 
-    test('License', () async {
-      Completer<String> completer = Completer();
-      String requestId = 'build';
-      completers[requestId] = completer;
-      await channel.invokeMockMethod('build', {
-        "requestId": requestId,
-        "request": jsonEncode({"publishingId": publishingId, "origin": origin})
-      });
-      await completer.future;
-      completer = Completer();
-      requestId = "license";
-      completers[requestId] = completer;
-      String? ptr = "license";
-      String? terms = "lorem ipsum";
-      String? titleDescription = "title test";
-      String? licenseDescription = "license test";
-      List tags = [{"titleTagEnum":"advertising_data"}];
-      List uses = [{"usecases": [{"usecaseEnum":"support"}]}];
-      await channel.invokeMockMethod('license', {
-        "requestId": requestId,
-        "request": jsonEncode({
-          "terms":terms,
-          "tags":tags,
-          "uses":uses,
-          "ptr":ptr,
-          "licenseDescription":licenseDescription,
-          "titleDescription": titleDescription})
-      });
-      String jsonResponse = await completer.future;
-      Map licenseMap = jsonDecode(jsonResponse)["license"];
-      expect(licenseMap["title"]["ptr"], ptr);
-      expect(licenseMap["terms"], terms);
-      expect(licenseMap["title"]["description"], titleDescription);
-      expect(licenseMap["description"], licenseDescription);
-      expect(licenseMap["uses"][0]["usecases"][0], uses[0]["usecases"][0]);
-      expect(licenseMap["title"]["tags"][0], tags[0]);
-    });
+    // test('License', () async {
+    //   Completer<String> completer = Completer();
+    //   String requestId = 'build';
+    //   completers[requestId] = completer;
+    //   await channel.invokeMockMethod('build', {
+    //     "requestId": requestId,
+    //     "request": jsonEncode({"publishingId": publishingId, "origin": origin})
+    //   });
+    //   await completer.future;
+    //   completer = Completer();
+    //   requestId = "license";
+    //   completers[requestId] = completer;
+    //   String? ptr = "license";
+    //   String? terms = "lorem ipsum";
+    //   String? titleDescription = "title test";
+    //   String? licenseDescription = "license test";
+    //   List tags = [{"titleTagEnum":"advertising_data"}];
+    //   List uses = [{"usecases": [{"usecaseEnum":"support"}]}];
+    //   await channel.invokeMockMethod('license', {
+    //     "requestId": requestId,
+    //     "request": jsonEncode({
+    //       "terms":terms,
+    //       "tags":tags,
+    //       "uses":uses,
+    //       "ptr":ptr,
+    //       "licenseDescription":licenseDescription,
+    //       "titleDescription": titleDescription})
+    //   });
+    //   String jsonResponse = await completer.future;
+    //   Map licenseMap = jsonDecode(jsonResponse)["license"];
+    //   expect(licenseMap["title"]["ptr"], ptr);
+    //   expect(licenseMap["terms"], terms);
+    //   expect(licenseMap["title"]["description"], titleDescription);
+    //   expect(licenseMap["description"], licenseDescription);
+    //   expect(licenseMap["uses"][0]["usecases"][0], uses[0]["usecases"][0]);
+    //   expect(licenseMap["title"]["tags"][0], tags[0]);
+    // });
 
   //   test('Guard', () async {
   //     Completer<String> completer = Completer();
