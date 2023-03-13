@@ -22,34 +22,32 @@ class RspLicenseList extends Rsp {
     if (licenseList.isEmpty) return [];
     List<Map> returnList = [];
     for (LicenseRecord license in licenseList) {
-        Map licenseMap = {
-          "id": license.id,
-          "title": {
-            "id": license.title.id,
-            "ptr": license.title.ptr,
-            "description": license.title.description,
-            "tags": license.title.tags
-                .map<Map<String, String>>((titleTag) =>
-            {
-              "titleTagEnum": titleTag.value
-            })
-                .toList(),
-            "origin": license.title.origin
-          },
-          "uses": license.uses
-              .map<Map<String, List>>((LicenseUse use) =>
-          {
-            "usecases": use.usecases.map<Map<String, String>>((
-                LicenseUsecase usecase) => {"usecaseEnum": usecase.value})
-                .toList(),
-            "destinations": use.destinations ?? []
-          })
+      Map licenseMap = {
+        "id": license.id,
+        "title": {
+          "id": license.title.id,
+          "ptr": license.title.ptr,
+          "description": license.title.description,
+          "tags": license.title.tags
+              .map<Map<String, String>>(
+                  (titleTag) => {"titleTagEnum": titleTag.value})
               .toList(),
-          "terms": license.terms,
-          "description": license.description,
-          "expiry": license.expiry?.millisecondsSinceEpoch
-        };
-        returnList.add(licenseMap);
+          "origin": license.title.origin
+        },
+        "uses": license.uses
+            .map<Map<String, List>>((LicenseUse use) => {
+                  "usecases": use.usecases
+                      .map<Map<String, String>>((LicenseUsecase usecase) =>
+                          {"usecaseEnum": usecase.value})
+                      .toList(),
+                  "destinations": use.destinations ?? []
+                })
+            .toList(),
+        "terms": license.terms,
+        "description": license.description,
+        "expiry": license.expiry?.millisecondsSinceEpoch
+      };
+      returnList.add(licenseMap);
     }
     return returnList;
   }

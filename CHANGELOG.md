@@ -1,3 +1,8 @@
+## 2.0.1
+
+* fix Dart formatting
+* fix release binaries action - checkout tags
+
 ## 2.0.0
 
 * BREAKING CHANGE: upgrade to TIKI SDK Dart 2.0

@@ -21,17 +21,20 @@ class RspLicense extends Rsp {
     Map licenseMap = {
       "id": license.id,
       "title": {
-        "id" : license.title.id,
+        "id": license.title.id,
         "ptr": license.title.ptr,
         "description": license.title.description,
         "tags": license.title.tags
-            .map<Map<String,String>>((titleTag)  => {"titleTagEnum": titleTag.value})
+            .map<Map<String, String>>(
+                (titleTag) => {"titleTagEnum": titleTag.value})
             .toList(),
         "origin": license.title.origin
       },
       "uses": license.uses
           .map<Map<String, List>>((LicenseUse use) => {
-                "usecases": use.usecases.map<Map<String,String>>((LicenseUsecase usecase) => {"usecaseEnum": usecase.value})
+                "usecases": use.usecases
+                    .map<Map<String, String>>((LicenseUsecase usecase) =>
+                        {"usecaseEnum": usecase.value})
                     .toList(),
                 "destinations": use.destinations ?? []
               })

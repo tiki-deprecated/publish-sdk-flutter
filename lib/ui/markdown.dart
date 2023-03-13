@@ -29,5 +29,5 @@ class MarkdownViewer extends StatelessWidget {
       data: mdText,
       styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
           textTheme: TextTheme(
-              bodyText2: TextStyle(fontSize: 20.0, color: textColor)))));
+              bodyMedium: TextStyle(fontSize: 20.0, color: textColor)))));
 }
