@@ -46,6 +46,11 @@ jobs:
         with:
           sdk: 2.18.2
 
+      - name: Setup Flutter
+          uses: subosito/flutter-action@v1
+          with:
+            flutter-version: '3.3.4'
+
       - name: Update docs
         run: dart doc
 
