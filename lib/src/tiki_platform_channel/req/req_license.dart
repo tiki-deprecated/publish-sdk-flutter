@@ -28,10 +28,10 @@ class ReqLicense {
         : null;
     origin = map["origin"];
 
-    List usecasesList = map["uses"] ?? [];
-    for (var usecase in usecasesList) {
-      List? destinationsList = usecase["destinations"];
-      List? usesList = usecase["usecases"];
+    List licenseUseList = map["uses"] ?? [];
+    for (var licenseUseCase in licenseUseList) {
+      List? destinationsList = licenseUseCase["destinations"];
+      List? usesList = licenseUseCase["usecases"];
       Map<String, List<String>> usesMap = {
         "destinations":
             destinationsList?.map<String>((e) => e.toString()).toList() ?? [],
