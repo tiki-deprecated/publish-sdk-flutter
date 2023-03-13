@@ -141,7 +141,6 @@ class TikiSdk {
 
   /// Shows the pre built UI Offer Flow.
   static Future<void> present(BuildContext context) async {
-    TikiSdk tikiSdk = instance;
     showModalBottomSheet<dynamic>(
         context: context,
         isScrollControlled: true,
@@ -150,9 +149,7 @@ class TikiSdk {
   }
 
   /// Shows the pre built Settings UI
-  static Future<void> settings(BuildContext context) async {
-    TikiSdk tikiSdk = instance;
-  }
+  static Future<void> settings(BuildContext context) async {}
 
   /// Starts the TikiSdk configuration.
   static TikiSdk config() {

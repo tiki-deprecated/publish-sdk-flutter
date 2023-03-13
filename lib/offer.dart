@@ -4,6 +4,8 @@
  */
 import 'package:flutter/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:tiki_sdk_dart/cache/license/license_use.dart';
+import 'package:tiki_sdk_dart/cache/title/title_tag.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk.dart';
 import 'package:uuid/uuid.dart';
 
@@ -17,8 +19,8 @@ class Offer {
   String? _terms;
   Image? _reward;
   List<UsedBullet> _usedBullet = [];
-  List<String> _uses = [];
-  List<String> _tags = [];
+  List<LicenseUse> _uses = [];
+  List<TitleTag> _tags = [];
   List<Permission> _requiredPermissions = [];
   DateTime? _expiry;
 
@@ -43,13 +45,13 @@ class Offer {
   String? get description => _description;
 
   /// The legal terms of the offer.
-  String? get terms => _terms;
+  String get terms => _terms!;
 
   /// The Use cases for the license.
-  List<String> get uses => _uses;
+  List<LicenseUse> get uses => _uses;
 
   /// The tags that describes the represented data asset.
-  List<String> get tags => _tags;
+  List<TitleTag> get tags => _tags;
 
   /// The expiration of the License. Null for no expiration.
   DateTime? get expiry => _expiry;
@@ -100,25 +102,25 @@ class Offer {
   }
 
   /// Sets the [uses]
-  Offer setUses(List<String> uses) {
+  Offer setUses(List<LicenseUse> uses) {
     _uses = uses;
     return this;
   }
 
   /// Adds an item in the [uses] list.
-  Offer addUse(String use) {
+  Offer addUse(LicenseUse use) {
     _uses.add(use);
     return this;
   }
 
   /// Sets the [tags]
-  Offer setTags(List<String> tags) {
+  Offer setTags(List<TitleTag> tags) {
     _tags = tags;
     return this;
   }
 
   /// Adds an item in the [tags] list.
-  Offer addTag(String tag) {
+  Offer addTag(TitleTag tag) {
     _tags.add(tag);
     return this;
   }

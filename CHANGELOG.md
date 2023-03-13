@@ -1,3 +1,8 @@
+## 2.0.0
+
+* BREAKING CHANGE: upgrade to TIKI SDK Dart 2.0
+* remove unused libraries from native binaries
+
 ## 1.1.4
 
 * update APIs to 2.0 

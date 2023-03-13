@@ -54,8 +54,6 @@ class TikiPlatformChannel {
   Future<void> methodHandler(MethodCall call) async {
     String jsonReq = call.arguments['request'];
     String requestId = call.arguments['requestId'];
-    print(call.method);
-    print(jsonReq);
     switch (call.method) {
       case "build":
         await _handle(requestId, ReqBuild.fromJson(jsonReq), _buildSdk);
@@ -112,9 +110,7 @@ class TikiPlatformChannel {
   Future<void> _handle<S, D extends Rsp>(
       String requestId, S req, Future<D> Function(S) process) async {
     try {
-      print("process");
       D rsp = await process(req);
-      print(rsp.toJson());
       _success(requestId, rsp);
     } catch (e) {
       RspError error = RspError.fromError(e as Error);
@@ -124,7 +120,6 @@ class TikiPlatformChannel {
   }
 
   Future<void> _success(String requestId, Rsp rsp) async {
-    print("success ${rsp.toJson}");
     await methodChannel.invokeMethod(
         'success', {'requestId': requestId, 'response': rsp.toJson()});
   }
@@ -134,7 +129,6 @@ class TikiPlatformChannel {
           'error', {'requestId': requestId, 'response': rsp.toJson()});
 
   Future<RspLicense> _license(ReqLicense reqLicense) async {
-    print("license");
     LicenseRecord licenseRecord = await _tikiSdk!.license(
         reqLicense.ptr!, reqLicense.uses, reqLicense.terms!,
         origin: reqLicense.origin,
@@ -142,7 +136,6 @@ class TikiPlatformChannel {
         titleDescription: reqLicense.titleDescription,
         licenseDescription: reqLicense.licenseDescription,
         expiry: reqLicense.expiry);
-    print(licenseRecord);
     return RspLicense(license: licenseRecord);
   }
 

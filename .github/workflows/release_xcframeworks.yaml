@@ -46,9 +46,11 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: 'Remove Integration Test Dependency'
+      - name: 'Remove unused dependencies'
         run: |
           perl -i -p0e 's/  integration_test:\n    sdk: flutter//s' pubspec.yaml
+          perl -i -p0e 's/permission_handler: \^10.2.0//s' pubspec.yaml
+          perl -i -p0e 's/package_info_plus: \^3.0.3//s' pubspec.yaml
 
       - name: 'Flutter pub get'
         run: |
