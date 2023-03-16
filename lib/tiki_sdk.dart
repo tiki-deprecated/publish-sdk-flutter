@@ -90,6 +90,9 @@ class TikiSdk {
   /// The wallet address that is in use.
   String? get address => _core?.address;
 
+  /// The current id.
+  String? get id => _core?.id;
+
   /// The TikiSdk singleton instance.
   static TikiSdk get instance {
     _instance ??= TikiSdk._();
@@ -102,13 +105,12 @@ class TikiSdk {
   /// A new blockchain address will be defined if no [address] provided.
   /// Identification of the [origin] is done automatically through the app's
   /// package name, and can be overriden in this method.
-  Future<TikiSdk> init(String publishingId,
-      {String? address, String? origin, String? databaseDir}) async {
+  Future<TikiSdk> init(String publishingId, String id, {String? origin, String? databaseDir}) async {
     WidgetsFlutterBinding.ensureInitialized();
     FlutterKeyStorage keyStorage = FlutterKeyStorage();
     WidgetsFlutterBinding.ensureInitialized();
     String addr =
-        await tiki_sdk_dart.TikiSdk.withAddress(keyStorage, address: address);
+        await tiki_sdk_dart.TikiSdk.withId(id, keyStorage);
     String dbDir = databaseDir ?? await _dbDir();
     Database database = sqlite3.open("$dbDir/$addr.db");
     _core = await tiki_sdk_dart.TikiSdk.init(

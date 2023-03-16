@@ -5,11 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:tiki_sdk_flutter/src/tiki_platform_channel/tiki_platform_channel.dart';
+import 'package:uuid/uuid.dart';
 
 import 'tiki_credentials.dart' as credentials;
 
 void main() {
   String publishingId = credentials.publishingId;
+  String id = Uuid().v4();
   const String origin = 'com.mytiki.test';
 
   Map<String, Completer<String>> completers = {};
@@ -35,35 +37,10 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('build', {
         "requestId": requestId,
-        "request": jsonEncode({"publishingId": publishingId, "origin": origin})
+        "request": jsonEncode({"id": id, "publishingId": publishingId, "origin": origin})
       });
       String jsonResponse = await completer.future;
       expect(jsonDecode(jsonResponse)["address"].length > 32, true);
-    });
-
-    test('Build Sdk - providing address', () async {
-      Completer<String> completer = Completer();
-      String requestId = 'build';
-      completers[requestId] = completer;
-      await channel.invokeMockMethod('build', {
-        "requestId": requestId,
-        "request": jsonEncode({"publishingId": publishingId, "origin": origin})
-      });
-      String jsonResponse = await completer.future;
-      String address = jsonDecode(jsonResponse)["address"];
-
-      completer = Completer();
-      completers[requestId] = completer;
-      await channel.invokeMockMethod('build', {
-        "requestId": requestId,
-        "request": jsonEncode({
-          "publishingId": publishingId,
-          "origin": origin,
-          "address": address
-        })
-      });
-      jsonResponse = await completer.future;
-      expect(address, jsonDecode(jsonResponse)["address"]);
     });
 
     // test('License', () async {

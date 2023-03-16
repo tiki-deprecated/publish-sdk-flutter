@@ -54,15 +54,15 @@ import 'flutter_key_storage.dart';
 ///
 /// It handles [TikiSdk] initialization and defines default values for Flutter SDK.
 class TikiSdkBuilder {
-  String? _address;
+  String? _id;
   String? _origin;
   String? _publishingId;
   String? _databaseDir;
 
-  /// The address of the blockchain node.
-  ///
-  /// A new address will be defined if none is provided.
-  void address(String address) => _address = address;
+  /// A customer provided identifier for the user, in use by this [TikiSdk]
+  /// instance. This [id] serves as a unique identifier for a user. Set the
+  /// [id] using the [withId] method before calling [init].
+  void id(String id) => _id = id;
 
   /// The default origin for the ownership assignments.
   void origin(String origin) => _origin = origin;
@@ -77,13 +77,16 @@ class TikiSdkBuilder {
 
   /// Builds a new [TikiSdk] for Flutter.
   Future<TikiSdk> build() async {
+    if(_id == null){
+      throw ArgumentError("Set TikiSdkBuilder.id before calling build().");
+    }
     FlutterKeyStorage keyStorage = FlutterKeyStorage();
     WidgetsFlutterBinding.ensureInitialized();
-    String addr = await TikiSdk.withAddress(keyStorage, address: _address);
+    String address = await TikiSdk.withId(_id!, keyStorage);
     String dbDir = _databaseDir ?? await _dbDir();
-    Database database = sqlite3.open("$dbDir/$addr.db");
+    Database database = sqlite3.open("$dbDir/$address.db");
     TikiSdk tikiSdk = await TikiSdk.init(
-        _publishingId!, _origin!, keyStorage, addr, database);
+        _publishingId!, _origin!, keyStorage, _id!, database);
     return tikiSdk;
   }
 

@@ -12,12 +12,12 @@ import 'dart:convert';
 class ReqBuild {
   late final String publishingId;
   late final String origin;
-  late final String? address;
+  late final String? id;
 
   ReqBuild.fromJson(String jsonString) {
     Map map = jsonDecode(jsonString);
     publishingId = map['publishingId']!;
     origin = map['origin']!;
-    address = map['address'];
+    id = map['id'];
   }
 }

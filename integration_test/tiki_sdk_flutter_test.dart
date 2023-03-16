@@ -11,8 +11,8 @@ void main() {
   test('FlutterKeyStorage write and read', () async {
     FlutterKeyStorage keyStorage = FlutterKeyStorage();
     String value = 'test';
-    keyStorage.write(key: 'test_value', value: 'test');
-    String? returnedValue = await keyStorage.read(key: 'test_value');
+    keyStorage.write('test_value', 'test');
+    String? returnedValue = await keyStorage.read('test_value');
     expect(returnedValue == null, false);
     expect(returnedValue, value);
   });
@@ -41,7 +41,7 @@ void main() {
     TikiSdk tikiSdk = await builder.build();
     TitleRecord title = await tikiSdk.title("teste");
     TitleRecord gotTitle = tikiSdk.getTitle(title.id)!;
-    expect(title.ptr, gotTitle.ptr);
+    expect(title.hashedPtr, gotTitle.hashedPtr);
   });
 
   // test('run a function based on user license', skip: publishingId.isEmpty, () async {

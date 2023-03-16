@@ -17,7 +17,7 @@ class RspTitle extends Rsp {
   String? jsonEncondeTitle(TitleRecord? title) {
     if (title == null) return "null";
     Map titleMap = {
-      "ptr": title.ptr,
+      "ptr": title.hashedPtr,
       "description": title.description,
       "tags": title.tags.map<Map<String, String>>(
           (titleTag) => {"titleTagEnum": titleTag.value}),
