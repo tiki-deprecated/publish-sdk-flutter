@@ -19,7 +19,7 @@ dependencies:
   sqlite3: ^1.9.3
   uuid: ^3.0.7
   sqlite3_flutter_libs: ^0.5.13
-  tiki_sdk_dart: 2.1.0
+  tiki_sdk_dart: 2.1.1
   permission_handler: ^10.2.0
   package_info_plus: ^3.0.3
 

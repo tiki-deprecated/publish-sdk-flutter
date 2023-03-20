@@ -13,10 +13,10 @@ import 'tiki_credentials.dart' as credentials;
 
 void main() {
   String publishingId = credentials.publishingId;
+  String id = Uuid().v4();
 
   test('Tiki SDK init', () async {
-    String id = Uuid().v4();
-    TikiSdk tikiSdk = await TikiSdk.config().init(id, publishingId);
+    TikiSdk tikiSdk = await TikiSdk.config().init(publishingId, id);
     assert(tikiSdk.address != null);
   });
 

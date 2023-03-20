@@ -117,7 +117,7 @@ class TikiSdk {
         publishingId,
         origin ?? (await PackageInfo.fromPlatform()).packageName,
         keyStorage,
-        addr,
+        id,
         database);
     return this;
   }

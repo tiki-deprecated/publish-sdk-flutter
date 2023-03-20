@@ -22,7 +22,7 @@ class RspLicense extends Rsp {
       "id": license.id,
       "title": {
         "id": license.title.id,
-        "ptr": license.title,
+        "ptr": license.title.hashedPtr,
         "description": license.title.description,
         "tags": license.title.tags
             .map<Map<String, String>>(

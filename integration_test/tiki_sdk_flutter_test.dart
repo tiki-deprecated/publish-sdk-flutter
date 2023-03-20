@@ -1,12 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tiki_sdk_flutter/main.dart';
 import 'package:tiki_sdk_flutter/src/flutter_key_storage.dart';
+import 'package:uuid/uuid.dart';
 
 import 'tiki_credentials.dart' as credentials;
 
 void main() {
   String publishingId = credentials.publishingId;
-  String origin = 'com.mytiki.test';
+  String id = Uuid().v4();
 
   test('FlutterKeyStorage write and read', () async {
     FlutterKeyStorage keyStorage = FlutterKeyStorage();
@@ -19,6 +20,7 @@ void main() {
 
   test('Initialize Flutter TIKI SDK', skip: publishingId.isEmpty, () async {
     TikiSdkBuilder builder = TikiSdkBuilder()
+      ..id(id)
       ..origin('com.mytiki.test')
       ..publishingId(publishingId);
     await builder.build();
@@ -27,7 +29,8 @@ void main() {
 
   test('Create a Title', skip: publishingId.isEmpty, () async {
     TikiSdkBuilder builder = TikiSdkBuilder()
-      ..origin(origin)
+      ..id(id)
+      ..origin('com.mytiki.test')
       ..publishingId(publishingId);
     TikiSdk tikiSdk = await builder.build();
     await tikiSdk.title('test');
@@ -36,7 +39,8 @@ void main() {
 
   test('Get a Title', skip: publishingId.isEmpty, () async {
     TikiSdkBuilder builder = TikiSdkBuilder()
-      ..origin(origin)
+      ..id(id)
+      ..origin('com.mytiki.test')
       ..publishingId(publishingId);
     TikiSdk tikiSdk = await builder.build();
     TitleRecord title = await tikiSdk.title("teste");
@@ -44,23 +48,35 @@ void main() {
     expect(title.hashedPtr, gotTitle.hashedPtr);
   });
 
-  // test('run a function based on user license', skip: publishingId.isEmpty, () async {
-  //   bool ok = false;
-  //   TikiSdkBuilder builder = TikiSdkBuilder()
-  //     ..origin(origin)
-  //     ..publishingId(publishingId);
-  //   TikiSdk tikiSdk = await builder.build();
-  //   String titleId = await tikiSdk.assignTitle(
-  //       'run a function based on user license test',
-  //       TikiSdkDataTypeEnum.point,
-  //       ['email']);
-  //   await tikiSdk.modifyConsent(titleId, const TikiSdkDestination.all());
-  //   LicenseRecord? licenseGiven =
-  //       tikiSdk.getConsent('run a function based on user license test');
-  //   expect(licenseGiven!.destination.uses[0], "*");
-  //   expect(licenseGiven.destination.paths[0], "*");
-  //   await tikiSdk.applyConsent('run a function based on user license test',
-  //       const TikiSdkDestination.all(), () => ok = true);
-  //   expect(ok, true);
-  // });
+  test('Create a License', skip: publishingId.isEmpty, () async {
+    TikiSdkBuilder builder = TikiSdkBuilder()
+      ..id(id)
+      ..origin('com.mytiki.test')
+      ..publishingId(publishingId);
+    TikiSdk tikiSdk = await builder.build();
+    List<LicenseUse> uses = [LicenseUse([LicenseUsecase.support()])];
+    List<TitleTag> tags = [TitleTag.emailAddress()];
+    String ptr = 'test';
+    LicenseRecord license = await tikiSdk.license(ptr, uses, "terms", tags: tags);
+    TitleRecord? title = tikiSdk.getTitle(license.title.id);
+    expect(title != null, true);
+    expect(title!.id, license.title.id);
+    expect(license.uses[0].usecases[0].value, uses[0].usecases[0].value);
+  });
+
+
+  test('Test guard return', skip: publishingId.isEmpty, () async {
+    bool ok = false;
+    TikiSdkBuilder builder = TikiSdkBuilder()
+      ..id(id)
+      ..origin('com.mytiki.test')
+      ..publishingId(publishingId);
+    TikiSdk tikiSdk = await builder.build();
+    List<LicenseUse> uses = [LicenseUse([LicenseUsecase.support()])];
+    List<TitleTag> tags = [TitleTag.emailAddress()];
+    String ptr = 'test';
+    await tikiSdk.license(ptr, uses, "terms", tags: tags);
+    ok = tikiSdk.guard(ptr, uses[0].usecases);
+    expect(ok, true);
+  });
 }
