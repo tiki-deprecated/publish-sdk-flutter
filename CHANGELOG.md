@@ -1,3 +1,11 @@
+## 2.1.1
+
+* update Flutter versions in release actions
+
+## 2.1.0
+
+* update Dart SDK to 2.1.1
+
 ## 2.0.1
 
 * fix Dart formatting
