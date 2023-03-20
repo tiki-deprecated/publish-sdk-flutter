@@ -585,9 +585,10 @@ packages:
     dependency: transitive
     description:
       name: tiki_sdk_dart
-      url: "https://pub.dartlang.org"
+      sha256: "86dfbb4fac8daa50d010239caf9067588f5752a192317f51da8b055da2e36736"
+      url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.1.1"
   tiki_sdk_flutter:
     dependency: "direct main"
     description:
