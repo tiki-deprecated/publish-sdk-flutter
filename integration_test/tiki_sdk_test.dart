@@ -7,18 +7,21 @@ import 'package:tiki_sdk_dart/cache/title/title_tag.dart';
 import 'package:tiki_sdk_dart/cache/title/title_tag_enum.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk.dart';
 import 'package:tiki_sdk_flutter/ui/used_bullet.dart';
+import 'package:uuid/uuid.dart';
 
 import 'tiki_credentials.dart' as credentials;
 
 void main() {
   String publishingId = credentials.publishingId;
+  String id = Uuid().v4();
 
   test('Tiki SDK init', () async {
-    TikiSdk tikiSdk = await TikiSdk.config().init(publishingId);
+    TikiSdk tikiSdk = await TikiSdk.config().init(publishingId, id);
     assert(tikiSdk.address != null);
   });
 
   test('Tiki SDK config', () async {
+    String id = Uuid().v4();
     TikiSdk tikiSdk = await TikiSdk.config()
         .theme
         .setPrimaryTextColor(Colors.white)
@@ -70,7 +73,7 @@ void main() {
         .setOnSettings((offer) => null)
         .disableAcceptEnding(false)
         .disableDeclineEnding(true)
-        .init(publishingId);
+        .init(id, publishingId);
     assert(tikiSdk.address != null);
   });
 }
