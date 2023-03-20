@@ -665,10 +665,10 @@ packages:
     dependency: transitive
     description:
       name: tiki_sdk_dart
-      sha256: f54f4501ec2c881f2238bed888762d8791b9d0dc0318f4cc79924c6163df49fe
+      sha256: "86dfbb4fac8daa50d010239caf9067588f5752a192317f51da8b055da2e36736"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   tiki_sdk_flutter:
     dependency: "direct main"
     description:
