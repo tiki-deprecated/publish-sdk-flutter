@@ -99,10 +99,8 @@ class TikiPlatformChannel {
   Future<RspBuild> _buildSdk(ReqBuild req) async {
     TikiSdkBuilder builder = TikiSdkBuilder()
       ..origin(req.origin)
-      ..publishingId(req.publishingId);
-    if (req.address != null) {
-      builder.address(req.address!);
-    }
+      ..publishingId(req.publishingId)
+      ..id(req.id!);
     _tikiSdk = await builder.build();
     return RspBuild(address: _tikiSdk!.address);
   }

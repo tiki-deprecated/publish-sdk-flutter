@@ -26,7 +26,7 @@ class RspLicenseList extends Rsp {
         "id": license.id,
         "title": {
           "id": license.title.id,
-          "ptr": license.title.ptr,
+          "ptr": license.title.hashedPtr,
           "description": license.title.description,
           "tags": license.title.tags
               .map<Map<String, String>>(
