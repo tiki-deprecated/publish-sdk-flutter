@@ -17,10 +17,10 @@ class RspTitle extends Rsp {
   String? jsonEncondeTitle(TitleRecord? title) {
     if (title == null) return "null";
     Map titleMap = {
-      "ptr": title.hashedPtr,
+      "hashedPtr": title.hashedPtr,
       "description": title.description,
-      "tags": title.tags.map<Map<String, String>>(
-          (titleTag) => {"titleTagEnum": titleTag.value}),
+      "tags": title.tags.map<String>(
+          (titleTag) => titleTag.value),
       "origin": title.origin
     };
     return jsonEncode(titleMap);

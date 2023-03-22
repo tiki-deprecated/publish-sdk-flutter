@@ -1,3 +1,7 @@
+## 2.1.2
+
+* update JSON encoding for LicenseUsecases and Tags in Platform Channels
+
 ## 2.1.1
 
 * update Flutter versions in release actions

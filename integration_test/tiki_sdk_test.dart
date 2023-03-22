@@ -73,7 +73,7 @@ void main() {
         .setOnSettings((offer) => null)
         .disableAcceptEnding(false)
         .disableDeclineEnding(true)
-        .init(id, publishingId);
+        .init(publishingId, id);
     assert(tikiSdk.address != null);
   });
 }
