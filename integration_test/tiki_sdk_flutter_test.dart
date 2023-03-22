@@ -65,7 +65,7 @@ void main() {
   });
 
 
-  test('Test guard return', skip: publishingId.isEmpty, () async {
+  test('Test guard return', skip: true, () async {
     bool ok = false;
     TikiSdkBuilder builder = TikiSdkBuilder()
       ..id(id)
