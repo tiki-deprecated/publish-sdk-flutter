@@ -87,13 +87,6 @@ class TikiPlatformChannel {
                 message: 'no method handler for method ${call.method}',
                 stackTrace: StackTrace.current));
     }
-    // }, (error, stack) {
-    //   _error(
-    //       requestId,
-    //       RspError(
-    //           message: error.toString(),
-    //           stackTrace: stack));
-    // });
   }
 
   Future<RspBuild> _buildSdk(ReqBuild req) async {

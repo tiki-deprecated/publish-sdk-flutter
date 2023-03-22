@@ -35,9 +35,7 @@ class ReqLicense {
       Map<String, List<String>> usesMap = {
         "destinations":
             destinationsList?.map<String>((e) => e.toString()).toList() ?? [],
-        "usecases": usesList
-                ?.map<String>((e) => e["usecaseEnum"].toString())
-                .toList() ??
+        "usecases": usesList?.map<String>((e) => e.toString()).toList() ??
             []
       };
       uses.add(LicenseUse.fromMap(usesMap));

@@ -108,7 +108,6 @@ class TikiSdk {
   Future<TikiSdk> init(String publishingId, String id, {String? origin, String? databaseDir}) async {
     WidgetsFlutterBinding.ensureInitialized();
     FlutterKeyStorage keyStorage = FlutterKeyStorage();
-    WidgetsFlutterBinding.ensureInitialized();
     String addr =
         await tiki_sdk_dart.TikiSdk.withId(id, keyStorage);
     String dbDir = databaseDir ?? await _dbDir();
