@@ -32,19 +32,14 @@ class ReqLicense {
     for (var licenseUseCase in licenseUseList) {
       List? destinationsList = licenseUseCase["destinations"];
       List? usesList = licenseUseCase["usecases"];
-      Map<String, List<String>> usesMap = {
-        "destinations":
-            destinationsList?.map<String>((e) => e.toString()).toList() ?? [],
-        "usecases": usesList?.map<String>((e) => e.toString()).toList() ??
-            []
+      Map<String, List<String>?> usesMap = {
+        "destinations": destinationsList?.map<String>((e) => e.toString()).toList(),
+        "usecases": usesList?.map<String>((e) => e.toString()).toList() ?? []
       };
       uses.add(LicenseUse.fromMap(usesMap));
     }
 
-    for (String tag in map["tags"]
-            ?.map<String>((e) => e.toString())
-            .toList() ??
-        []) {
+    for (String tag in map["tags"]?.map<String>((e) => e.toString()).toList() ?? []) {
       tags.add(TitleTag.from(tag));
     }
   }

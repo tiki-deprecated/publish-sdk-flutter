@@ -35,12 +35,12 @@ class RspLicenseList extends Rsp {
           "origin": license.title.origin
         },
         "uses": license.uses
-            .map<Map<String, List>>((LicenseUse use) => {
+            .map<Map<String, List?>>((LicenseUse use) => {
                   "usecases": use.usecases
                       .map<String>((LicenseUsecase usecase) =>
                           usecase.value)
                       .toList(),
-                  "destinations": use.destinations ?? []
+                  "destinations": use.destinations
                 })
             .toList(),
         "terms": license.terms,
