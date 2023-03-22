@@ -42,7 +42,7 @@ class ReqLicense {
     }
 
     for (String tag in map["tags"]
-            ?.map<String>((e) => e["titleTagEnum"].toString())
+            ?.map<String>((e) => e.toString())
             .toList() ??
         []) {
       tags.add(TitleTag.from(tag));
