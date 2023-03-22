@@ -33,7 +33,7 @@ void main() {
       ..origin('com.mytiki.test')
       ..publishingId(publishingId);
     TikiSdk tikiSdk = await builder.build();
-    await tikiSdk.title('test');
+    await tikiSdk.title('test1');
     expect(1, 1);
   });
 
@@ -56,7 +56,7 @@ void main() {
     TikiSdk tikiSdk = await builder.build();
     List<LicenseUse> uses = [LicenseUse([LicenseUsecase.support()])];
     List<TitleTag> tags = [TitleTag.emailAddress()];
-    String ptr = 'test';
+    String ptr = 'test2';
     LicenseRecord license = await tikiSdk.license(ptr, uses, "terms", tags: tags);
     TitleRecord? title = tikiSdk.getTitle(license.title.id);
     expect(title != null, true);
@@ -74,7 +74,7 @@ void main() {
     TikiSdk tikiSdk = await builder.build();
     List<LicenseUse> uses = [LicenseUse([LicenseUsecase.support()])];
     List<TitleTag> tags = [TitleTag.emailAddress()];
-    String ptr = 'test';
+    String ptr = 'test3';
     await tikiSdk.license(ptr, uses, "terms", tags: tags);
     ok = tikiSdk.guard(ptr, uses[0].usecases);
     expect(ok, true);
