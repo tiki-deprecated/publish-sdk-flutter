@@ -1,3 +1,7 @@
+## 2.1.3
+
+* recreate binaries
+
 ## 2.1.2
 
 * update JSON encoding for LicenseUsecases and Tags in Platform Channels
