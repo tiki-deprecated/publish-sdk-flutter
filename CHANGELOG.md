@@ -1,3 +1,7 @@
+## 2.1.4
+
+* upgrade TIKI SDK Dart to 2.1.4
+
 ## 2.1.3
 
 * recreate binaries
