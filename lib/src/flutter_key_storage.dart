@@ -8,6 +8,7 @@ library flutter_key_storage;
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tiki_sdk_dart/node/key/key_storage.dart';
+import 'package:tiki_sdk_dart/utils/rsa/rsa.dart';
 
 /// The Flutter specific implementation of [KeyStorage].
 ///
@@ -23,4 +24,7 @@ class FlutterKeyStorage implements KeyStorage {
   @override
   Future<void> write(String key, String value) async =>
       await secureStorage.write(key: key, value: value);
+
+  @override
+  Future<String> generate() async => (await Rsa.generateAsync()).privateKey.encode();
 }
