@@ -54,7 +54,7 @@ class OfferCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child:
-                          SizedBox(width: 300, height: 86, child: offer.reward),
+                          SizedBox(width: 300, height: 86, child: offer.getReward),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15),
@@ -62,7 +62,7 @@ class OfferCard extends StatelessWidget {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           text: TextSpan(
-                              text: offer.description,
+                              text: offer.getDescription,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,

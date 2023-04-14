@@ -42,16 +42,16 @@ class Settings extends StatefulWidget {
     String? fontFamily,
   }) {
     primaryTextColor =
-        primaryTextColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
+        primaryTextColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
     secondaryTextColor =
-        secondaryTextColor ?? TikiSdk.instance.activeTheme.secondaryTextColor;
+        secondaryTextColor ?? TikiSdk.instance.activeTheme.getSecondaryTextColor;
     btnOutlineTextColor =
-        btnOutlineTextColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
+        btnOutlineTextColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
     btnOutlineBorderColor =
-        btnOutlineBorderColor ?? TikiSdk.instance.activeTheme.accentColor;
-    btnSolidColor = btnSolidColor ?? TikiSdk.instance.activeTheme.accentColor;
-    fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
-    fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
+        btnOutlineBorderColor ?? TikiSdk.instance.activeTheme.getAccentColor;
+    btnSolidColor = btnSolidColor ?? TikiSdk.instance.activeTheme.getAccentColor;
+    fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
+    fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
   }
 
   @override
@@ -90,7 +90,7 @@ class SettingsState extends State<Settings> {
           child: Column(children: [
             OfferCard(TikiSdk.instance.offers.values.toList()[offerIndex]),
             UsedFor(
-                TikiSdk.instance.offers.values.toList()[offerIndex].usedBullet)
+                TikiSdk.instance.offers.values.toList()[offerIndex].getBullets)
           ]),
         ),
         Padding(
@@ -101,7 +101,7 @@ class SettingsState extends State<Settings> {
               children: [
                 const Text("Terms and Conditions"),
                 MarkdownViewer(
-                    TikiSdk.instance.offers.values.toList()[offerIndex].terms)
+                    TikiSdk.instance.offers.values.toList()[offerIndex].getTerms)
               ],
             )),
         Padding(

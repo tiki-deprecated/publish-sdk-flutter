@@ -54,7 +54,7 @@ void main() {
   });
 
 
-  test('Test guard return', skip: true, () async {
+  test('Test guard return', () async {
     bool ok = false;
     await TikiSdk.config().initialize(publishingId, id, origin: 'com.mytiki.test');
     List<LicenseUse> uses = [LicenseUse([LicenseUsecase.support()])];

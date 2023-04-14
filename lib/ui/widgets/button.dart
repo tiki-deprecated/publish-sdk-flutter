@@ -51,7 +51,7 @@ class Button extends StatelessWidget {
     this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
     this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
     backgroundColor = color ?? TikiSdk.instance.activeTheme.accentColor;
-    borderColor = borderColor ?? TikiSdk.instance.activeTheme.accentColor;
+    borderColor = borderColor ?? TikiSdk.instance.activeTheme.getAccentColor;
   }
 
   @override

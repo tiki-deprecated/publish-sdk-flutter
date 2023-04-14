@@ -46,7 +46,7 @@ class OfferPrompt extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: primaryBackgroundColor ??
-            TikiSdk.instance.activeTheme.primaryBackgroundColor,
+            TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(40), topRight: Radius.circular(40)),
       ),
@@ -67,7 +67,7 @@ class OfferPrompt extends StatelessWidget {
                     ),
                     LearnMoreButton(
                         iconColor: secondaryTextColor ??
-                            TikiSdk.instance.activeTheme.secondaryTextColor)
+                            TikiSdk.instance.activeTheme.getSecondaryTextColor)
                   ])),
           OfferCard(
             offers.values.toList()[0],
@@ -79,7 +79,7 @@ class OfferPrompt extends StatelessWidget {
             fontPackage:
                 fontPackage ?? TikiSdk.instance.activeTheme.fontPackage,
           ),
-          UsedFor(offers.values.toList()[0].usedBullet,
+          UsedFor(offers.values.toList()[0].getBullets,
               textColor: primaryTextColor ??
                   TikiSdk.instance.activeTheme.primaryTextColor,
               fontFamily: fontFamily ?? TikiSdk.instance.activeTheme.fontFamily,

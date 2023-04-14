@@ -45,56 +45,56 @@ class Theme {
         _fontPackage = "tiki_sdk_flutter";
 
   /// Primary text color. Used in the default text items.
-  Color get primaryTextColor => _primaryTextColor;
+  Color get getPrimaryTextColor => _primaryTextColor;
 
   /// Secondary text color. Used in specific text items.
   ///
   /// Defaults to [primaryTextColor] with 60% alpha transparency.
-  Color get secondaryTextColor => _primaryTextColor.withAlpha(153);
+  Color get getSecondaryTextColor => _primaryTextColor.withAlpha(153);
 
   /// Primary background color. The default color for backgrounds.
-  Color get primaryBackgroundColor => _primaryBackgroundColor;
+  Color get getPrimaryBackgroundColor => _primaryBackgroundColor;
 
   /// Secondary background color.
-  Color get secondaryBackgroundColor => _secondaryBackgroundColor;
+  Color get getSecondaryBackgroundColor => _secondaryBackgroundColor;
 
   /// Accent color. Used to decorate or highlight items.
-  Color get accentColor => _accentColor;
+  Color get getAccentColor => _accentColor;
 
   /// The default font family for all texts.
   ///
   /// This should be set in the assets section of pubspec.yaml.
-  String get fontFamily => _fontFamily;
+  String get getFontFamily => _fontFamily;
 
   /// The package to which the font asset belongs.
-  String get fontPackage => _fontPackage;
+  String get getFontPackage => _fontPackage;
 
-  Theme setPrimaryTextColor(Color primaryTextColor) {
+  Theme primaryTextColor(Color primaryTextColor) {
     _primaryTextColor = primaryTextColor;
     return this;
   }
 
-  Theme setPrimaryBackgroundColor(Color primaryBackgroundColor) {
+  Theme primaryBackgroundColor(Color primaryBackgroundColor) {
     _primaryBackgroundColor = primaryBackgroundColor;
     return this;
   }
 
-  Theme setSecondaryBackgroundColor(Color secondaryBackgroundColor) {
+  Theme secondaryBackgroundColor(Color secondaryBackgroundColor) {
     _secondaryBackgroundColor = secondaryBackgroundColor;
     return this;
   }
 
-  Theme setAccentColor(Color accentColor) {
+  Theme accentColor(Color accentColor) {
     _accentColor = accentColor;
     return this;
   }
 
-  Theme setFontFamily(String fontFamily) {
+  Theme fontFamily(String fontFamily) {
     _fontFamily = fontFamily;
     return this;
   }
 
-  Theme setFontPackage(String fontPackage) {
+  Theme fontPackage(String fontPackage) {
     _fontPackage = fontPackage;
     return this;
   }

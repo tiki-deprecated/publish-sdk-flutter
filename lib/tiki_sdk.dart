@@ -30,8 +30,8 @@ class TikiSdk {
   tiki_theme.Theme? _dark;
   core.TikiSdk? _core;
 
-  Function(Offer)? _onAccept;
-  Function(Offer)? _onDecline;
+  Function(Offer, LicenseRecord?)? _onAccept;
+  Function(Offer, LicenseRecord?)? _onDecline;
   Function(Offer)? _onSettings;
 
   bool _isAcceptEndingDisabled = false;
@@ -71,10 +71,10 @@ class TikiSdk {
   bool get isAcceptEndingDisabled => _isAcceptEndingDisabled;
 
   /// Callback function for an accepted offer.
-  Function(Offer)? get getOnAccept => _onAccept;
+  Function(Offer, LicenseRecord?)? get getOnAccept => _onAccept;
 
   /// Callback function for a declined offer.
-  Function(Offer)? get getOnDecline => _onDecline;
+  Function(Offer, LicenseRecord?)? get getOnDecline => _onDecline;
 
   /// Callback function for user tapping in settings in the settings link in
   /// ending screen.
@@ -110,7 +110,7 @@ class TikiSdk {
   /// If an offer with the same ID already exists in the dictionary, it will be
   /// overwritten by the new offer.
   TikiSdk addOffer(Offer offer) {
-    _offers[offer.id] = offer;
+    _offers[offer.getId] = offer;
     return TikiSdk.instance;
   }
 
@@ -149,7 +149,7 @@ class TikiSdk {
   /// of the licensing offer. This happens after accepting the terms, not just
   /// on selecting "I'm In." The License Record is passed as a parameter to the
   /// callback function.
-  TikiSdk onAccept(Function(Offer) onAccept) {
+  TikiSdk onAccept(Function(Offer, LicenseRecord?) onAccept) {
     _onAccept = onAccept;
     return this;
   }
@@ -158,7 +158,7 @@ class TikiSdk {
   ///
   /// he onDecline() event is triggered when the user declines the licensing offer.
   /// This happens on dismissal of the flow or when "Back Off" is selected.
-  TikiSdk onDecline(Function(Offer) onDecline) {
+  TikiSdk onDecline(Function(Offer, LicenseRecord?) onDecline) {
     _onDecline = onDecline;
     return this;
   }

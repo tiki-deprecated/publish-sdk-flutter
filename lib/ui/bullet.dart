@@ -6,12 +6,12 @@
 /// {@category UI}
 
 /// An item that describes what can be done with the user data.
-class UsedBullet {
+class Bullet {
   /// Description of the data usage.
   final String text;
 
   /// Whether it is used.
   final bool isUsed;
 
-  UsedBullet(this.text, this.isUsed);
+  Bullet(this.text, this.isUsed);
 }
