@@ -29,16 +29,14 @@ class RspLicenseList extends Rsp {
           "ptr": license.title.hashedPtr,
           "description": license.title.description,
           "tags": license.title.tags
-              .map<String>(
-                  (titleTag) => titleTag.value)
+              .map<String>((titleTag) => titleTag.value)
               .toList(),
           "origin": license.title.origin
         },
         "uses": license.uses
             .map<Map<String, List?>>((LicenseUse use) => {
                   "usecases": use.usecases
-                      .map<String>((LicenseUsecase usecase) =>
-                          usecase.value)
+                      .map<String>((LicenseUsecase usecase) => usecase.value)
                       .toList(),
                   "destinations": use.destinations
                 })

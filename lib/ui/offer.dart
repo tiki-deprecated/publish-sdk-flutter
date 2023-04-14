@@ -9,7 +9,7 @@ import 'package:tiki_sdk_dart/cache/title/title_tag.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk.dart';
 import 'package:uuid/uuid.dart';
 
-import 'ui/used_bullet.dart';
+import 'bullet.dart';
 
 /// An Offer for creating a License for a Title identified by [ptr].
 class Offer {

@@ -6,11 +6,10 @@
 /// {@category UI}
 import 'package:flutter/material.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk.dart';
-import 'package:tiki_sdk_flutter/ui/learn_more_btn.dart';
-import 'package:tiki_sdk_flutter/ui/markdown.dart';
 
-import '../offer.dart';
 import 'button.dart';
+import 'learn_more_btn.dart';
+import 'markdown.dart';
 import 'offer_card.dart';
 import 'used_for.dart';
 
@@ -18,9 +17,6 @@ import 'used_for.dart';
 class Settings extends StatefulWidget {
   /// A title to be shown in the top of the screen.
   final RichText? title;
-
-  /// The list of [Offfer] to be displayed for the user.
-  final Map<String, Offer> offers;
 
   late final Color primaryTextColor;
   late final Color secondaryTextColor;
@@ -34,8 +30,7 @@ class Settings extends StatefulWidget {
   /// Builds the settings screen.
   ///
   /// [TikiSdk.theme] is used for default styling.
-  Settings(
-    this.offers, {
+  Settings({
     super.key,
     this.title,
     Color? primaryTextColor,
@@ -93,8 +88,9 @@ class SettingsState extends State<Settings> {
         Padding(
           padding: const EdgeInsets.only(top: 30.0),
           child: Column(children: [
-            OfferCard(widget.offers.values.toList()[offerIndex]),
-            UsedFor(widget.offers.values.toList()[offerIndex].usedBullet)
+            OfferCard(TikiSdk.instance.offers.values.toList()[offerIndex]),
+            UsedFor(
+                TikiSdk.instance.offers.values.toList()[offerIndex].usedBullet)
           ]),
         ),
         Padding(
@@ -104,7 +100,8 @@ class SettingsState extends State<Settings> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Text("Terms and Conditions"),
-                MarkdownViewer(widget.offers.values.toList()[offerIndex].terms)
+                MarkdownViewer(
+                    TikiSdk.instance.offers.values.toList()[offerIndex].terms)
               ],
             )),
         Padding(

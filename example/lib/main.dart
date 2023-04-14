@@ -18,6 +18,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'TIKI SDK Example App',
-        home: Scaffold(body: Container()));
+        home: Scaffold(body: Column(
+          children: [
+            ElevatedButton(onPressed:
+                TikiSdk.present(context), child: Text("Start")),
+            ElevatedButton(onPressed:
+                TikiSdk.settings(context), child: Text("Settings"))
+          ],
+        )));
   }
 }

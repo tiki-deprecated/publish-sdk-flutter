@@ -6,7 +6,7 @@
 /// {@category UI}
 import 'package:flutter/material.dart';
 
-import '../tiki_sdk.dart';
+import '../../tiki_sdk.dart';
 
 /// The TikiSdk UI button.
 class Button extends StatelessWidget {

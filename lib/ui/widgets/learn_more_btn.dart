@@ -5,10 +5,10 @@
 
 /// {@category UI}
 import 'package:flutter/material.dart';
-import 'package:tiki_sdk_flutter/ui/learn_more.dart';
 
-import '../src/assets/icons/tiki_sdk_icons_icons.dart';
-import '../tiki_sdk.dart';
+import '../../src/assets/icons/tiki_sdk_icons_icons.dart';
+import '../../tiki_sdk.dart';
+import 'learn_more.dart';
 
 /// A help button that shows the [LearnMore] widget on tap.
 ///

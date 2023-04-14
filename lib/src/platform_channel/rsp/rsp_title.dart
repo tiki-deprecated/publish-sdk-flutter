@@ -19,8 +19,7 @@ class RspTitle extends Rsp {
     Map titleMap = {
       "hashedPtr": title.hashedPtr,
       "description": title.description,
-      "tags": title.tags.map<String>(
-          (titleTag) => titleTag.value),
+      "tags": title.tags.map<String>((titleTag) => titleTag.value),
       "origin": title.origin
     };
     return jsonEncode(titleMap);

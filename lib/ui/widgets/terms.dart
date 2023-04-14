@@ -6,7 +6,7 @@
 /// {@category UI}
 import 'package:flutter/material.dart';
 
-import '../tiki_sdk.dart';
+import '../../tiki_sdk.dart';
 import 'button.dart';
 import 'markdown.dart';
 

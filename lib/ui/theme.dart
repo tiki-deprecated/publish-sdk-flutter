@@ -6,7 +6,7 @@
 /// {@category UI}
 import 'package:flutter/painting.dart';
 
-import 'tiki_sdk.dart';
+import '../tiki_sdk.dart';
 
 /// Controls the UI theming for TikiSdk.
 class Theme {

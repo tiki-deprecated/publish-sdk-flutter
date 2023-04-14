@@ -5,10 +5,10 @@
 
 /// {@category UI}
 import 'package:flutter/cupertino.dart';
-import 'package:tiki_sdk_flutter/ui/used_bullet.dart';
+import 'package:tiki_sdk_flutter/ui/bullet.dart';
 
-import '../src/assets/icons/tiki_sdk_icons_icons.dart';
-import '../tiki_sdk.dart';
+import '../../src/assets/icons/tiki_sdk_icons_icons.dart';
+import '../../tiki_sdk.dart';
 
 /// A list of how user data will be used.
 class UsedFor extends StatelessWidget {

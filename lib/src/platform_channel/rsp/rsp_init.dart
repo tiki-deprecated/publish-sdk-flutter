@@ -10,11 +10,11 @@ import 'rsp.dart';
 /// The response for the `build` method call in the Platform Channel.
 ///
 /// It returns the [address] of the built node.
-class RspBuild extends Rsp {
+class RspInit extends Rsp {
   final String? address;
   final String? requestId;
 
-  RspBuild({this.address, this.requestId});
+  RspInit({this.address, this.requestId});
 
   @override
   String toJson() => jsonEncode({"address": address, "request_id": requestId});

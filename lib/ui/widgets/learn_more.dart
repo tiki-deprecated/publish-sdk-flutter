@@ -5,9 +5,9 @@
 
 /// {@category UI}
 import 'package:flutter/material.dart';
-import 'package:tiki_sdk_flutter/ui/markdown.dart';
 
-import '../tiki_sdk.dart';
+import '../../tiki_sdk.dart';
+import 'markdown.dart';
 
 /// The Learn More screen with user information of how TIKI SDK works.
 class LearnMore extends StatelessWidget {
