@@ -11,14 +11,6 @@ class InMemL0Storage implements BackupClient {
   Map<String, Map<String, Uint8List>> storage = {};
 
   @override
-  Future<Uint8List?> read(String path) async {
-    List<String> paths = path.split('/');
-    String address = paths[0];
-    String id = paths[1];
-    return storage[address]?[id];
-  }
-
-  @override
   Future<void> write(String path, Uint8List obj) async {
     List<String> paths = path.split('/');
     String address = paths[0];

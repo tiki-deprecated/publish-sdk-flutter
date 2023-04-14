@@ -13,7 +13,7 @@ import '../../tiki_sdk.dart';
 /// A list of how user data will be used.
 class UsedFor extends StatelessWidget {
   /// The [usedBullet] list of how the data will be used.
-  final List<UsedBullet> bullets;
+  final List<Bullet> bullets;
 
   late final Color? textColor;
   late final String? fontFamily;

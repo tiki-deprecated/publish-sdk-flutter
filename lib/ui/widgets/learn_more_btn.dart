@@ -27,7 +27,7 @@ class LearnMoreButton extends StatelessWidget {
       backgroundColor,
       fontFamily,
       fontPackage}) {
-    iconColor = iconColor ?? TikiSdk.instance.activeTheme.secondaryTextColor;
+    iconColor = iconColor ?? TikiSdk.instance.activeTheme.getSecondaryTextColor;
     textColor = textColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
     backgroundColor =
         backgroundColor ?? TikiSdk.instance.activeTheme.primaryBackgroundColor;

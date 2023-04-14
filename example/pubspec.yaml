@@ -24,9 +24,10 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-
   assets:
     - lib/ui/assets/images/offer_sample.png
+    - lib/ui/assets/terms.md
+
   fonts:
     - family: SpaceGrotesk
       fonts:

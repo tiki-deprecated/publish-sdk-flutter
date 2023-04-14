@@ -16,8 +16,12 @@ class ReqGuard {
   ReqGuard.fromJson(String jsonReq) {
     Map map = jsonDecode(jsonReq);
     ptr = map["ptr"];
-    destinations = map["destinations"]?.map<String>((e) => e.toString()).toList();
-    uses = map["usecases"]?.map<LicenseUsecase>((e) => LicenseUsecase.from(e.toString())).toList() ?? [];
+    destinations =
+        map["destinations"]?.map<String>((e) => e.toString()).toList();
+    uses = map["usecases"]
+            ?.map<LicenseUsecase>((e) => LicenseUsecase.from(e.toString()))
+            .toList() ??
+        [];
     origin = map["origin"];
   }
 }

@@ -75,6 +75,6 @@ class CompletionSheet extends StatelessWidget {
   /// Creates a new Title record or retrieves an existing one before creating
   /// the License.
   static Future<LicenseRecord> license(Offer offer, bool accepted) async {
-    return await TikiSdk.license(offer.ptr, offer.uses, offer.terms);
+    return await TikiSdk.license(offer.getPtr, offer.getUses, offer.getTerms);
   }
 }

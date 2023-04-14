@@ -1,4 +1,4 @@
-include: package:lints/platform_channel.yaml
+include: package:lints/core.yaml
 
 dart_code_metrics:
   extends:
