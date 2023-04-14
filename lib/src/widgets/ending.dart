@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:tiki_sdk_dart/license_record.dart';
 
 import '../../tiki_sdk.dart';
-import '../offer.dart';
+import '../../ui/offer.dart';
 
 /// A dismissible bottom sheet that will be shown after the TIKI flow is complete.
 class CompletionSheet extends StatelessWidget {

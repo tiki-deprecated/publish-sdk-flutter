@@ -10,14 +10,18 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/common.dart';
 import 'package:sqlite3/sqlite3.dart';
+import 'package:tiki_sdk_dart/cache/license/license_use.dart';
+import 'package:tiki_sdk_dart/cache/license/license_usecase.dart';
+import 'package:tiki_sdk_dart/cache/title/title_tag.dart';
+import 'package:tiki_sdk_dart/license_record.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart' as core;
-import 'package:tiki_sdk_flutter/src/platform_channel/flutter_key_storage.dart';
-import 'package:tiki_sdk_flutter/ui/widgets/settings.dart';
+import 'package:tiki_sdk_dart/title_record.dart';
 
-import 'main.dart';
+import 'src/flutter_key_storage.dart';
+import 'src/widgets/offer_prompt.dart';
+import 'src/widgets/settings.dart';
 import 'ui/offer.dart';
 import 'ui/theme.dart' as tiki_theme;
-import 'ui/widgets/offer_prompt.dart';
 
 /// The TIKI SDK main class. Use this to add tokenized data ownership, consent, and rewards.
 ///
