@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tiki_sdk_flutter/src/platform_channel/platform_channel.dart';
 
-import 'package:tiki_sdk_flutter/src/tiki_platform_channel/tiki_platform_channel.dart';
 import 'package:uuid/uuid.dart';
 
 import 'tiki_credentials.dart' as credentials;
@@ -24,7 +24,7 @@ void main() {
   }
 
   TestWidgetsFlutterBinding.ensureInitialized();
-  TikiPlatformChannel platform = TikiPlatformChannel();
+  PlatformChannel platform = PlatformChannel();
   MethodChannel channel = platform.methodChannel;
 
   TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger
@@ -69,7 +69,7 @@ void main() {
       })});
         String jsonResponse = await completer.future;
       Map licenseMap = jsonDecode(jsonResponse)["license"];
-      expect(1, 1);
+      expect(licenseMap["title"]["hashedPtr"] != null, true);
     });
 
     test('Guard', () async {
@@ -94,7 +94,6 @@ void main() {
           "ptr":ptr,
           "licenseDescription":
           "Trade your IDFA (kind of like a serial # for your phone) for a discount.",
-          "expiry":1711040173000
         })});
       await completer.future;
       completer = Completer();
@@ -102,7 +101,7 @@ void main() {
       completers[requestId] = completer;
       await channel.invokeMockMethod('guard', {
         "requestId": requestId,
-        "request": 	'{"ptr":"source","usecases":["support"],"destinations":[]}'
+        "request": 	'{"ptr": "$ptr","usecases":["support"],"destinations":[]}'
       });
       String jsonResponse = await completer.future;
       expect(jsonDecode(jsonResponse)["success"], true);

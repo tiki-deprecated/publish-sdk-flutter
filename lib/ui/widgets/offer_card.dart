@@ -6,8 +6,8 @@
 /// {@category UI}
 import 'package:flutter/material.dart';
 
+import '../../tiki_sdk.dart';
 import '../offer.dart';
-import '../tiki_sdk.dart';
 
 /// A card that represents an [Offer] to the user.
 class OfferCard extends StatelessWidget {

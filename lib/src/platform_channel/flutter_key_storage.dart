@@ -18,13 +18,13 @@ class FlutterKeyStorage implements KeyStorage {
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   @override
-  Future<String?> read(String key) async =>
-      await secureStorage.read(key: key);
+  Future<String?> read(String key) async => await secureStorage.read(key: key);
 
   @override
   Future<void> write(String key, String value) async =>
       await secureStorage.write(key: key, value: value);
 
   @override
-  Future<String> generate() async => (await Rsa.generateAsync()).privateKey.encode();
+  Future<String> generate() async =>
+      (await Rsa.generateAsync()).privateKey.encode();
 }

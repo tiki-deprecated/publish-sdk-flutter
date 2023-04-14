@@ -13,31 +13,31 @@ library tiki_sdk_flutter_platform;
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:tiki_sdk_flutter/main.dart';
-import 'package:tiki_sdk_flutter/src/tiki_platform_channel/req/req_guard.dart';
-import 'package:tiki_sdk_flutter/src/tiki_platform_channel/req/req_license.dart';
-import 'package:tiki_sdk_flutter/src/tiki_platform_channel/req/req_license_get.dart';
-import 'package:tiki_sdk_flutter/src/tiki_platform_channel/req/req_license_latest.dart';
-import 'package:tiki_sdk_flutter/src/tiki_platform_channel/req/req_title.dart';
-import 'package:tiki_sdk_flutter/src/tiki_platform_channel/rsp/rsp_guard.dart';
-import 'package:tiki_sdk_flutter/src/tiki_platform_channel/rsp/rsp_license_list.dart';
+import 'package:tiki_sdk_dart/license_record.dart';
+import 'package:tiki_sdk_dart/title_record.dart';
 
-import 'req/req_build.dart';
+import '../../tiki_sdk.dart';
+import 'req/req_guard.dart';
+import 'req/req_init.dart';
+import 'req/req_license.dart';
 import 'req/req_license_all.dart';
+import 'req/req_license_get.dart';
+import 'req/req_license_latest.dart';
+import 'req/req_title.dart';
 import 'req/req_title_get.dart';
 import 'rsp/rsp.dart';
-import 'rsp/rsp_build.dart';
 import 'rsp/rsp_error.dart';
+import 'rsp/rsp_guard.dart';
+import 'rsp/rsp_init.dart';
 import 'rsp/rsp_license.dart';
+import 'rsp/rsp_license_list.dart';
 import 'rsp/rsp_title.dart';
 
 /// The definition of native platform channels
-class TikiPlatformChannel {
-  TikiSdk? _tikiSdk;
-
+class PlatformChannel {
   final methodChannel = const MethodChannel('tiki_sdk_flutter');
 
-  TikiPlatformChannel() {
+  PlatformChannel() {
     methodChannel.setMethodCallHandler(methodHandler);
   }
 
@@ -56,7 +56,7 @@ class TikiPlatformChannel {
     String requestId = call.arguments['requestId'];
     switch (call.method) {
       case "build":
-        await _handle(requestId, ReqBuild.fromJson(jsonReq), _buildSdk);
+        await _handle(requestId, ReqInit.fromJson(jsonReq), _init);
         break;
       case "license":
         await _handle(requestId, ReqLicense.fromJson(jsonReq), _license);
@@ -89,13 +89,10 @@ class TikiPlatformChannel {
     }
   }
 
-  Future<RspBuild> _buildSdk(ReqBuild req) async {
-    TikiSdkBuilder builder = TikiSdkBuilder()
-      ..origin(req.origin)
-      ..publishingId(req.publishingId)
-      ..id(req.id!);
-    _tikiSdk = await builder.build();
-    return RspBuild(address: _tikiSdk!.address);
+  Future<RspInit> _init(ReqInit req) async {
+    await TikiSdk.config()
+        .initialize(req.publishingId, req.id, origin: req.origin);
+    return RspInit(address: TikiSdk.instance.address);
   }
 
   Future<void> _handle<S, D extends Rsp>(
@@ -120,7 +117,7 @@ class TikiPlatformChannel {
           'error', {'requestId': requestId, 'response': rsp.toJson()});
 
   Future<RspLicense> _license(ReqLicense reqLicense) async {
-    LicenseRecord licenseRecord = await _tikiSdk!.license(
+    LicenseRecord licenseRecord = await TikiSdk.license(
         reqLicense.ptr!, reqLicense.uses, reqLicense.terms!,
         origin: reqLicense.origin,
         tags: reqLicense.tags,
@@ -131,24 +128,24 @@ class TikiPlatformChannel {
   }
 
   Future<RspLicense> _licenseLatest(ReqLicenseLatest reqLicenseLatest) async {
-    LicenseRecord? licenseRecord = _tikiSdk!
-        .latest(reqLicenseLatest.ptr!, origin: reqLicenseLatest.origin);
+    LicenseRecord? licenseRecord =
+        TikiSdk.latest(reqLicenseLatest.ptr!, origin: reqLicenseLatest.origin);
     return RspLicense(license: licenseRecord);
   }
 
   Future<RspLicenseList> _licenseAll(ReqLicenseAll reqLicenseAll) async {
     List<LicenseRecord> licenses =
-        _tikiSdk!.all(reqLicenseAll.ptr!, origin: reqLicenseAll.origin);
+        TikiSdk.all(reqLicenseAll.ptr!, origin: reqLicenseAll.origin);
     return RspLicenseList(licenseList: licenses);
   }
 
   Future<RspLicense> _licenseGet(ReqLicenseGet reqLicenseGet) async {
-    LicenseRecord? licenseRecord = _tikiSdk!.getLicense(reqLicenseGet.id!);
+    LicenseRecord? licenseRecord = TikiSdk.getLicense(reqLicenseGet.id!);
     return RspLicense(license: licenseRecord);
   }
 
   Future<RspTitle> _title(ReqTitle reqTitle) async {
-    TitleRecord titleRecord = await _tikiSdk!.title(reqTitle.ptr!,
+    TitleRecord titleRecord = await TikiSdk.title(reqTitle.ptr!,
         origin: reqTitle.origin,
         description: reqTitle.description,
         tags: reqTitle.tags);
@@ -156,14 +153,14 @@ class TikiPlatformChannel {
   }
 
   Future<RspTitle> _titleGet(ReqTitleGet reqTitleGet) async {
-    TitleRecord? titleRecord = _tikiSdk!.getTitle(reqTitleGet.id!);
+    TitleRecord? titleRecord = TikiSdk.getTitle(reqTitleGet.id!);
     return RspTitle(title: titleRecord);
   }
 
   Future<Rsp> _guard(ReqGuard reqGuard) async {
     bool result;
     String? reason;
-    result = _tikiSdk!.guard(reqGuard.ptr!, reqGuard.uses,
+    result = await TikiSdk.guard(reqGuard.ptr!, reqGuard.uses,
         destinations: reqGuard.destinations,
         origin: reqGuard.origin, onFail: (reason) {
       reason = reason;

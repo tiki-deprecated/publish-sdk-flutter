@@ -5,8 +5,10 @@
 
 /// {@category UI}
 import 'package:flutter/cupertino.dart';
+import 'package:tiki_sdk_dart/license_record.dart';
 
-import '../tiki_sdk.dart';
+import '../../tiki_sdk.dart';
+import '../offer.dart';
 
 /// A dismissible bottom sheet that will be shown after the TIKI flow is complete.
 class CompletionSheet extends StatelessWidget {
@@ -64,5 +66,15 @@ class CompletionSheet extends StatelessWidget {
               Padding(
                   padding: const EdgeInsets.only(top: 36.0), child: footnote),
             ]));
+  }
+
+  /// Creates a new License, based on the the user choice about the [offer].
+  ///
+  /// If the user [accepted] the [offer], the License will include the [Offer.uses].
+  /// If not the License will have no uses.
+  /// Creates a new Title record or retrieves an existing one before creating
+  /// the License.
+  static Future<LicenseRecord> license(Offer offer, bool accepted) async {
+    return await TikiSdk.license(offer.ptr, offer.uses, offer.terms);
   }
 }

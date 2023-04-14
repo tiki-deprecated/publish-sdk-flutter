@@ -6,8 +6,8 @@
 /// {@category UI}
 import 'package:flutter/material.dart';
 
+import '../../tiki_sdk.dart';
 import '../offer.dart';
-import '../tiki_sdk.dart';
 import 'button.dart';
 import 'learn_more_btn.dart';
 import 'offer_card.dart';
