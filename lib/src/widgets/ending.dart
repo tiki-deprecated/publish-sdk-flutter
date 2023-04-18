@@ -5,7 +5,6 @@
 
 /// {@category UI}
 import 'package:flutter/cupertino.dart';
-import 'package:tiki_sdk_dart/license_record.dart';
 
 import '../../tiki_sdk.dart';
 import '../../ui/offer.dart';

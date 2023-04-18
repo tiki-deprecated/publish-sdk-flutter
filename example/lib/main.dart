@@ -16,7 +16,7 @@ void main() async {
         .tag(TitleTag.advertisingData())
         .description("Trade your IDFA (kind of like a serial # for your phone) for a discount.")
         .terms("terms")
-        .duration(Duration(days: 365))
+        .duration(const Duration(days: 365))
         .add()
       .initialize(publishingId, "test_user_123", onComplete: () =>
     runApp(const MyApp())
@@ -28,13 +28,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
         title: 'TIKI SDK Example App',
         home: Scaffold(body: Center(child: ExampleButtons())));
   }
 }
 
 class ExampleButtons extends StatelessWidget{
+  const ExampleButtons({super.key});
+
   @override
   Widget build(BuildContext context) =>  Column(
     mainAxisSize: MainAxisSize.min,

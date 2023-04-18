@@ -31,7 +31,7 @@ export 'package:tiki_sdk_dart/tiki_sdk.dart';
 /// parameters are kept when a new instance is created, except for the address
 class TikiSdk {
   static TikiSdk? _instance;
-  final tiki_theme.Theme _theme = tiki_theme.Theme.light();
+  final tiki_theme.Theme _theme = tiki_theme.Theme();
 
   tiki_theme.Theme? _dark;
   core.TikiSdk? _core;
@@ -60,7 +60,7 @@ class TikiSdk {
 
   /// The dark theme for TikiSdk pre-built UIs. Just used if is set in TikiSdk.
   tiki_theme.Theme get dark {
-    _dark ??= tiki_theme.Theme.dark();
+    _dark ??= tiki_theme.Theme();
     return _dark!;
   }
 

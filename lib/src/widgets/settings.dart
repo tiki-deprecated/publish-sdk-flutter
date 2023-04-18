@@ -79,7 +79,7 @@ class SettingsState extends State<Settings> {
             color: TikiSdk.instance.theme.getPrimaryTextColor,
             onPressed: () => Navigator.of(context).pop()),
         title: Text(
-
+          "Settings"
         ),
         actions: [
           LearnMoreButton()

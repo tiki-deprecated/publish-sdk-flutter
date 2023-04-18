@@ -9,7 +9,6 @@ import 'package:tiki_sdk_flutter/src/widgets/trade_your_data.dart';
 
 import '../../tiki_sdk.dart';
 import '../../ui/offer.dart';
-import 'button.dart';
 import 'learn_more_btn.dart';
 import 'offer_card.dart';
 import 'used_for.dart';
