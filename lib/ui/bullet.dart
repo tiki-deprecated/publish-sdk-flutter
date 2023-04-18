@@ -3,6 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 /// {@category UI}
+library bullet;
 
 /// An item that describes what can be done with the user data. Used in the
 /// pre-built UI to show the 3 bullets underneath the Offer reward image.
