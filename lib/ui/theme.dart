@@ -2,13 +2,47 @@
  * Copyright (c) TIKI Inc.
  * MIT license. See LICENSE file in root directory.
  */
-
 /// {@category UI}
 import 'package:flutter/painting.dart';
 
 import '../tiki_sdk.dart';
 
-/// Controls the UI theming for TikiSdk.
+/// The Tiki SDK theme for pre-built UIs.
+///
+/// The pre-built UI styles are defined by a [Theme] object. To configure a theme,
+/// chain calls to the [TikiSdk.config] method. For example:
+///
+/// ```
+/// TikiSdk.config()
+///     .theme
+///         .primaryTextColor(Colors.black)
+///         .primaryBackgroundColor(Colors.white)
+///         .accentColor(Colors.blue)
+///         .fontFamily("test")
+/// ```
+///
+/// To configure a dark theme, use the `TikiSdk.dark` property or chain calls
+/// to the `config()` method:
+///
+/// ```
+/// TikiSdk.config()
+///     .theme
+///         .primaryTextColor(Colors.black)
+///         .primaryBackgroundColor(Colors.white)
+///         .accentColor(Colors.blue)
+///         .fontFamily("test")
+///     .and()
+///     .dark
+///         .primaryTextColor(Colors.white)
+///         .primaryBackgroundColor(Colors.black)
+///         .accentColor(Colors.white)
+///         .fontFamily("test")
+/// ```
+///
+/// The dark theme is only used if explicitly configured and if the OS is using a dark theme.
+///
+/// To configure fonts, first load the font assets files with `pubsbec.yaml` and
+/// set the [fontFamily] and [fontPackage].
 class Theme {
   Color _primaryTextColor;
   Color _primaryBackgroundColor;
@@ -19,28 +53,10 @@ class Theme {
 
   /// Builds a default TikiTheme.
   Theme()
-      : _primaryTextColor = const Color(0x001C0000),
-        _primaryBackgroundColor = const Color(0x001C1C1E),
-        _secondaryBackgroundColor = const Color(0x00F6F6F6),
-        _accentColor = const Color(0x0000B272),
-        _fontFamily = "SpaceGrotesk",
-        _fontPackage = "tiki_sdk_flutter";
-
-  /// Builds the light version of the theme.
-  Theme.light()
-      : _primaryTextColor = const Color(0x001C0000),
-        _primaryBackgroundColor = const Color(0x001C1C1E),
-        _secondaryBackgroundColor = const Color(0x00F6F6F6),
-        _accentColor = const Color(0x0000B272),
-        _fontFamily = "SpaceGrotesk",
-        _fontPackage = "tiki_sdk_flutter";
-
-  /// Builds the dark version of the theme.
-  Theme.dark()
-      : _primaryTextColor = const Color(0x00F6F6F6),
-        _primaryBackgroundColor = const Color(0x001C1C1E),
-        _secondaryBackgroundColor = const Color(0x00F6F6F6).withOpacity(0.38),
-        _accentColor = const Color(0x0000B272),
+      : _primaryTextColor = const Color(0xFF1C1C1C),
+        _primaryBackgroundColor = const Color(0xFFFFFFFF),
+        _secondaryBackgroundColor = const Color(0xFFF6F6F6),
+        _accentColor = const Color(0xFF00B277),
         _fontFamily = "SpaceGrotesk",
         _fontPackage = "tiki_sdk_flutter";
 
@@ -69,35 +85,45 @@ class Theme {
   /// The package to which the font asset belongs.
   String get getFontPackage => _fontPackage;
 
+
+  /// Sets the [_primaryTextColor]
   Theme primaryTextColor(Color primaryTextColor) {
     _primaryTextColor = primaryTextColor;
     return this;
   }
 
+
+  /// Sets the [_primaryBackgroundColor]
   Theme primaryBackgroundColor(Color primaryBackgroundColor) {
     _primaryBackgroundColor = primaryBackgroundColor;
     return this;
   }
 
+  /// Sets the [_secondaryBackgroundColor]
   Theme secondaryBackgroundColor(Color secondaryBackgroundColor) {
     _secondaryBackgroundColor = secondaryBackgroundColor;
     return this;
   }
 
+  /// Sets the [_accentColor]
   Theme accentColor(Color accentColor) {
     _accentColor = accentColor;
     return this;
   }
 
+  /// Sets the [_fontFamily]
   Theme fontFamily(String fontFamily) {
     _fontFamily = fontFamily;
     return this;
   }
 
+  /// Sets the [_fontPackage]
   Theme fontPackage(String fontPackage) {
     _fontPackage = fontPackage;
     return this;
   }
 
+  /// Returns the [TikiSdk] instance to simplify the chaining of methods in
+  /// SDK configuration and initialization.
   TikiSdk and() => TikiSdk.instance;
 }

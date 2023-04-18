@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:tiki_sdk_dart/cache/license/license_usecase.dart';
 import 'package:tiki_sdk_dart/cache/license/license_usecase_enum.dart';
-import 'package:tiki_sdk_dart/cache/title/title_tag.dart';
 import 'package:tiki_sdk_dart/cache/title/title_tag_enum.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk.dart';
 import 'package:uuid/uuid.dart';
