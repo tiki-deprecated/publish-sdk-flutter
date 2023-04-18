@@ -7,30 +7,17 @@
 import 'package:flutter/material.dart';
 
 import '../../tiki_sdk.dart';
-import '../offer.dart';
+import '../../ui/offer.dart';
 
 /// A card that represents an [Offer] to the user.
 class OfferCard extends StatelessWidget {
   /// The offer to be shown.
   final Offer offer;
 
-  late final Color? textColor;
-  late final Color? backgroundColor;
-
-  late final String? fontFamily;
-  late final String? fontPackage;
-
   /// Builds the OfferCard.
   ///
   /// [TikiSdk.theme] is used for default styling.
-  OfferCard(this.offer,
-      {super.key, textColor, backgroundColor, fontFamily, fontPackage}) {
-    this.textColor = textColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
-    this.backgroundColor =
-        backgroundColor ?? TikiSdk.instance.activeTheme.primaryBackgroundColor;
-    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
-  }
+  OfferCard(this.offer, {super.key});
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -38,7 +25,7 @@ class OfferCard extends StatelessWidget {
         child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
-                color: backgroundColor,
+                color: TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
                 boxShadow: const [
                   BoxShadow(
                       color: Color.fromARGB(13, 0, 0, 0), offset: Offset(4, 4))
@@ -67,9 +54,9 @@ class OfferCard extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                   height: 1.2,
-                                  color: textColor,
-                                  fontFamily: fontFamily,
-                                  package: fontPackage))),
+                                  color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
+                                  fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
+                                  package: TikiSdk.instance.activeTheme.getFontPackage))),
                     )
                   ],
                 ))),

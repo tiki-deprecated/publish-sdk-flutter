@@ -14,26 +14,18 @@ import 'learn_more.dart';
 ///
 /// [TikiSdk.theme] is used for default styling.
 class LearnMoreButton extends StatelessWidget {
-  late final Color? iconColor;
-  late final Color? textColor;
-  late final Color? backgroundColor;
-  late final String? fontFamily;
-  late final String? fontPackage;
+  late final Color iconColor;
+  late final Color textColor;
+  late final Color backgroundColor;
+  late final String fontFamily;
+  late final String fontPackage;
 
-  LearnMoreButton(
-      {super.key,
-      iconColor,
-      textColor,
-      backgroundColor,
-      fontFamily,
-      fontPackage}) {
-    iconColor = iconColor ?? TikiSdk.instance.activeTheme.getSecondaryTextColor;
-    textColor = textColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
-    backgroundColor =
-        backgroundColor ?? TikiSdk.instance.activeTheme.primaryBackgroundColor;
-    fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
-    fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
-  }
+  LearnMoreButton({super.key}) :
+    iconColor = TikiSdk.instance.activeTheme.getSecondaryTextColor,
+    textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor,
+    backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+    fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
+    fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
 
   @override
   Widget build(BuildContext context) => IconButton(

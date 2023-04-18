@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:tiki_sdk_dart/license_record.dart';
 
 import '../../tiki_sdk.dart';
-import '../offer.dart';
+import '../../ui/offer.dart';
 
 /// A dismissible bottom sheet that will be shown after the TIKI flow is complete.
 class CompletionSheet extends StatelessWidget {
@@ -21,22 +21,20 @@ class CompletionSheet extends StatelessWidget {
   /// The sub text shown below the message.
   final RichText footnote;
 
-  late final Color? primaryTextColor;
-  late final Color? backgroundColor;
-  late final String? fontFamily;
-  late final String? fontPackage;
+  late final Color primaryTextColor;
+  late final Color backgroundColor;
+  late final String fontFamily;
+  late final String fontPackage;
 
   /// Completion Sheet Builder
   ///
   /// [TikiSdk.theme] is used for default styling.
   CompletionSheet(this.title, this.message, this.footnote,
       {super.key, fontFamily, fontPackage, primaryTextColor, backgroundColor}) {
-    this.primaryTextColor =
-        primaryTextColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
-    this.backgroundColor =
-        backgroundColor ?? TikiSdk.instance.activeTheme.primaryBackgroundColor;
-    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
+    this.primaryTextColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
   }
 
   @override

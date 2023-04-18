@@ -23,9 +23,9 @@ class UsedFor extends StatelessWidget {
   ///
   /// [TikiSdk.theme] is used for default styling.
   UsedFor(this.bullets, {super.key, textColor, fontFamily, fontPackage}) {
-    this.textColor = textColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
-    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
+    this.textColor = textColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
   }
 
   @override

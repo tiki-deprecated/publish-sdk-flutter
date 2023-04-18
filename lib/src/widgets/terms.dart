@@ -33,11 +33,11 @@ class Terms extends StatelessWidget {
       fontFamily,
       fontPackage}) {
     this.buttonColor = buttonColor ?? TikiSdk.instance.activeTheme.accentColor;
-    this.textColor = textColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
+    this.textColor = textColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
     this.backgroundColor =
-        backgroundColor ?? TikiSdk.instance.activeTheme.primaryBackgroundColor;
-    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
+        backgroundColor ?? TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
   }
 
   @override
@@ -59,11 +59,7 @@ class Terms extends StatelessWidget {
               child: FutureBuilder(
                   future: DefaultAssetBundle.of(context).loadString(src),
                   builder: (context, snapshot) {
-                    return MarkdownViewer(snapshot.data!,
-                        textColor: textColor,
-                        fontSize: 20,
-                        fontPackage: fontPackage,
-                        fontFamily: fontFamily);
+                    return MarkdownViewer(snapshot.data!);
                   }),
             ),
             Padding(
@@ -71,6 +67,6 @@ class Terms extends StatelessWidget {
                     top: 40, bottom: 50, left: 15, right: 15),
                 child: Button.solid("I agree", () {
                   Navigator.of(context).pop(true);
-                }, color: buttonColor))
+                }))
           ]))));
 }

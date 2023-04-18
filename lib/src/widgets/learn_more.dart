@@ -24,11 +24,10 @@ class LearnMore extends StatelessWidget {
   /// [TikiSdk.theme] is used for default styling.
   LearnMore(this.src,
       {super.key, textColor, backgroundColor, fontFamily, fontPackage}) {
-    this.textColor = textColor ?? TikiSdk.instance.activeTheme.primaryTextColor;
-    this.backgroundColor =
-        backgroundColor ?? TikiSdk.instance.activeTheme.primaryBackgroundColor;
-    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.fontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.fontPackage;
+    this.textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
   }
 
   @override
@@ -50,11 +49,7 @@ class LearnMore extends StatelessWidget {
               child: FutureBuilder(
                   future: DefaultAssetBundle.of(context).loadString(src),
                   builder: (context, snapshot) {
-                    return MarkdownViewer(snapshot.data!,
-                        textColor: textColor,
-                        fontSize: 20,
-                        fontPackage: fontPackage,
-                        fontFamily: fontFamily);
+                    return MarkdownViewer(snapshot.data!);
                   }),
             ),
           ]))));

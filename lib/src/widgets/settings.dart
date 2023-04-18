@@ -73,14 +73,16 @@ class SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
+        backgroundColor: TikiSdk.instance.theme.getPrimaryBackgroundColor,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
+            color: TikiSdk.instance.theme.getPrimaryTextColor,
             onPressed: () => Navigator.of(context).pop()),
-        title: widget.title,
+        title: Text(
+
+        ),
         actions: [
-          LearnMoreButton(
-            iconColor: widget.secondaryTextColor,
-          )
+          LearnMoreButton()
         ],
       ),
       body: SafeArea(
@@ -95,30 +97,18 @@ class SettingsState extends State<Settings> {
         ),
         Padding(
             padding: const EdgeInsets.only(top: 30.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Text("Terms and Conditions"),
-                MarkdownViewer(
-                    TikiSdk.instance.offers.values.toList()[offerIndex].getTerms)
-              ],
-            )),
+        ),
+        const Text("Terms and Conditions"),
+        MarkdownViewer(
+                    TikiSdk.instance.offers.values.toList()[offerIndex].getTerms),
         Padding(
             padding: const EdgeInsets.only(top: 30.0),
             child: isAccepted
                 ? Button(
                     "Opt Out",
                     _change,
-                    textColor: widget.btnOutlineTextColor,
-                    borderColor: widget.btnOutlineBorderColor,
-                    fontFamily: widget.fontFamily,
-                    fontPackage: widget.fontPackage,
                   )
-                : Button.solid("Opt In", _change,
-                    color: widget.btnSolidColor,
-                    fontFamily: widget.fontFamily,
-                    fontPackage: widget.fontPackage))
+                : Button.solid("Opt In", _change))
       ])));
 
   Future<void> _change() async {

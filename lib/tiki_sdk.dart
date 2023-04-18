@@ -10,14 +10,20 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/common.dart';
 import 'package:sqlite3/sqlite3.dart';
+import 'package:tiki_sdk_dart/cache/license/license_use.dart';
+import 'package:tiki_sdk_dart/cache/license/license_usecase.dart';
+import 'package:tiki_sdk_dart/cache/title/title_tag.dart';
+import 'package:tiki_sdk_dart/license_record.dart';
 import 'package:tiki_sdk_dart/tiki_sdk.dart' as core;
-import 'package:tiki_sdk_flutter/src/platform_channel/flutter_key_storage.dart';
-import 'package:tiki_sdk_flutter/ui/widgets/settings.dart';
+import 'package:tiki_sdk_dart/title_record.dart';
 
-import 'main.dart';
+import 'src/flutter_key_storage.dart';
+import 'src/widgets/offer_prompt.dart';
+import 'src/widgets/settings.dart';
 import 'ui/offer.dart';
 import 'ui/theme.dart' as tiki_theme;
-import 'ui/widgets/offer_prompt.dart';
+
+export 'package:tiki_sdk_dart/tiki_sdk.dart';
 
 /// The TIKI SDK main class. Use this to add tokenized data ownership, consent, and rewards.
 ///
@@ -187,6 +193,7 @@ class TikiSdk {
       {Function? onComplete = null,
       String? origin = null,
       String? dbDir = null}) async {
+    WidgetsFlutterBinding.ensureInitialized();
     FlutterKeyStorage keyStorage = FlutterKeyStorage();
     String address = await core.TikiSdk.withId(id, keyStorage);
     origin ??= (await PackageInfo.fromPlatform()).packageName;
@@ -256,11 +263,13 @@ class TikiSdk {
   ///
   /// It throws a [StateError] if the SDK is not initialized or if no `Offer` was created.
   static Future<void> present(BuildContext context) async {
+    _throwIfNotInitialized();
+    _throwIfNoOffers();
     showModalBottomSheet<dynamic>(
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
-        builder: (BuildContext context) => OfferPrompt(instance.offers));
+        builder: (BuildContext context) => OfferPrompt());
   }
 
   /// Presents the Tiki SDK's pre-built user interface for the settings screen, which allows the user to accept or decline the current offer.
@@ -271,6 +280,8 @@ class TikiSdk {
   ///
   /// - Throws: `TikiSdkError` if the SDK is not initialized or if no `Offer` was created.
   static Future<void> settings(BuildContext context) async {
+    _throwIfNotInitialized();
+    _throwIfNoOffers();
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => Settings()));
   }
@@ -355,6 +366,7 @@ class TikiSdk {
       String? licenseDescription,
       DateTime? expiry,
       String? origin}) {
+    _throwIfNotInitialized();
     return instance._core!.license(
       ptr,
       uses,
@@ -381,6 +393,7 @@ class TikiSdk {
       {List<TitleTag> tags = const [],
       String? description = null,
       String? origin = null}) async {
+    _throwIfNotInitialized();
     return instance._core!
         .title(ptr, tags: tags, description: description, origin: origin);
   }
@@ -391,6 +404,7 @@ class TikiSdk {
   /// - Parameters
   ///  - id: The ID of the TitleRecord to retrieve.
   static TitleRecord? getTitle(String id) {
+    _throwIfNotInitialized();
     return instance._core!.getTitle(id);
   }
 
@@ -403,6 +417,7 @@ class TikiSdk {
   ///     - origin: An optional override of the default origin specified in `initTikiSdkAsync`.
   /// - Returns: The LicenseRecord that matches the specified ID or null if the license or corresponding title record is not found.
   static LicenseRecord? getLicense(String id) {
+    _throwIfNotInitialized();
     return instance._core!.getLicense(id);
   }
 
@@ -416,6 +431,7 @@ class TikiSdk {
   /// - Returns: An array of all LicenseRecords associated with the given Pointer Record. If no LicenseRecords are found,
   /// an empty array is returned.
   static List<LicenseRecord> all(String ptr, {String? origin = null}) {
+    _throwIfNotInitialized();
     return instance._core!.all(ptr, origin: origin);
   }
 
@@ -426,6 +442,7 @@ class TikiSdk {
   ///
   /// - Returns: The latest LicenseRecord for the given ptr, or null if the corresponding title or license records are not found.
   static LicenseRecord? latest(String ptr, {String? origin = null}) {
+    _throwIfNotInitialized();
     return instance._core!.latest(ptr, origin: origin);
   }
 
@@ -435,5 +452,18 @@ class TikiSdk {
       await dir.create(recursive: true);
     }
     return dir.path;
+  }
+
+  static _throwIfNotInitialized() {
+    if (!TikiSdk.instance.isInitialized) {
+      throw StateError(
+          "Please ensure that the TIKI SDK is properly initialized by calling initialize().");
+    }
+  }
+
+  static _throwIfNoOffers() {
+    if(TikiSdk.instance.offers.isEmpty) {
+      throw StateError("To proceed, kindly utilize the TikiSdk.offer() method to include at least one offer.");
+    }
   }
 }

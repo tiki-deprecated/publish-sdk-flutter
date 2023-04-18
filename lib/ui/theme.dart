@@ -19,28 +19,28 @@ class Theme {
 
   /// Builds a default TikiTheme.
   Theme()
-      : _primaryTextColor = const Color(0x001C0000),
-        _primaryBackgroundColor = const Color(0x001C1C1E),
-        _secondaryBackgroundColor = const Color(0x00F6F6F6),
-        _accentColor = const Color(0x0000B272),
+      : _primaryTextColor = const Color(0xFF1C1C1C),
+        _primaryBackgroundColor = const Color(0xFFFFFFFF),
+        _secondaryBackgroundColor = const Color(0xFFF6F6F6),
+        _accentColor = const Color(0xFF00B277),
         _fontFamily = "SpaceGrotesk",
         _fontPackage = "tiki_sdk_flutter";
 
   /// Builds the light version of the theme.
   Theme.light()
-      : _primaryTextColor = const Color(0x001C0000),
-        _primaryBackgroundColor = const Color(0x001C1C1E),
-        _secondaryBackgroundColor = const Color(0x00F6F6F6),
-        _accentColor = const Color(0x0000B272),
+      : _primaryTextColor = const Color(0xFF1C1C1C),
+        _primaryBackgroundColor = const Color(0xFFFFFFFF),
+        _secondaryBackgroundColor = const Color(0xFFF6F6F6),
+        _accentColor = const Color(0xFF00B277),
         _fontFamily = "SpaceGrotesk",
         _fontPackage = "tiki_sdk_flutter";
 
   /// Builds the dark version of the theme.
   Theme.dark()
-      : _primaryTextColor = const Color(0x00F6F6F6),
-        _primaryBackgroundColor = const Color(0x001C1C1E),
-        _secondaryBackgroundColor = const Color(0x00F6F6F6).withOpacity(0.38),
-        _accentColor = const Color(0x0000B272),
+      : _primaryTextColor =  const Color(0xFFFFFFFF),
+        _primaryBackgroundColor =  const Color(0xFF1C1C1C),
+        _secondaryBackgroundColor = const Color(0xFF060606),
+        _accentColor = const Color(0xFF00B277),
         _fontFamily = "SpaceGrotesk",
         _fontPackage = "tiki_sdk_flutter";
 

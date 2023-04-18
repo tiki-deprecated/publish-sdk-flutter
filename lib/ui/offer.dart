@@ -71,7 +71,7 @@ class Offer {
 
   /// Sets the [reward]
   Offer reward(Image reward) {
-    reward = reward;
+    _reward = reward;
     return this;
   }
 
