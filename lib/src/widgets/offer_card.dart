@@ -9,14 +9,9 @@ import 'package:flutter/material.dart';
 import '../../tiki_sdk.dart';
 import '../../ui/offer.dart';
 
-/// A card that represents an [Offer] to the user.
 class OfferCard extends StatelessWidget {
-  /// The offer to be shown.
   final Offer offer;
 
-  /// Builds the OfferCard.
-  ///
-  /// [TikiSdk.theme] is used for default styling.
   OfferCard(this.offer, {super.key});
 
   @override

@@ -8,12 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk.dart';
 
-/// A simple Markdown viewer.
 class MarkdownViewer extends StatelessWidget {
 
-  /// The markdown text to be displayed.
   final String mdText;
-
   const MarkdownViewer(this.mdText, {super.key});
 
   @override

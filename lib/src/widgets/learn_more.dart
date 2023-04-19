@@ -5,25 +5,20 @@
 
 /// {@category UI}
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../tiki_sdk.dart';
 import 'markdown.dart';
 
-/// The Learn More screen with user information of how TIKI SDK works.
 class LearnMore extends StatelessWidget {
-  /// The source asset for the Learn More text.
-  final String src;
+  String text;
 
   late final Color? textColor;
   late final Color? backgroundColor;
   late final String? fontFamily;
   late final String? fontPackage;
 
-  /// Builds the Learn More screen.
-  ///
-  /// [TikiSdk.theme] is used for default styling.
-  LearnMore(this.src,
-      {super.key, textColor, backgroundColor, fontFamily, fontPackage}) {
+  LearnMore(this.text) {
     this.textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
     this.backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
     this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
@@ -45,12 +40,6 @@ class LearnMore extends StatelessWidget {
           ),
           body: SafeArea(
               child: Column(children: [
-            Expanded(
-              child: FutureBuilder(
-                  future: DefaultAssetBundle.of(context).loadString(src),
-                  builder: (context, snapshot) {
-                    return MarkdownViewer(snapshot.data!);
-                  }),
-            ),
+            Expanded(child: MarkdownViewer(text)),
           ]))));
 }

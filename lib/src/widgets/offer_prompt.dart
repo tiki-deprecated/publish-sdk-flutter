@@ -9,16 +9,13 @@ import 'package:tiki_sdk_flutter/src/widgets/trade_your_data.dart';
 
 import '../../tiki_sdk.dart';
 import '../../ui/offer.dart';
+import 'button.dart';
 import 'learn_more_btn.dart';
 import 'offer_card.dart';
 import 'used_for.dart';
 
-/// A bottom sheet that will prompt user with [Offer] options.
 class OfferPrompt extends StatelessWidget {
 
-  /// Builds the [OfferPropt].
-  ///
-  /// [TikiSdk.theme] is used for default styling.
   const OfferPrompt();
 
   @override
@@ -48,17 +45,18 @@ class OfferPrompt extends StatelessWidget {
                   ])),
           OfferCard(TikiSdk.instance.offers.values.toList()[0]),
           UsedFor(TikiSdk.instance.offers.values.toList()[0].getBullets),
-        //   Padding(
-        //       padding: const EdgeInsets.only(bottom: 50, left: 15, right: 15),
-        //       child: Row(
-        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //           children: [
-        //             Button("Back Off", () => _decline(context, offers.values.toList()[0])),
-        //             Button.solid(
-        //               "I'm in",
-        //               () => _accept(context, offers.values.toList()[0]),
-        //             )
-        //           ]))
+          Padding(
+              padding: const EdgeInsets.only(bottom: 50, left: 15, right: 15),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(child: Button("Back Off", () => _decline(context, TikiSdk.instance.offers.values.toList()[0]))),
+                    Padding(padding: EdgeInsets.symmetric(horizontal:12)),
+                    Expanded(child: Button.solid(
+                      "I'm in",
+                      () => _accept(context, TikiSdk.instance.offers.values.toList()[0]),
+                    ))
+                  ]))
         ],
       ),
     );
