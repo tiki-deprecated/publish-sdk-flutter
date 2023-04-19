@@ -33,13 +33,17 @@ class LearnMore extends StatelessWidget {
       },
       child: Scaffold(
           appBar: AppBar(
+            elevation: 0,
+            backgroundColor: TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
             leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
+                color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
                 onPressed: () => Navigator.of(context).pop()),
-            title: const Text("Learn More"),
+            title: Text("Learn More", style: TextStyle(
+              color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
+            )),
           ),
           body: SafeArea(
-              child: Column(children: [
-            Expanded(child: MarkdownViewer(text)),
-          ]))));
+              child: MarkdownViewer(text),
+          )));
 }

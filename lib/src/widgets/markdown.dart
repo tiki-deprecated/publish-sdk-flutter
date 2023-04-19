@@ -14,7 +14,7 @@ class MarkdownViewer extends StatelessWidget {
   const MarkdownViewer(this.mdText, {super.key});
 
   @override
-  Widget build(BuildContext context) => Expanded(child: Markdown(
+  Widget build(BuildContext context) => Markdown(
       data: mdText,
       styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
           colorScheme: ColorScheme.light(
@@ -22,8 +22,8 @@ class MarkdownViewer extends StatelessWidget {
           ),
           textTheme: TextTheme(
               bodyMedium: TextStyle(
-                fontSize: 20.0,
+                fontSize: 16.0,
                 color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
                 fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
-                package: TikiSdk.instance.activeTheme.getFontPackage))))));
+                package: TikiSdk.instance.activeTheme.getFontPackage)))));
 }
