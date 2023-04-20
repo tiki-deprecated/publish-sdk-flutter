@@ -50,7 +50,7 @@ class OfferCard extends StatelessWidget {
                                   fontSize: 16,
                                   height: 1.2,
                                   color: TikiSdk
-                                      .instance.activeTheme.getPrimaryTextColor,
+                                      .instance.activeTheme.getSecondaryTextColor,
                                   fontFamily: TikiSdk
                                       .instance.activeTheme.getFontFamily,
                                   package: TikiSdk

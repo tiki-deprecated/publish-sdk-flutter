@@ -88,7 +88,7 @@ class Ending extends StatelessWidget {
                           package: fontPackage,
                           fontSize: 32,
                           height: 1.3125,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           color: primaryTextColor)),
               Padding(
                   padding: const EdgeInsets.only(top: 36.0)),

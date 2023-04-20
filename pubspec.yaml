@@ -1,6 +1,6 @@
 name: tiki_sdk_flutter
 description: A package for adding TIKI's decentralized infrastructure to Flutter projects. Add tokenized data ownership, consent, and rewards to your app in minutes.
-version: 2.1.5
+version: 2.1.6
 homepage: https://mytiki.com
 documentation: https://docs.mytiki.com/docs
 repository: https://github.com/tiki/tiki-sdk-flutter
@@ -31,6 +31,8 @@ dev_dependencies:
   flutter_lints: ^2.0.1
 
 flutter:
+  uses-material-design: true
+
   module:
     androidX: true
 
@@ -38,19 +40,6 @@ flutter:
     - family: TikiSdkIcons
       fonts:
         - asset: lib/src/assets/fonts/TikiSdkIcons.ttf
-    - family: SpaceGrotesk
-      fonts:
-        - asset: lib/src/assets/fonts/SpaceGroteskRegular.ttf
-        - asset: lib/src/assets/fonts/SpaceGroteskLight.ttf
-          weight: 300
-        - asset: lib/src/assets/fonts/SpaceGroteskRegular.ttf
-          weight: 400
-        - asset: lib/src/assets/fonts/SpaceGroteskMedium.ttf
-          weight: 500
-        - asset: lib/src/assets/fonts/SpaceGroteskSemiBold.ttf
-          weight: 600
-        - asset: lib/src/assets/fonts/SpaceGroteskBold.ttf
-          weight: 700
 
   assets:
     - lib/src/assets/data/

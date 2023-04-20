@@ -22,16 +22,14 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+
 flutter:
   uses-material-design: true
 
-  assets:
-    - lib/ui/assets/images/offer_sample.png
-    - lib/ui/assets/terms.md
-
   fonts:
-    - family: SpaceGrotesk
+    - family: "SpaceGrotesk"
       fonts:
+        - asset: lib/ui/assets/fonts/SpaceGroteskRegular.ttf
         - asset: lib/ui/assets/fonts/SpaceGroteskLight.ttf
           weight: 300
         - asset: lib/ui/assets/fonts/SpaceGroteskRegular.ttf
@@ -42,3 +40,7 @@ flutter:
           weight: 600
         - asset: lib/ui/assets/fonts/SpaceGroteskBold.ttf
           weight: 700
+
+  assets:
+    - lib/ui/assets/images/offer_sample.png
+    - lib/ui/assets/terms.md

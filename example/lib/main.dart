@@ -9,7 +9,6 @@ void main() async {
   await TikiSdk.config()
       .theme
         .fontFamily("SpaceGrotesk")
-        .fontPackage("tiki_sdk_flutter")
         .and()
       .offer
         .reward(Image.asset("lib/ui/assets/images/offer_sample.png"))

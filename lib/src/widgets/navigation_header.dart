@@ -26,6 +26,8 @@ class NavigationHeader {
             title: Text(title,
                 textAlign: TextAlign.left,
                 style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                   color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
                 )));
 }
