@@ -13,6 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  app_settings: 4.2.0
   flutter_markdown: ^0.6.14
   flutter_secure_storage: ^8.0.0
   path_provider: ^2.0.14
@@ -39,15 +40,16 @@ flutter:
         - asset: lib/src/assets/fonts/TikiSdkIcons.ttf
     - family: SpaceGrotesk
       fonts:
-        - asset: lib/src/assets/fonts/SpaceGrotesk-Light.ttf
+        - asset: lib/src/assets/fonts/SpaceGroteskRegular.ttf
+        - asset: lib/src/assets/fonts/SpaceGroteskLight.ttf
           weight: 300
-        - asset: lib/src/assets/fonts/SpaceGrotesk-Regular.ttf
+        - asset: lib/src/assets/fonts/SpaceGroteskRegular.ttf
           weight: 400
-        - asset: lib/src/assets/fonts/SpaceGrotesk-Medium.ttf
+        - asset: lib/src/assets/fonts/SpaceGroteskMedium.ttf
           weight: 500
-        - asset: lib/src/assets/fonts/SpaceGrotesk-SemiBold.ttf
+        - asset: lib/src/assets/fonts/SpaceGroteskSemiBold.ttf
           weight: 600
-        - asset: lib/src/assets/fonts/SpaceGrotesk-Bold.ttf
+        - asset: lib/src/assets/fonts/SpaceGroteskBold.ttf
           weight: 700
 
   assets:

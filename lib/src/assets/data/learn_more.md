@@ -1,76 +1,72 @@
-# Referre alterno turbantur vera emicat armaque cetera
+# What is data trading?
 
-## Postquam Aeginae stabat
+It is pretty simple, really. You’re agreeing to trade specific types of data with us **in exchange
+for** the offered compensation.
 
-Lorem markdownum bene. Ceu inquit fulvis, per illic matrem: at
-[gramine](http://ast.net/ministros) cumque et **ostendisse** Thebae perceperat et dare et illa.
-Moriens meris decepto solum. Volantem cum, dona veniebat horum nec **telae committitur** rigidumve,
-luridus iuxta per!
+It's **100% optional**. Declining to participate will not negatively impact your current experience.
 
-## Egit pietas
+The types of data are specified on the offer screen, and no other data than the explicitly stated
+data is traded as part of the program.
 
-Virgineos potentia pharetras ignibus, Sicula ad inplumes quibus mittantur. Scythiam quid
-consistitque deus dictis magis proterva, intemptata unda cervix tunc Phrygia: metusque. Fluentum
-inter *veri est*, hic Tum et paratis rapitur ducere.
+Each _“trade”_ is legally binding and takes the form of a data license. By trading the data, you
+agree to let us license your data for the explicitly stated reasons found on the offer screen.
 
-    if (pinterest < ray_friend_terahertz) {
-        dac.vle += wired(1);
-        qbeVramCrossplatform += transferIcq(switch_runtime(5, page, offline));
-        hdvVirtual /= component;
-    } else {
-        wddmRateEditor = firewallUncZip;
-    }
-    if (file_bcc(-2)) {
-        cpl.backlink_hexadecimal(rateError, safe);
-        bitInstaller.power += -3 + sambaWhoisDirectx - internetSpeedProcessor;
-        card.ramSoftware(-5);
-    } else {
-        constantRestore.designReadMips = social_add;
-    }
-    opacityFiber = leaderboard(-3, gisMotion) + 5;
-    var cps = secondary(push.sramSpoofing(mail_ansi_direct, digitalRoom, virus),
-            box(animated_public(2, irc)), numberTime * mirrored);
+<br />
 
-## Vos hora obscenique
+# What is a data license/data licensing?
 
-Ambiguus cum suos mora hostiliter vitarit tamen Latona illi nono. Cum mora
-*solvere*, glomerabat sanguis quis tum ponti datis [fefellimus probat](http://ales.net/quos.html)
-segetes capillos Aeoliden. Pandos talibus sensit est illae illius aequora inmeritam starent cur
-moenia obligor carbasa victa admotumque agmina tulit. Messenia malorum occupat quidem dixit pericula
-sibi; nec incidit amante. Nollem muros adfectat, pius mihi feremus nostri praestantia: hos
-quod [in remigioque](http://onerosa-somnia.org/de) solidaque corripit.
+A data license is a legally binding, immutable contract that contains the exact details and
+parameters of the trade. This includes the type of data being traded, the purposes for which the
+business can access and use the data, and the duration for which it can be used.
 
-## Adeunt frigore sequuntur navifragumque velletque et ferre
+Once created, the license cannot be altered in any way; however, as a user, **you can always change
+your mind**. If you no longer want the business to use and/or access the data, your settings can be
+toggled off/on any time and the previous license becomes null and void.
 
-Frementem rogant vultus non siccat pars, sic Idan innumerae reseratque prima
-est; [altera](http://gratissimeiuvenali.net/). Ne imbres mellaque; est contigit saucius odorant *
-ponto*: blanditias paviunt, haec videri. Pallidaque certe, Minervae, ait hic te fiducia Achivi
-teneri! Saevisque oppugnare urbem famulos
-[demittant](http://que-philomela.org/obliquis-lycurgum) novae, percutimurque inposito utque serpere!
-Spe vocem repellit iacet gerit, frequens pecorum vacuaque pharetra, speculabar est coniunx?
+If you choose to participate again, a separate, new license is created replacing the previous
+license.
 
-    if (adMultitaskingPlatform < 46) {
-        megahertz.waisManet(upMebibyte, push.flowchart(
-                cgi_gis_telecommunications), 505469);
-        streaming_dual_skyscraper.mode = 4 + backsideLosslessCode;
-        jquery_pdf.popBaudFlaming = reader + netiquette + dlc;
-    } else {
-        crt -= 5;
-        trim = leaderboardIpv + png;
-    }
-    if (hard - bank_gis_jpeg.rup.menuLock(subnet_software_dvi) + heap) {
-        ictCleanDimm = adc - plugDual;
-        thumbnailPdaGraphic = 3 + packet_login_disk;
-        programWais(oopCircuitBlog(unit_solid_null), lossyFile + aluTelnetGps,
-                trim_topology_platform);
-    }
-    var bit_printer_secondary = cycle_reader;
-    petaflopsRate(duplex_blacklist_gigabyte, jsonExtension,
-            sidebarInterpreterDonationware(type(-1, terminal),
-            megahertzIterationHeat));
+<br />
 
-Amplexus novissima publica capillis, somnus quem habentem semper vicem flammasque roga *potest* et
-pectoraque [leones protinus](http://mea-non.io/genu.html). Doctior oneris ex reverti obest imoque,
-increvit Volturnus exsternata turbatusque, stirpis. Talia praefractam longo domos suos, futura teli!
-Ablata urbem, super, ut inquit aequalique **qui fonte passisque** quam tridentigero animalia populi?
-Non crevit, Tereo sua missus agmine velum, [et](http://rerum.io/miserum.php).
+# Why should I trade/license my data?
+
+There are many reasons one may want to trade/license data, including receiving compensation in the
+form of:
+
+- discounts
+- loyalty points
+- access to exclusive features
+- and more.
+
+You may also want to receive more accurate advertisements or more personalization and customization
+from the chosen business.
+
+Other reasons **include contributing** to academic studies and assisting in improving products and
+services.
+
+<br />
+
+---
+
+<br />
+
+The **choice is completely up to you**; if the offer isn’t to your liking, simply decline and
+access/use is turned off. You can always change your mind later.
+
+The most important thing is understanding how your data is being accessed/used and receiving fair
+compensation for it; finally 🥳.
+
+<br />
+
+---
+
+<div style="margin: 3em 0;">
+    <strong style="text-align: center; margin-bottom: 0.5em; display: block">built on</strong>
+    <a href="https://mytiki.com">
+        <img alt="TIKI" src="https://cdn.mytiki.com/assets/icon-logo.svg"
+        style="height:3em; margin: auto; width: 100%;">
+    </a>
+    <div style="font-size: .75rem; font-style: italic; margin-top: 0.5em; text-align: center">
+        TIKI is infrastructure to make data trade and data licensing possible. Located in Nashville, we strive to improve the exchange of data —fairer, safer, easier to understand.
+    </div>
+</div>

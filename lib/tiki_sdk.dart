@@ -265,11 +265,20 @@ class TikiSdk {
   static Future<void> present(BuildContext context) async {
     _throwIfNotInitialized();
     _throwIfNoOffers();
-    showModalBottomSheet<dynamic>(
+    String ptr = TikiSdk.instance.offers.values.first.getPtr;
+    List<LicenseUsecase> usecases = [];
+    List<String> destinations= [];
+    TikiSdk.instance.offers.values.first.getUses.forEach( (licenseUse) {
+      if(licenseUse.destinations != null){
+        destinations.addAll(licenseUse.destinations!);
+      }
+      usecases.addAll(licenseUse.usecases);
+    });
+    await guard(ptr, usecases, destinations: destinations, onFail: (_) => showModalBottomSheet<dynamic>(
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
-        builder: (BuildContext context) => OfferPrompt());
+        builder: (BuildContext context) => OfferPrompt()));
   }
 
   /// Presents the Tiki SDK's pre-built user interface for the settings screen, which allows the user to accept or decline the current offer.
@@ -282,8 +291,18 @@ class TikiSdk {
   static Future<void> settings(BuildContext context) async {
     _throwIfNotInitialized();
     _throwIfNoOffers();
+    String ptr = TikiSdk.instance.offers.values.first.getPtr;
+    List<LicenseUsecase> usecases = [];
+    List<String> destinations= [];
+    TikiSdk.instance.offers.values.first.getUses.forEach( (licenseUse) {
+      if(licenseUse.destinations != null){
+        destinations.addAll(licenseUse.destinations!);
+      }
+      usecases.addAll(licenseUse.usecases);
+    });
+    bool isAccepted = await guard(ptr, usecases, destinations: destinations);
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => Settings()));
+        .push(MaterialPageRoute(builder: (context) => Settings(isAccepted)));
   }
 
   /// Starts the configuration process for the Tiki SDK instance.
@@ -462,8 +481,9 @@ class TikiSdk {
   }
 
   static _throwIfNoOffers() {
-    if(TikiSdk.instance.offers.isEmpty) {
-      throw StateError("To proceed, kindly utilize the TikiSdk.offer() method to include at least one offer.");
+    if (TikiSdk.instance.offers.isEmpty) {
+      throw StateError(
+          "To proceed, kindly utilize the TikiSdk.offer() method to include at least one offer.");
     }
   }
 }

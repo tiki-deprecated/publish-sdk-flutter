@@ -14,6 +14,7 @@ dependencies:
   provider: ^6.0.5
   intl: ^0.18.0
   http: ^0.13.5
+  permission_handler: ^10.2.0
   tiki_sdk_flutter:
     path: ../.
 
@@ -31,13 +32,13 @@ flutter:
   fonts:
     - family: SpaceGrotesk
       fonts:
-        - asset: lib/ui/assets/fonts/SpaceGrotesk-Light.ttf
+        - asset: lib/ui/assets/fonts/SpaceGroteskLight.ttf
           weight: 300
-        - asset: lib/ui/assets/fonts/SpaceGrotesk-Regular.ttf
+        - asset: lib/ui/assets/fonts/SpaceGroteskRegular.ttf
           weight: 400
-        - asset: lib/ui/assets/fonts/SpaceGrotesk-Medium.ttf
+        - asset: lib/ui/assets/fonts/SpaceGroteskMedium.ttf
           weight: 500
-        - asset: lib/ui/assets/fonts/SpaceGrotesk-SemiBold.ttf
+        - asset: lib/ui/assets/fonts/SpaceGroteskSemiBold.ttf
           weight: 600
-        - asset: lib/ui/assets/fonts/SpaceGrotesk-Bold.ttf
+        - asset: lib/ui/assets/fonts/SpaceGroteskBold.ttf
           weight: 700

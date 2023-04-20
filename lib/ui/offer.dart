@@ -197,7 +197,7 @@ class Offer {
   ///
   /// Additionally, this method returns the Offer object to enable convenient
   /// chaining of method calls during offer initialization.
-  Offer bullet(String text,bool isUsed) {
+  Offer bullet(String text, bool isUsed) {
     _bullets.add(Bullet(text, isUsed));
     return this;
   }
@@ -241,7 +241,8 @@ class Offer {
   ///
   /// Additionally, this method returns the Offer object to enable convenient
   /// chaining of method calls during offer initialization.
-  Offer use(List<LicenseUsecase> usecases, {List<String> destinations = const []}) {
+  Offer use(List<LicenseUsecase> usecases,
+      {List<String> destinations = const []}) {
     _uses.add(LicenseUse(usecases, destinations: destinations));
     return this;
   }

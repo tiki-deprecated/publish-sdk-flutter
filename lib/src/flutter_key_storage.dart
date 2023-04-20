@@ -10,10 +10,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tiki_sdk_dart/node/key/key_storage.dart';
 import 'package:tiki_sdk_dart/utils/rsa/rsa.dart';
 
-/// The Flutter specific implementation of [KeyStorage].
-///
-/// It uses [FlutterSecureStorage] to implement encrypted key-value storage
-/// for Android and iOS.
 class FlutterKeyStorage implements KeyStorage {
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 

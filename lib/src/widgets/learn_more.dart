@@ -8,24 +8,20 @@ import 'package:flutter/material.dart';
 
 import '../../tiki_sdk.dart';
 import 'markdown.dart';
+import 'navigation_header.dart';
 
-/// The Learn More screen with user information of how TIKI SDK works.
 class LearnMore extends StatelessWidget {
-  /// The source asset for the Learn More text.
-  final String src;
+  final String text;
 
   late final Color? textColor;
   late final Color? backgroundColor;
   late final String? fontFamily;
   late final String? fontPackage;
 
-  /// Builds the Learn More screen.
-  ///
-  /// [TikiSdk.theme] is used for default styling.
-  LearnMore(this.src,
-      {super.key, textColor, backgroundColor, fontFamily, fontPackage}) {
+  LearnMore(this.text) {
     this.textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
-    this.backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.backgroundColor =
+        TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
     this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
     this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
   }
@@ -37,20 +33,8 @@ class LearnMore extends StatelessWidget {
         return Future.value(false);
       },
       child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Navigator.of(context).pop()),
-            title: const Text("Learn More"),
-          ),
+          appBar: NavigationHeader("Learn More", context).appBar,
           body: SafeArea(
-              child: Column(children: [
-            Expanded(
-              child: FutureBuilder(
-                  future: DefaultAssetBundle.of(context).loadString(src),
-                  builder: (context, snapshot) {
-                    return MarkdownViewer(snapshot.data!);
-                  }),
-            ),
-          ]))));
+            child: MarkdownViewer(text),
+          )));
 }

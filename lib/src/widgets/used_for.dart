@@ -10,22 +10,19 @@ import 'package:tiki_sdk_flutter/ui/bullet.dart';
 import '../../src/assets/icons/tiki_sdk_icons_icons.dart';
 import '../../tiki_sdk.dart';
 
-/// A list of how user data will be used.
 class UsedFor extends StatelessWidget {
-  /// The [usedBullet] list of how the data will be used.
   final List<Bullet> bullets;
 
   late final Color? textColor;
   late final String? fontFamily;
   late final String? fontPackage;
 
-  /// Builds the UsedFor Widget.
-  ///
-  /// [TikiSdk.theme] is used for default styling.
   UsedFor(this.bullets, {super.key, textColor, fontFamily, fontPackage}) {
-    this.textColor = textColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.textColor =
+        textColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
     this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
+    this.fontPackage =
+        fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
   }
 
   @override

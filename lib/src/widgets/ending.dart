@@ -4,37 +4,66 @@
  */
 
 /// {@category UI}
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
+import 'package:tiki_sdk_flutter/src/widgets/your_choice.dart';
 
 import '../../tiki_sdk.dart';
 import '../../ui/offer.dart';
+import 'whoops.dart';
 
-/// A dismissible bottom sheet that will be shown after the TIKI flow is complete.
-class CompletionSheet extends StatelessWidget {
-  /// A [RichText] title to be shown in he top of the bottom sheet.
-  final RichText title;
-
-  /// The center message of the ending screen.
+class Ending extends StatelessWidget {
+  final Widget title;
   final String message;
-
-  /// The sub text shown below the message.
-  final RichText footnote;
+  final Widget footnote;
 
   late final Color primaryTextColor;
   late final Color backgroundColor;
-  late final String fontFamily;
-  late final String fontPackage;
+  late final String? fontFamily;
+  late final String? fontPackage;
 
-  /// Completion Sheet Builder
-  ///
-  /// [TikiSdk.theme] is used for default styling.
-  CompletionSheet(this.title, this.message, this.footnote,
+  Ending(this.title, this.message, this.footnote,
       {super.key, fontFamily, fontPackage, primaryTextColor, backgroundColor}) {
     this.primaryTextColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
-    this.backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.backgroundColor =
+        TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
     this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
     this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
   }
+
+  Ending.accepted(BuildContext context)
+      : this.title = YourChoice(),
+        this.message = "Awesome! You’re in",
+        this.footnote = _acceptedFootnote(context),
+        this.primaryTextColor =
+            TikiSdk.instance.activeTheme.getPrimaryTextColor,
+        this.backgroundColor =
+            TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+        this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
+        this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
+
+  Ending.declined(BuildContext context)
+      : this.title = YourChoice(),
+        this.message = "Backing Off",
+        this.footnote = _declinedFootnote(context),
+        this.primaryTextColor =
+            TikiSdk.instance.activeTheme.getPrimaryTextColor,
+        this.backgroundColor =
+            TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+        this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
+        this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
+
+  Ending.error(String permissionName)
+      : this.title = Whoops(),
+        this.message = "Permission Required",
+        this.footnote = _errorFootnote(permissionName),
+        this.primaryTextColor =
+            TikiSdk.instance.activeTheme.getPrimaryTextColor,
+        this.backgroundColor =
+            TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+        this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
+        this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
 
   @override
   Widget build(BuildContext context) {
@@ -47,31 +76,133 @@ class CompletionSheet extends StatelessWidget {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(padding: const EdgeInsets.only(top: 28.0), child: title),
+              Padding(padding: const EdgeInsets.only(top: 28.0)),
+              title,
               Padding(
                   padding: const EdgeInsets.only(top: 36.0),
-                  child: Text(message,
+              ),
+              Text(message,
                       style: TextStyle(
                           fontFamily: fontFamily,
                           package: fontPackage,
                           fontSize: 32,
                           height: 1.3125,
                           fontWeight: FontWeight.bold,
-                          color: primaryTextColor))),
+                          color: primaryTextColor)),
               Padding(
-                  padding: const EdgeInsets.only(top: 36.0), child: footnote),
+                  padding: const EdgeInsets.only(top: 36.0)),
+              footnote,
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 50.0)),
             ]));
   }
 
-  /// Creates a new License, based on the the user choice about the [offer].
-  ///
-  /// If the user [accepted] the [offer], the License will include the [Offer.uses].
-  /// If not the License will have no uses.
-  /// Creates a new Title record or retrieves an existing one before creating
-  /// the License.
   static Future<LicenseRecord> license(Offer offer, bool accepted) async {
     return await TikiSdk.license(offer.getPtr, offer.getUses, offer.getTerms);
+  }
+
+  static Widget _acceptedFootnote(BuildContext context) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("We’re on it, stay tuned",  style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w300,
+              color: TikiSdk
+                  .instance.activeTheme.getSecondaryTextColor,
+              fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
+              package: TikiSdk.instance.activeTheme.getFontPackage)),
+          Padding(padding: EdgeInsets.only(top:6)),
+          RichText(
+              text: TextSpan(
+                  text: "Change your mind anytime in ",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300,
+                      color: TikiSdk
+                          .instance.activeTheme.getSecondaryTextColor,
+                      fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
+                      package: TikiSdk.instance.activeTheme.getFontPackage),
+                  children: [
+                TextSpan(
+                    text: "settings",
+                    style: TextStyle(decoration: TextDecoration.underline),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => TikiSdk.settings(context)),
+                TextSpan(text: ".")
+              ]))
+        ]);
+  }
+
+  static Widget _declinedFootnote(BuildContext context) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("Your data is valuable.", style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w300,
+        color: TikiSdk
+            .instance.activeTheme.getSecondaryTextColor,
+        fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
+        package: TikiSdk.instance.activeTheme.getFontPackage)),
+          Padding(padding: EdgeInsets.only(top:6)),
+          RichText(
+              text: TextSpan(
+                  text: "Opt-in anytime in ",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300,
+                      color: TikiSdk
+                          .instance.activeTheme.getSecondaryTextColor,
+                      fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
+                      package: TikiSdk.instance.activeTheme.getFontPackage),
+                  children: [
+                TextSpan(
+                    text: "settings",
+                    style: TextStyle(decoration: TextDecoration.underline),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => TikiSdk.settings(context)),
+                TextSpan(text: ".")
+              ]))
+        ]);
+  }
+
+  static Widget _errorFootnote(String permissionName) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("Offer declined.", style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w300,
+              color: TikiSdk
+                  .instance.activeTheme.getSecondaryTextColor,
+              fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
+              package: TikiSdk.instance.activeTheme.getFontPackage),),
+          Padding(padding: EdgeInsets.only(top:6)),
+          RichText(
+              text: TextSpan(
+                  text: "To proceed, allow ",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300,
+                      color: TikiSdk
+                          .instance.activeTheme.getSecondaryTextColor,
+                      fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
+                      package: TikiSdk.instance.activeTheme.getFontPackage),
+                  children: [
+                TextSpan(
+                    text: permissionName,
+                    style: TextStyle(decoration: TextDecoration.underline),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => AppSettings.openAppSettings()),
+                TextSpan(text: ".")
+              ]))
+        ]);
   }
 }
