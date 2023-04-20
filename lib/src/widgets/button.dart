@@ -10,7 +10,7 @@ import '../../tiki_sdk.dart';
 
 class Button extends StatelessWidget {
   final String text;
-  final Function onTap;
+  final void Function() onTap;
   late final Color backgroundColor;
   late final Color borderColor;
   late final Color textColor;
@@ -33,7 +33,7 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-      onTap: () => onTap,
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(

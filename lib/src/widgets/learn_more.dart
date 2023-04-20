@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 
 import '../../tiki_sdk.dart';
 import 'markdown.dart';
+import 'navigation_header.dart';
 
 class LearnMore extends StatelessWidget {
   String text;
@@ -32,18 +33,9 @@ class LearnMore extends StatelessWidget {
         return Future.value(false);
       },
       child: Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
-            leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
-                onPressed: () => Navigator.of(context).pop()),
-            title: Text("Learn More", style: TextStyle(
-              color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
-            )),
-          ),
+          appBar: NavigationHeader("Learn More", context).appBar,
           body: SafeArea(
               child: MarkdownViewer(text),
           )));
 }
+

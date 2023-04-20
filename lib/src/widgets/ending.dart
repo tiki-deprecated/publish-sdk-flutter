@@ -5,27 +5,56 @@
 
 /// {@category UI}
 import 'package:flutter/cupertino.dart';
+import 'package:tiki_sdk_flutter/src/widgets/your_choice.dart';
 
 import '../../tiki_sdk.dart';
 import '../../ui/offer.dart';
+import 'whoops.dart';
 
-class CompletionSheet extends StatelessWidget {
-  final RichText title;
+class Ending extends StatelessWidget {
+  final Widget title;
   final String message;
-  final RichText footnote;
+  final Widget footnote;
 
   late final Color primaryTextColor;
   late final Color backgroundColor;
   late final String? fontFamily;
   late final String? fontPackage;
 
-  CompletionSheet(this.title, this.message, this.footnote,
+  Ending(this.title, this.message, this.footnote,
       {super.key, fontFamily, fontPackage, primaryTextColor, backgroundColor}) {
     this.primaryTextColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
     this.backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
     this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
     this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
   }
+
+  Ending.accepted() :
+    this.title = YourChoice(),
+    this.message = "Awesome! You’re in",
+    this.footnote = Container(),
+    this.primaryTextColor = TikiSdk.instance.activeTheme.getPrimaryTextColor,
+    this.backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+    this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
+    this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
+
+  Ending.declined() :
+        this.title = YourChoice(),
+        this.message = "Backing Off",
+        this.footnote = Container(),
+        this.primaryTextColor = TikiSdk.instance.activeTheme.getPrimaryTextColor,
+        this.backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+        this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
+        this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
+
+  Ending.error() :
+        this.title = Whoops(),
+        this.message = "Permission Required",
+        this.footnote = Container(),
+        this.primaryTextColor = TikiSdk.instance.activeTheme.getPrimaryTextColor,
+        this.backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+        this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
+        this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
 
   @override
   Widget build(BuildContext context) {
@@ -59,4 +88,5 @@ class CompletionSheet extends StatelessWidget {
   static Future<LicenseRecord> license(Offer offer, bool accepted) async {
     return await TikiSdk.license(offer.getPtr, offer.getUses, offer.getTerms);
   }
+
 }

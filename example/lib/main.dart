@@ -19,7 +19,7 @@ void main() async {
         .use([LicenseUsecase.support()])
         .tag(TitleTag.advertisingData())
         .description("Trade your IDFA (kind of like a serial # for your phone) for a discount.")
-        .terms("terms")
+        .terms("lib/ui/assets/terms.md")
         .duration(const Duration(days: 365))
         .add()
       .initialize(publishingId, "test_user_123", onComplete: () =>
