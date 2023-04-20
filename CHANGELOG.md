@@ -1,3 +1,8 @@
+## 2.1.6
+
+* move platform channels to tiki_sdk_platform_channel repository
+* add pre built UIs
+
 ## 2.1.5
 
 * update SDK APIs
