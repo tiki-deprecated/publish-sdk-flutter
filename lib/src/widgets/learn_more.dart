@@ -5,14 +5,13 @@
 
 /// {@category UI}
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../tiki_sdk.dart';
 import 'markdown.dart';
 import 'navigation_header.dart';
 
 class LearnMore extends StatelessWidget {
-  String text;
+  final String text;
 
   late final Color? textColor;
   late final Color? backgroundColor;
@@ -21,7 +20,8 @@ class LearnMore extends StatelessWidget {
 
   LearnMore(this.text) {
     this.textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
-    this.backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.backgroundColor =
+        TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
     this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
     this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
   }
@@ -35,7 +35,6 @@ class LearnMore extends StatelessWidget {
       child: Scaffold(
           appBar: NavigationHeader("Learn More", context).appBar,
           body: SafeArea(
-              child: MarkdownViewer(text),
+            child: MarkdownViewer(text),
           )));
 }
-

@@ -10,6 +10,7 @@ class YourChoice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           "YOUR ",
@@ -32,7 +33,6 @@ class YourChoice extends StatelessWidget {
           ),
         ),
       ],
-      mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
     );
   }

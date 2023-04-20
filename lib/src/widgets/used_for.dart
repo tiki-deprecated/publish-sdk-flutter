@@ -18,9 +18,11 @@ class UsedFor extends StatelessWidget {
   late final String? fontPackage;
 
   UsedFor(this.bullets, {super.key, textColor, fontFamily, fontPackage}) {
-    this.textColor = textColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.textColor =
+        textColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
     this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
-    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
+    this.fontPackage =
+        fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
   }
 
   @override

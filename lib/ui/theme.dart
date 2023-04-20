@@ -83,13 +83,11 @@ class Theme {
   /// The package to which the font asset belongs.
   String? get getFontPackage => _fontPackage;
 
-
   /// Sets the [_primaryTextColor]
   Theme primaryTextColor(Color primaryTextColor) {
     _primaryTextColor = primaryTextColor;
     return this;
   }
-
 
   /// Sets the [_primaryBackgroundColor]
   Theme primaryBackgroundColor(Color primaryBackgroundColor) {

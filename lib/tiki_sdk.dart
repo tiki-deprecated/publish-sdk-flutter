@@ -462,8 +462,9 @@ class TikiSdk {
   }
 
   static _throwIfNoOffers() {
-    if(TikiSdk.instance.offers.isEmpty) {
-      throw StateError("To proceed, kindly utilize the TikiSdk.offer() method to include at least one offer.");
+    if (TikiSdk.instance.offers.isEmpty) {
+      throw StateError(
+          "To proceed, kindly utilize the TikiSdk.offer() method to include at least one offer.");
     }
   }
 }

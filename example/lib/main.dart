@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk.dart';
 
 const String origin = "com.mytiki.tiki_sdk_example";
@@ -20,6 +21,7 @@ void main() async {
         .tag(TitleTag.advertisingData())
         .description("Trade your IDFA (kind of like a serial # for your phone) for a discount.")
         .terms("lib/ui/assets/terms.md")
+        .permission(Permission.camera)
         .duration(const Duration(days: 365))
         .add()
       .initialize(publishingId, "test_user_123", onComplete: () =>

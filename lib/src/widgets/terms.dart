@@ -24,7 +24,8 @@ class Terms extends StatelessWidget {
   Terms(this.text) {
     this.buttonColor = TikiSdk.instance.activeTheme.getAccentColor;
     this.textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
-    this.backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.backgroundColor =
+        TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
     this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
     this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
   }
@@ -39,15 +40,13 @@ class Terms extends StatelessWidget {
           appBar: NavigationHeader("Terms and Conditions", context).appBar,
           body: SafeArea(
               child: Column(children: [
-             Expanded(
-                 child:MarkdownViewer(text)),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child:
-              Divider(
-                height:1,
-                color: TikiSdk.instance.activeTheme.getAccentColor,
-            )),
+            Expanded(child: MarkdownViewer(text)),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Divider(
+                  height: 1,
+                  color: TikiSdk.instance.activeTheme.getAccentColor,
+                )),
             Padding(
                 padding: const EdgeInsets.only(
                     top: 40, bottom: 20, left: 15, right: 15),

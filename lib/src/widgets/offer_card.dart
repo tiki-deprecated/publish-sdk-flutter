@@ -35,8 +35,8 @@ class OfferCard extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child:
-                          SizedBox(width: 300, height: 86, child: offer.getReward),
+                      child: SizedBox(
+                          width: 300, height: 86, child: offer.getReward),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15),
@@ -49,9 +49,12 @@ class OfferCard extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                   height: 1.2,
-                                  color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
-                                  fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
-                                  package: TikiSdk.instance.activeTheme.getFontPackage))),
+                                  color: TikiSdk
+                                      .instance.activeTheme.getPrimaryTextColor,
+                                  fontFamily: TikiSdk
+                                      .instance.activeTheme.getFontFamily,
+                                  package: TikiSdk
+                                      .instance.activeTheme.getFontPackage))),
                     )
                   ],
                 ))),

@@ -18,12 +18,13 @@ class LearnMoreButton extends StatelessWidget {
   late final String? fontFamily;
   late final String? fontPackage;
 
-  LearnMoreButton({super.key}) :
-    iconColor = TikiSdk.instance.activeTheme.getSecondaryTextColor,
-    textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor,
-    backgroundColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
-    fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
-    fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
+  LearnMoreButton({super.key})
+      : iconColor = TikiSdk.instance.activeTheme.getSecondaryTextColor,
+        textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor,
+        backgroundColor =
+            TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+        fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
+        fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
 
   @override
   Widget build(BuildContext context) => IconButton(
@@ -33,8 +34,7 @@ class LearnMoreButton extends StatelessWidget {
           onPressed: () async {
             String txt = await rootBundle.loadString(
                 "packages/tiki_sdk_flutter/lib/src/assets/data/learn_more.md");
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => LearnMore(txt)
-                ));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => LearnMore(txt)));
           }));
 }

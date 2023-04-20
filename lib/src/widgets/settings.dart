@@ -38,13 +38,14 @@ class Settings extends StatefulWidget {
   }) {
     primaryTextColor =
         primaryTextColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
-    secondaryTextColor =
-        secondaryTextColor ?? TikiSdk.instance.activeTheme.getSecondaryTextColor;
+    secondaryTextColor = secondaryTextColor ??
+        TikiSdk.instance.activeTheme.getSecondaryTextColor;
     btnOutlineTextColor =
         btnOutlineTextColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
     btnOutlineBorderColor =
         btnOutlineBorderColor ?? TikiSdk.instance.activeTheme.getAccentColor;
-    btnSolidColor = btnSolidColor ?? TikiSdk.instance.activeTheme.getAccentColor;
+    btnSolidColor =
+        btnSolidColor ?? TikiSdk.instance.activeTheme.getAccentColor;
     fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
     fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
   }
@@ -73,12 +74,8 @@ class SettingsState extends State<Settings> {
             icon: const Icon(Icons.arrow_back),
             color: TikiSdk.instance.theme.getPrimaryTextColor,
             onPressed: () => Navigator.of(context).pop()),
-        title: Text(
-          "Settings"
-        ),
-        actions: [
-          LearnMoreButton()
-        ],
+        title: Text("Settings"),
+        actions: [LearnMoreButton()],
       ),
       body: SafeArea(
           child: Column(children: [
@@ -91,11 +88,11 @@ class SettingsState extends State<Settings> {
           ]),
         ),
         Padding(
-            padding: const EdgeInsets.only(top: 30.0),
+          padding: const EdgeInsets.only(top: 30.0),
         ),
         const Text("Terms and Conditions"),
         MarkdownViewer(
-                    TikiSdk.instance.offers.values.toList()[offerIndex].getTerms),
+            TikiSdk.instance.offers.values.toList()[offerIndex].getTerms),
         Padding(
             padding: const EdgeInsets.only(top: 30.0),
             child: isAccepted

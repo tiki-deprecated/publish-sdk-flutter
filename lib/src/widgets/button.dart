@@ -17,19 +17,19 @@ class Button extends StatelessWidget {
   late final String? fontFamily;
   late final String? fontPackage;
 
-  Button(this.text, this.onTap) :
-    fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
-    fontPackage = TikiSdk.instance.activeTheme.getFontPackage,
-    textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor,
-    borderColor = TikiSdk.instance.activeTheme.getAccentColor,
-    backgroundColor = const Color(0xFFFFFFFF);
+  Button(this.text, this.onTap)
+      : fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
+        fontPackage = TikiSdk.instance.activeTheme.getFontPackage,
+        textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor,
+        borderColor = TikiSdk.instance.activeTheme.getAccentColor,
+        backgroundColor = const Color(0xFFFFFFFF);
 
-  Button.solid(this.text, this.onTap) :
-    fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
-    fontPackage = TikiSdk.instance.activeTheme.getFontPackage,
-    textColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
-    backgroundColor = TikiSdk.instance.activeTheme.getAccentColor,
-    borderColor = TikiSdk.instance.activeTheme.getAccentColor;
+  Button.solid(this.text, this.onTap)
+      : fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
+        fontPackage = TikiSdk.instance.activeTheme.getFontPackage,
+        textColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+        backgroundColor = TikiSdk.instance.activeTheme.getAccentColor,
+        borderColor = TikiSdk.instance.activeTheme.getAccentColor;
 
   @override
   Widget build(BuildContext context) => GestureDetector(
@@ -38,8 +38,7 @@ class Button extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
             color: backgroundColor,
-            border:
-                Border.all(width: 1.0, color: borderColor),
+            border: Border.all(width: 1.0, color: borderColor),
             borderRadius: BorderRadius.circular(10)),
         child: Center(
             child: Text(text,

@@ -10,6 +10,7 @@ class Whoops extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           "WHOOPS",
@@ -21,18 +22,7 @@ class Whoops extends StatelessWidget {
             color: const Color.fromRGBO(199, 48, 0, 1),
           ),
         ),
-        Text(
-          "CHOICE",
-          style: TextStyle(
-            fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
-            package: TikiSdk.instance.activeTheme.getFontPackage,
-            fontWeight: FontWeight.bold,
-            color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
-            fontSize: 20,
-          ),
-        ),
       ],
-      mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
     );
   }
