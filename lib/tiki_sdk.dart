@@ -38,7 +38,7 @@ class TikiSdk {
 
   Function(Offer, LicenseRecord?)? _onAccept;
   Function(Offer, LicenseRecord?)? _onDecline;
-  Function(Offer)? _onSettings;
+  Function(BuildContext) _onSettings = TikiSdk.settings;
 
   bool _isAcceptEndingDisabled = false;
   bool _isDeclineEndingDisabled = false;
@@ -84,7 +84,7 @@ class TikiSdk {
 
   /// Callback function for user tapping in settings in the settings link in
   /// ending screen.
-  Function(Offer)? get getOnSettings => _onSettings;
+  Function(BuildContext) get getOnSettings => _onSettings;
 
   /// Returns the `Theme` configured for the specified *colorScheme*, or the default theme if none is specified or the specified
   /// color scheme does not exist.
@@ -174,7 +174,7 @@ class TikiSdk {
   /// The onSettings() event is triggered when the user selects "settings" in the
   /// ending screen. If a callback function is not registered, the SDK defaults to
   /// calling the TikiSdk.settings() method.
-  TikiSdk onSettings(Function(Offer) onSettings) {
+  TikiSdk onSettings(Function(BuildContext) onSettings) {
     _onSettings = onSettings;
     return this;
   }
@@ -301,8 +301,10 @@ class TikiSdk {
       usecases.addAll(licenseUse.usecases);
     });
     bool isAccepted = await guard(ptr, usecases, destinations: destinations);
+    String terms =
+      await DefaultAssetBundle.of(context).loadString(TikiSdk.instance.offers.values.first.getTerms);
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => Settings(isAccepted)));
+        .push(MaterialPageRoute(builder: (context) => Settings(isAccepted, terms)));
   }
 
   /// Starts the configuration process for the Tiki SDK instance.
