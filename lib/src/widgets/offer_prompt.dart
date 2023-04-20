@@ -130,7 +130,10 @@ class OfferPrompt extends StatelessWidget {
           context: context,
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
-          builder: (BuildContext context) => Ending.accepted(context));
+          builder: (BuildContext context) {
+            license(TikiSdk.instance.offers.values.first);
+            return Ending.accepted(context);
+          });
     }
   }
 
@@ -140,5 +143,10 @@ class OfferPrompt extends StatelessWidget {
       return snakeName.split("_").join(" ").toLowerCase();
     }
     return "permissions";
+  }
+
+  Future<void> license(Offer offer) async {
+    LicenseRecord license = await TikiSdk.license(offer.getPtr, offer.getUses, offer.getTerms);
+    if(TikiSdk.instance.getOnAccept != null) TikiSdk.instance.getOnAccept!(offer, license);
   }
 }

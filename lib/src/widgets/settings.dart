@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk.dart';
 
+import '../../ui/offer.dart';
 import 'button.dart';
 import 'learn_more_btn.dart';
 import 'markdown.dart';
@@ -14,7 +15,6 @@ import 'offer_card.dart';
 import 'used_for.dart';
 
 class Settings extends StatefulWidget {
-  final RichText? title;
 
   late final Color primaryTextColor;
   late final Color secondaryTextColor;
@@ -25,27 +25,18 @@ class Settings extends StatefulWidget {
   late final String? fontPackage;
   late final String? fontFamily;
 
-  Settings({
-    super.key,
-    this.title,
-    Color? primaryTextColor,
-    Color? secondaryTextColor,
-    Color? btnOutlineTextColor,
-    Color? btnOutlineBorderColor,
-    Color? btnSolidColor,
-    String? fontPackage,
-    String? fontFamily,
-  }) {
-    primaryTextColor =
-        primaryTextColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
-    secondaryTextColor = secondaryTextColor ??
+  final bool isAccepted;
+
+  Settings(this.isAccepted) {
+    primaryTextColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    secondaryTextColor =
         TikiSdk.instance.activeTheme.getSecondaryTextColor;
     btnOutlineTextColor =
-        btnOutlineTextColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
+        TikiSdk.instance.activeTheme.getPrimaryTextColor;
     btnOutlineBorderColor =
-        btnOutlineBorderColor ?? TikiSdk.instance.activeTheme.getAccentColor;
+         TikiSdk.instance.activeTheme.getAccentColor;
     btnSolidColor =
-        btnSolidColor ?? TikiSdk.instance.activeTheme.getAccentColor;
+         TikiSdk.instance.activeTheme.getAccentColor;
     fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
     fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
   }
@@ -57,12 +48,11 @@ class Settings extends StatefulWidget {
 class SettingsState extends State<Settings> {
   int offerIndex = 0;
   bool isAccepted = false;
-
   String defaultTerms = "path to default terms";
 
   @override
   void initState() {
-    // TODO VERIFY LICENSE STATUS
+    isAccepted = widget.isAccepted;
     super.initState();
   }
 
@@ -82,28 +72,38 @@ class SettingsState extends State<Settings> {
         Padding(
           padding: const EdgeInsets.only(top: 30.0),
           child: Column(children: [
-            OfferCard(TikiSdk.instance.offers.values.toList()[offerIndex]),
+            OfferCard(TikiSdk.instance.offers.values.first),
             UsedFor(
-                TikiSdk.instance.offers.values.toList()[offerIndex].getBullets)
+                TikiSdk.instance.offers.values.first.getBullets)
           ]),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 30.0),
         ),
         const Text("Terms and Conditions"),
-        MarkdownViewer(
-            TikiSdk.instance.offers.values.toList()[offerIndex].getTerms),
+        Expanded(child:MarkdownViewer(
+            TikiSdk.instance.offers.values.first.getTerms)),
         Padding(
             padding: const EdgeInsets.only(top: 30.0),
-            child: isAccepted
+        ),
+        isAccepted
                 ? Button(
                     "Opt Out",
                     _change,
                   )
-                : Button.solid("Opt In", _change))
+                : Button.solid("Opt In", _change)
       ])));
 
   Future<void> _change() async {
-    // TODO await change license
+    setState((){
+      isAccepted = !isAccepted;
+      license(TikiSdk.instance.offers.values.first);
+    });
+
+  }
+
+  Future<void> license(Offer offer) async {
+    LicenseRecord license = await TikiSdk.license(offer.getPtr, offer.getUses, offer.getTerms);
+    if(TikiSdk.instance.getOnAccept != null) TikiSdk.instance.getOnAccept!(offer, license);
   }
 }
