@@ -38,19 +38,6 @@ flutter:
     - family: TikiSdkIcons
       fonts:
         - asset: lib/src/assets/fonts/TikiSdkIcons.ttf
-    - family: SpaceGrotesk
-      fonts:
-        - asset: lib/src/assets/fonts/SpaceGroteskRegular.ttf
-        - asset: lib/src/assets/fonts/SpaceGroteskLight.ttf
-          weight: 300
-        - asset: lib/src/assets/fonts/SpaceGroteskRegular.ttf
-          weight: 400
-        - asset: lib/src/assets/fonts/SpaceGroteskMedium.ttf
-          weight: 500
-        - asset: lib/src/assets/fonts/SpaceGroteskSemiBold.ttf
-          weight: 600
-        - asset: lib/src/assets/fonts/SpaceGroteskBold.ttf
-          weight: 700
 
   assets:
     - lib/src/assets/data/

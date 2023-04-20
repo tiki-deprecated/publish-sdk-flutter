@@ -9,7 +9,6 @@ void main() async {
   await TikiSdk.config()
       .theme
         .fontFamily("SpaceGrotesk")
-        .fontPackage("tiki_sdk_flutter")
         .and()
       .offer
         .reward(Image.asset("lib/ui/assets/images/offer_sample.png"))
@@ -48,6 +47,7 @@ class ExampleButtons extends StatelessWidget{
     mainAxisSize: MainAxisSize.min,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
+          Text("Lazy brown fox", style: TextStyle(fontFamily: "SpaceGrotesk")),
       ElevatedButton(onPressed:
           () => TikiSdk.present(context), child: const Text("Start")),
       ElevatedButton(onPressed:

@@ -1,26 +1,26 @@
 # -------------------------------------------------------------------------------------
-# Backend development owns this repo as a whole.
+# Mobile development owns this repo as a whole.
 # -------------------------------------------------------------------------------------
-*                    @tiki/backend-development
+*                    @tiki/mobile-development
 
 
 # -------------------------------------------------------------------------------------
 # Content should have eyes on any Markdown changes.
 # -------------------------------------------------------------------------------------
-*.md                 @tiki/content @tiki/backend-development
+*.md                 @tiki/content @tiki/mobile-development
 
 
 # -------------------------------------------------------------------------------------
 # Core development should all have eyes on any changes under .github/
 # -------------------------------------------------------------------------------------
-/.github/            @tiki/core-development @tiki/backend-development
+/.github/            @tiki/core-development @tiki/mobile-development
 
 
 # -------------------------------------------------------------------------------------
 # Governance needs to have eyes on any licensing or risk-related changes
 # -------------------------------------------------------------------------------------
-LICENSE              @tiki/governance @tiki/backend-development
-/.github/CODEOWNERS  @tiki/governance @tiki/core-development @tiki/backend-development
+LICENSE              @tiki/governance @tiki/mobile-development
+/.github/CODEOWNERS  @tiki/governance @tiki/core-development @tiki/mobile-development
 
 
 # -------------------------------------------------------------------------------------
