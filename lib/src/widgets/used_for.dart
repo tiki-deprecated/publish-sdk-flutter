@@ -69,7 +69,7 @@ class UsedFor extends StatelessWidget {
                                   package: fontPackage,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: textColor),
+                                  color: TikiSdk.instance.activeTheme.getSecondaryTextColor),
                             )
                           ]),
                         ))

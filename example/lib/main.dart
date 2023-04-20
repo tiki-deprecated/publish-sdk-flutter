@@ -47,7 +47,6 @@ class ExampleButtons extends StatelessWidget{
     mainAxisSize: MainAxisSize.min,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-          Text("Lazy brown fox", style: TextStyle(fontFamily: "SpaceGrotesk")),
       ElevatedButton(onPressed:
           () => TikiSdk.present(context), child: const Text("Start")),
       ElevatedButton(onPressed:

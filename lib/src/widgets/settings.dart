@@ -77,9 +77,11 @@ class SettingsState extends State<Settings> {
         Container(color: TikiSdk.instance.activeTheme.getSecondaryBackgroundColor,
           child: Column(children: [
         Padding(
-          padding: const EdgeInsets.only(top: 30.0),
+          padding: const EdgeInsets.only(top: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
             OfferCard(TikiSdk.instance.offers.values.first),
             UsedFor(
@@ -89,7 +91,7 @@ class SettingsState extends State<Settings> {
         Container(
           width: double.infinity,
           padding: const EdgeInsets.only(bottom:15, left: 15.0, right: 15),
-          child: Text("Terms & Conditions",
+          child: Text("TERMS & CONDITIONS",
             style: TextStyle(
               fontFamily: widget.fontFamily,
               package: widget.fontPackage,
@@ -99,10 +101,11 @@ class SettingsState extends State<Settings> {
               color: widget.primaryTextColor)
           )
         ),
-        Expanded(child:MarkdownViewer(widget.terms)),
+        Expanded(child:MarkdownViewer(widget.terms, fontSize: 12,)),
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Divider(
+              thickness: 1,
               height: 1,
               color: TikiSdk.instance.activeTheme.getAccentColor,
             )),

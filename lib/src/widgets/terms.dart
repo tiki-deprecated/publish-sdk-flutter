@@ -45,6 +45,7 @@ class Terms extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: Divider(
                   height: 1,
+                  thickness: 1,
                   color: TikiSdk.instance.activeTheme.getAccentColor,
                 )),
             Padding(
