@@ -127,7 +127,11 @@ class Ending extends StatelessWidget {
                     text: "settings",
                     style: TextStyle(decoration: TextDecoration.underline),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => TikiSdk.instance.getOnSettings(context)),
+                      ..onTap = () {
+                      Navigator.of(context).pop();
+                      TikiSdk.instance.getOnSettings(context);
+                    }
+                ),
                 TextSpan(text: ".")
               ]))
         ]);
@@ -161,7 +165,10 @@ class Ending extends StatelessWidget {
                     text: "settings",
                     style: TextStyle(decoration: TextDecoration.underline),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => TikiSdk.instance.getOnSettings(context)),
+                      ..onTap = () {
+                      Navigator.of(context).pop();
+                      TikiSdk.instance.getOnSettings(context);
+                    }),
                 TextSpan(text: ".")
               ]))
         ]);

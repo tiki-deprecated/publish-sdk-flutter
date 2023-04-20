@@ -86,12 +86,9 @@ class SettingsState extends State<Settings> {
                 TikiSdk.instance.offers.values.first.getBullets)
           ]),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 30.0),
-        ),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.only(bottom:15, left: 15.0, right: 15),
           child: Text("Terms & Conditions",
             style: TextStyle(
               fontFamily: widget.fontFamily,
@@ -104,6 +101,12 @@ class SettingsState extends State<Settings> {
         ),
         Expanded(child:MarkdownViewer(widget.terms)),
         Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Divider(
+              height: 1,
+              color: TikiSdk.instance.activeTheme.getAccentColor,
+            )),
+            Padding(
             padding: const EdgeInsets.only(top: 30.0, left: 15, right:15), child:
         isAccepted
                 ? Button(
