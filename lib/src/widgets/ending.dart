@@ -10,7 +10,6 @@ import 'package:flutter/gestures.dart';
 import 'package:tiki_sdk_flutter/src/widgets/your_choice.dart';
 
 import '../../tiki_sdk.dart';
-import '../../ui/offer.dart';
 import 'whoops.dart';
 
 class Ending extends StatelessWidget {
@@ -99,10 +98,6 @@ class Ending extends StatelessWidget {
             ]));
   }
 
-  static Future<LicenseRecord> license(Offer offer, bool accepted) async {
-    return await TikiSdk.license(offer.getPtr, offer.getUses, offer.getTerms);
-  }
-
   static Widget _acceptedFootnote(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -132,7 +127,7 @@ class Ending extends StatelessWidget {
                     text: "settings",
                     style: TextStyle(decoration: TextDecoration.underline),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => TikiSdk.settings(context)),
+                      ..onTap = () => TikiSdk.instance.getOnSettings(context)),
                 TextSpan(text: ".")
               ]))
         ]);
@@ -166,7 +161,7 @@ class Ending extends StatelessWidget {
                     text: "settings",
                     style: TextStyle(decoration: TextDecoration.underline),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => TikiSdk.settings(context)),
+                      ..onTap = () => TikiSdk.instance.getOnSettings(context)),
                 TextSpan(text: ".")
               ]))
         ]);

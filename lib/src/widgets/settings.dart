@@ -5,6 +5,7 @@
 
 /// {@category UI}
 import 'package:flutter/material.dart';
+import 'package:tiki_sdk_flutter/src/widgets/trade_your_data.dart';
 import 'package:tiki_sdk_flutter/tiki_sdk.dart';
 
 import '../../ui/offer.dart';
@@ -27,7 +28,9 @@ class Settings extends StatefulWidget {
 
   final bool isAccepted;
 
-  Settings(this.isAccepted) {
+  final String terms;
+
+  Settings(this.isAccepted, this.terms) {
     primaryTextColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
     secondaryTextColor =
         TikiSdk.instance.activeTheme.getSecondaryTextColor;
@@ -59,19 +62,25 @@ class SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
-        backgroundColor: TikiSdk.instance.theme.getPrimaryBackgroundColor,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: TikiSdk.instance.theme.getPrimaryTextColor,
-            onPressed: () => Navigator.of(context).pop()),
-        title: Text("Settings"),
-        actions: [LearnMoreButton()],
-      ),
-      body: SafeArea(
+          centerTitle: false,
+          leadingWidth: 30,
+          elevation: 0,
+          backgroundColor:
+            TikiSdk.instance.activeTheme.getSecondaryBackgroundColor,
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
+              onPressed: () => Navigator.of(context).pop()),
+          title: TradeYourData(),
+          actions: [ LearnMoreButton()]),
+      body: SafeArea( child:
+        Container(color: TikiSdk.instance.activeTheme.getSecondaryBackgroundColor,
           child: Column(children: [
         Padding(
           padding: const EdgeInsets.only(top: 30.0),
-          child: Column(children: [
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             OfferCard(TikiSdk.instance.offers.values.first),
             UsedFor(
                 TikiSdk.instance.offers.values.first.getBullets)
@@ -80,30 +89,49 @@ class SettingsState extends State<Settings> {
         Padding(
           padding: const EdgeInsets.only(top: 30.0),
         ),
-        const Text("Terms and Conditions"),
-        Expanded(child:MarkdownViewer(
-            TikiSdk.instance.offers.values.first.getTerms)),
-        Padding(
-            padding: const EdgeInsets.only(top: 30.0),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Text("Terms & Conditions",
+            style: TextStyle(
+              fontFamily: widget.fontFamily,
+              package: widget.fontPackage,
+              fontSize: 16,
+              height: 1.8,
+              fontWeight: FontWeight.bold,
+              color: widget.primaryTextColor)
+          )
         ),
+        Expanded(child:MarkdownViewer(widget.terms)),
+        Padding(
+            padding: const EdgeInsets.only(top: 30.0, left: 15, right:15), child:
         isAccepted
                 ? Button(
                     "Opt Out",
                     _change,
                   )
-                : Button.solid("Opt In", _change)
-      ])));
+                : Button.solid("Opt In", _change))
+      ]))));
 
   Future<void> _change() async {
+    if(!isAccepted) {
+      await license(TikiSdk.instance.offers.values.first);
+    }else{
+      Offer oldOffer = TikiSdk.instance.offers.values.first;
+      Offer offer = Offer()
+          .ptr(oldOffer.getPtr)
+          .terms(oldOffer.getTerms);
+      await license(offer);
+    }
     setState((){
       isAccepted = !isAccepted;
-      license(TikiSdk.instance.offers.values.first);
     });
 
   }
 
   Future<void> license(Offer offer) async {
     LicenseRecord license = await TikiSdk.license(offer.getPtr, offer.getUses, offer.getTerms);
-    if(TikiSdk.instance.getOnAccept != null) TikiSdk.instance.getOnAccept!(offer, license);
+    if(isAccepted && TikiSdk.instance.getOnAccept != null) TikiSdk.instance.getOnAccept!(offer, license);
+    if(!isAccepted && TikiSdk.instance.getOnDecline != null) TikiSdk.instance.getOnDecline!(offer, license);
   }
 }
