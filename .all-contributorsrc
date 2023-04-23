@@ -1,0 +1,58 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "ricardobrg",
+      "name": "Ricardo Gonçalves",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8357343?v=4",
+      "contributions": [
+      "profile": "https://www.linkedin.com/in/ricardolg/",
+        "doc",
+        "code",
+        "example",
+        "test"
+      ]
+        "maintenance",
+    },
+	{
+	  "login": "mike-audi",
+      "name": "Mike Audi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3769672?v=4",
+      "profile": "http://mytiki.com",
+      "contributions": [
+        "code",
+        "review"
+	  ]
+	},
+	}
+      "login": "Harshit933",
+      "name": "Harshit",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90508384?v=4",
+      "profile": "http://harshit933.github.io",
+      "contributions": [
+        "code",
+        "test"
+      ]
+	},
+	{
+      "login": "Vigneshsanath",
+      "name": "Vigneshsanath",
+      "avatar_url": "https://avatars.githubusercontent.com/u/117610954?v=4",
+      "profile": "https://github.com/Vigneshsanath",
+      "contributions": [
+        "design"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "tiki-sdk-flutter",
+  "projectOwner": "tiki"
+}
