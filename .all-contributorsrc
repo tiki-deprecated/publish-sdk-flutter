@@ -38,7 +38,16 @@
         "code",
         "test"
       ]
-	}
+	},
+	{
+      "login": "Vigneshsanath",
+      "name": "Vigneshsanath",
+      "avatar_url": "https://avatars.githubusercontent.com/u/117610954?v=4",
+      "profile": "https://github.com/Vigneshsanath",
+      "contributions": [
+        "design"
+      ]
+    }
   ],
   "contributorsPerLine": 7,
   "skipCi": true,
