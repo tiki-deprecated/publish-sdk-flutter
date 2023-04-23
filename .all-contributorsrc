@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "Vigneshsanath",
+      "name": "Vigneshsanath",
+      "avatar_url": "https://avatars.githubusercontent.com/u/117610954?v=4",
+      "profile": "https://github.com/Vigneshsanath",
+      "contributions": [
+        "design"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "tiki-sdk-flutter",
+  "projectOwner": "tiki"
+}
