@@ -49,7 +49,7 @@ Initialize the TIKI SDK in minutes with the TIKI pre-built UI and a custom data 
 ```
 await TikiSdk.config()
   .theme
-  	.primaryTextColor(Color(0xFF00B277))
+  	.primaryTextColor(Color(0xFF1C0000))
   	.primaryBackgroundColor(Color(0xFFFFFFFF))
   	.secondaryBackgroundColor(Color(0xFFF6F6F6))
   	.accentColor(Color(0xFF00B277))
