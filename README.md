@@ -28,6 +28,19 @@ dependencies:
   tiki_sdk_flutter: ^2.1.6
 ```
 
+Make sure your project's Android `minSdkVersion` to is set to at least `19` in `[project]/android/app/build.gradle`.
+
+```Text Gradle
+android {
+    ...
+    defaultConfig {
+        ...
+        minSdkVersion 19
+        ...
+    }
+}
+```
+
 That's it. And yes, it's really that easy.
 
 ## Initialization
