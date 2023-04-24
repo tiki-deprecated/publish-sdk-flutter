@@ -13,8 +13,6 @@ This library includes both configurable pre-built UI flows/elements and native l
 
 _Note: Before you get started, you will need a Publishing ID. It's free to create one; simply log in to our 🧑‍💻 [Developer Console](https://console.mytiki.com) and create a new Project._
 
-Either
-
 Install the dependency using Flutter
 
 ```
