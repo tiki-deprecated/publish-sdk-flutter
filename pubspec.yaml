@@ -1,6 +1,6 @@
 name: tiki_sdk_flutter
 description: A package for adding TIKI's decentralized infrastructure to Flutter projects. Add tokenized data ownership, consent, and rewards to your app in minutes.
-version: 2.1.6
+version: 2.1.7
 homepage: https://mytiki.com
 documentation: https://docs.mytiki.com/docs
 repository: https://github.com/tiki/tiki-sdk-flutter
@@ -22,6 +22,7 @@ dependencies:
   tiki_sdk_dart: ^2.1.4
   permission_handler: ^10.2.0
   package_info_plus: ^3.1.0
+  sqlite3_flutter_libs: ^0.5.13
 
 dev_dependencies:
   integration_test:
