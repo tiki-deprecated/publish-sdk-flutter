@@ -19,6 +19,8 @@ class Settings extends StatefulWidget {
 
   late final Color primaryTextColor;
   late final Color secondaryTextColor;
+  late final Color primaryBackgroundColor;
+  late final Color secondaryBackgroundColor;
   late final Color btnOutlineTextColor;
   late final Color btnOutlineBorderColor;
   late final Color btnSolidColor;
@@ -30,18 +32,30 @@ class Settings extends StatefulWidget {
 
   final String terms;
 
-  Settings(this.isAccepted, this.terms) {
-    primaryTextColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
-    secondaryTextColor =
-        TikiSdk.instance.activeTheme.getSecondaryTextColor;
-    btnOutlineTextColor =
-        TikiSdk.instance.activeTheme.getPrimaryTextColor;
-    btnOutlineBorderColor =
-         TikiSdk.instance.activeTheme.getAccentColor;
-    btnSolidColor =
-         TikiSdk.instance.activeTheme.getAccentColor;
-    fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
-    fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
+  Settings(this.isAccepted, this.terms,
+  {
+    Color? primaryTextColor,
+    Color? backgroundColor,
+    Color? secondaryBackgroundColor,
+    Color? secondaryTextColor,
+    Color? btnOutlineTextColor,
+    Color? btnOutlineBorderColor,
+    Color? btnSolidColor,
+    String? fontPackage,
+    String? fontFamily
+  }) {
+    this.primaryTextColor = primaryTextColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.primaryBackgroundColor = backgroundColor ?? TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.secondaryBackgroundColor = secondaryBackgroundColor ?? TikiSdk.instance.activeTheme.getSecondaryBackgroundColor;
+    this.secondaryTextColor = secondaryTextColor ??         TikiSdk.instance.activeTheme.getSecondaryTextColor;
+    this.btnOutlineTextColor =
+btnOutlineTextColor ??         TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.btnOutlineBorderColor =
+btnOutlineBorderColor ??          TikiSdk.instance.activeTheme.getAccentColor;
+    this.btnSolidColor =
+btnSolidColor ??          TikiSdk.instance.activeTheme.getAccentColor;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
   }
 
   @override
@@ -65,16 +79,15 @@ class SettingsState extends State<Settings> {
           centerTitle: false,
           leadingWidth: 30,
           elevation: 0,
-          backgroundColor:
-            TikiSdk.instance.activeTheme.getSecondaryBackgroundColor,
+          backgroundColor: widget.primaryBackgroundColor,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
+              color: widget.primaryTextColor,
               onPressed: () => Navigator.of(context).pop()),
           title: TradeYourData(),
           actions: [ LearnMoreButton()]),
       body: SafeArea( child:
-        Container(color: TikiSdk.instance.activeTheme.getSecondaryBackgroundColor,
+        Container(color: widget.secondaryBackgroundColor,
           child: Column(children: [
         Padding(
           padding: const EdgeInsets.only(top: 20.0),
@@ -107,7 +120,7 @@ class SettingsState extends State<Settings> {
             child: Divider(
               thickness: 1,
               height: 1,
-              color: TikiSdk.instance.activeTheme.getAccentColor,
+              color: widget.btnSolidColor,
             )),
             Padding(
             padding: const EdgeInsets.only(top: 30.0, left: 15, right:15), child:

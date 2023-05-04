@@ -11,8 +11,21 @@ import '../../ui/offer.dart';
 
 class OfferCard extends StatelessWidget {
   final Offer offer;
+  late final Color primaryBackgroundColor;
+  late final Color secondaryTextColor;
+  late final String fontFamily;
+  late final String fontPackage;
 
-  OfferCard(this.offer, {super.key});
+  OfferCard(this.offer, {super.key,
+    Color? primaryBackgroundColor,
+    Color? secondaryTextColor,
+    String? fontFamily,
+    String? fontPackage}){
+    this.primaryBackgroundColor = primaryBackgroundColor ?? TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.secondaryTextColor = secondaryTextColor ?? TikiSdk.instance.activeTheme.getSecondaryTextColor;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
+  }
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -20,7 +33,7 @@ class OfferCard extends StatelessWidget {
         child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
-                color: TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+                color: primaryBackgroundColor,
                 boxShadow: const [
                   BoxShadow(
                       color: Color.fromARGB(13, 0, 0, 0), offset: Offset(4, 4))
@@ -49,12 +62,9 @@ class OfferCard extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                   height: 1.2,
-                                  color: TikiSdk
-                                      .instance.activeTheme.getSecondaryTextColor,
-                                  fontFamily: TikiSdk
-                                      .instance.activeTheme.getFontFamily,
-                                  package: TikiSdk
-                                      .instance.activeTheme.getFontPackage))),
+                                  color: secondaryTextColor,
+                                  fontFamily: fontFamily,
+                                  package: fontPackage))),
                     )
                   ],
                 ))),

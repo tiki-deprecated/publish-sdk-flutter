@@ -13,56 +13,84 @@ import '../../tiki_sdk.dart';
 import 'whoops.dart';
 
 class Ending extends StatelessWidget {
-  final Widget title;
-  final String message;
-  final Widget footnote;
 
+  late final Widget title;
+  late final String message;
+  late final Widget footnote;
   late final Color primaryTextColor;
+  late final Color secondaryTextColor;
   late final Color backgroundColor;
-  late final String? fontFamily;
-  late final String? fontPackage;
+  late final String fontFamily;
+  late final String fontPackage;
 
   Ending(this.title, this.message, this.footnote,
       {super.key, fontFamily, fontPackage, primaryTextColor, backgroundColor}) {
-    this.primaryTextColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
-    this.backgroundColor =
+    this.primaryTextColor = primaryTextColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.backgroundColor = backgroundColor ??
         TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
-    this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
-    this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
   }
 
-  Ending.accepted(BuildContext context)
-      : this.title = YourChoice(),
-        this.message = "Awesome! You’re in",
-        this.footnote = _acceptedFootnote(context),
-        this.primaryTextColor =
-            TikiSdk.instance.activeTheme.getPrimaryTextColor,
-        this.backgroundColor =
-            TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
-        this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
-        this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
+  Ending.accepted(BuildContext context, {
+    Color? primaryTextColor,
+    Color? secondaryTextColor,
+    Color? backgroundColor,
+    String? fontFamily,
+    String? fontPackage,
+  }) : this.title = YourChoice(),
+       this.message = "Awesome! You’re in" {
+    this.primaryTextColor = primaryTextColor ??
+    TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.secondaryTextColor = secondaryTextColor ??
+        TikiSdk.instance.activeTheme.getSecondaryTextColor;
+    this.backgroundColor = backgroundColor ??
+    TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
+    this.footnote = _acceptedFootnote(context, this.primaryTextColor, this.backgroundColor, this.fontFamily, this.fontPackage);
+  }
+  Ending.declined(BuildContext context, {
+    Color? primaryTextColor,
+    Color? secondaryTextColor,
+    Color? backgroundColor,
+    String? fontFamily,
+    String? fontPackage,
+  }){
+    this.title = YourChoice();
+    this.message = "Backing Off";
+    this.primaryTextColor = primaryTextColor ??
+        TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.secondaryTextColor = primaryTextColor ??
+        TikiSdk.instance.activeTheme.getSecondaryTextColor;
+    this.backgroundColor = backgroundColor ??
+        TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage =
+        fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
+    this.footnote = _declinedFootnote(context, this.secondaryTextColor, this.fontFamily, this.fontPackage);
+  }
 
-  Ending.declined(BuildContext context)
-      : this.title = YourChoice(),
-        this.message = "Backing Off",
-        this.footnote = _declinedFootnote(context),
-        this.primaryTextColor =
-            TikiSdk.instance.activeTheme.getPrimaryTextColor,
-        this.backgroundColor =
-            TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
-        this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
-        this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
-
-  Ending.error(String permissionName)
-      : this.title = Whoops(),
-        this.message = "Permission Required",
-        this.footnote = _errorFootnote(permissionName),
-        this.primaryTextColor =
-            TikiSdk.instance.activeTheme.getPrimaryTextColor,
-        this.backgroundColor =
-            TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
-        this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
-        this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
+  Ending.error(String permissionName, {
+    Color? primaryTextColor,
+    Color? secondaryTextColor,
+    Color? backgroundColor,
+    String? fontFamily,
+    String? fontPackage,
+  }){
+    this.title = Whoops();
+    this.message = "Permission Required";
+    this.primaryTextColor = primaryTextColor ??
+      TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.secondaryTextColor = primaryTextColor ??
+        TikiSdk.instance.activeTheme.getSecondaryTextColor;
+    this.backgroundColor = backgroundColor ??
+      TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.
+    getFontPackage;
+    this.footnote = _errorFootnote(permissionName, this.secondaryTextColor, this.fontFamily, this.fontPackage);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +126,11 @@ class Ending extends StatelessWidget {
             ]));
   }
 
-  static Widget _acceptedFootnote(BuildContext context) {
+  static Widget _acceptedFootnote(BuildContext context,
+      Color primaryTextColor,
+      Color backgroundColor,
+      String fontFamily,
+      String fontPackage) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -137,7 +169,9 @@ class Ending extends StatelessWidget {
         ]);
   }
 
-  static Widget _declinedFootnote(BuildContext context) {
+  static Widget _declinedFootnote(BuildContext context, Color secondaryTextColor,
+      String fontFamily,
+      String fontPackage) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -145,10 +179,9 @@ class Ending extends StatelessWidget {
           Text("Your data is valuable.", style: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w300,
-        color: TikiSdk
-            .instance.activeTheme.getSecondaryTextColor,
-        fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
-        package: TikiSdk.instance.activeTheme.getFontPackage)),
+        color: secondaryTextColor,
+        fontFamily: fontFamily,
+        package: fontPackage)),
           Padding(padding: EdgeInsets.only(top:6)),
           RichText(
               text: TextSpan(
@@ -156,10 +189,9 @@ class Ending extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w300,
-                      color: TikiSdk
-                          .instance.activeTheme.getSecondaryTextColor,
-                      fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
-                      package: TikiSdk.instance.activeTheme.getFontPackage),
+                      color: secondaryTextColor,
+                      fontFamily: fontFamily,
+                      package: fontPackage),
                   children: [
                 TextSpan(
                     text: "settings",
@@ -174,7 +206,11 @@ class Ending extends StatelessWidget {
         ]);
   }
 
-  static Widget _errorFootnote(String permissionName) {
+  static Widget _errorFootnote(
+      String permissionName,
+      Color secondaryTextColor,
+      String fontFamily,
+      String fontPackage) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -182,10 +218,9 @@ class Ending extends StatelessWidget {
           Text("Offer declined.", style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w300,
-              color: TikiSdk
-                  .instance.activeTheme.getSecondaryTextColor,
-              fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
-              package: TikiSdk.instance.activeTheme.getFontPackage),),
+              color: secondaryTextColor,
+              fontFamily: fontFamily,
+              package: fontPackage),),
           Padding(padding: EdgeInsets.only(top:6)),
           RichText(
               text: TextSpan(
@@ -193,10 +228,9 @@ class Ending extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w300,
-                      color: TikiSdk
-                          .instance.activeTheme.getSecondaryTextColor,
-                      fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
-                      package: TikiSdk.instance.activeTheme.getFontPackage),
+                      color: secondaryTextColor,
+                      fontFamily: fontFamily,
+                      package: fontPackage),
                   children: [
                 TextSpan(
                     text: permissionName,

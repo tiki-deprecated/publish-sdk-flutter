@@ -10,24 +10,29 @@ import '../../tiki_sdk.dart';
 
 class NavigationHeader {
   String title;
-  AppBar appBar;
+  late AppBar appBar;
 
-  NavigationHeader(this.title, context)
-      : appBar = AppBar(
-            centerTitle: false,
-            leadingWidth: 30,
-            elevation: 0,
-            backgroundColor:
-                TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
-            leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
-                onPressed: () => Navigator.of(context).pop()),
-            title: Text(title,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: TikiSdk.instance.activeTheme.getPrimaryTextColor,
-                )));
+  NavigationHeader(this.title, context,
+      {Color? backgroundColor,
+        Color? primaryTextColor}) {
+    appBar = AppBar(
+        centerTitle: false,
+        leadingWidth: 30,
+        elevation: 0,
+        backgroundColor: backgroundColor ??
+            TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: primaryTextColor ??
+                TikiSdk.instance.activeTheme.getPrimaryTextColor,
+            onPressed: () => Navigator.of(context).pop()),
+        title: Text(title,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: primaryTextColor ??
+                  TikiSdk.instance.activeTheme.getPrimaryTextColor,
+            )));
+  }
 }

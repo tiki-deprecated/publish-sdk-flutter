@@ -18,13 +18,18 @@ class LearnMoreButton extends StatelessWidget {
   late final String? fontFamily;
   late final String? fontPackage;
 
-  LearnMoreButton({super.key})
-      : iconColor = TikiSdk.instance.activeTheme.getSecondaryTextColor,
-        textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor,
-        backgroundColor =
+  LearnMoreButton({
+    Color? iconColor,
+    Color? textColor,
+    Color? backgroundColor,
+    String? fontFamily,
+    String? fontPackage, super.key})
+      : iconColor = iconColor ?? TikiSdk.instance.activeTheme.getSecondaryTextColor,
+        textColor = textColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor,
+        backgroundColor =backgroundColor ??
             TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
-        fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
-        fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
+        fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily,
+        fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
 
   @override
   Widget build(BuildContext context) => IconButton(
