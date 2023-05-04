@@ -137,7 +137,7 @@ class SettingsState extends State<Settings> {
 
   Future<void> license(Offer offer) async {
     LicenseRecord license = await TikiSdk.license(offer.getPtr, offer.getUses, offer.getTerms);
-    if(isAccepted && TikiSdk.instance.getOnAccept != null) TikiSdk.instance.getOnAccept!(offer, license);
-    if(!isAccepted && TikiSdk.instance.getOnDecline != null) TikiSdk.instance.getOnDecline!(offer, license);
+    if(!isAccepted && TikiSdk.instance.getOnAccept != null) TikiSdk.instance.getOnAccept!(offer, license);
+    if(isAccepted && TikiSdk.instance.getOnDecline != null) TikiSdk.instance.getOnDecline!(offer, license);
   }
 }
