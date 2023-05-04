@@ -20,14 +20,17 @@ import 'used_for.dart';
 
 class OfferPrompt extends StatelessWidget {
   late final List<Permission> permissions;
+  late final Color secondaryBackgroundColor;
 
-  OfferPrompt();
+  OfferPrompt({Color? secondaryBackgrounColor}){
+    this.secondaryBackgroundColor = secondaryBackgrounColor ?? TikiSdk.instance.activeTheme.getSecondaryBackgroundColor;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: TikiSdk.instance.activeTheme.getSecondaryBackgroundColor,
+        color: secondaryBackgroundColor,
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(40), topRight: Radius.circular(40)),
       ),

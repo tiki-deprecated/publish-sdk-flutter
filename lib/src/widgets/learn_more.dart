@@ -18,12 +18,17 @@ class LearnMore extends StatelessWidget {
   late final String? fontFamily;
   late final String? fontPackage;
 
-  LearnMore(this.text) {
-    this.textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
-    this.backgroundColor =
+  LearnMore(this.text, {
+    Color? textColor,
+    Color? backgroundColor,
+    String? fontFamily,
+    String? fontPackage
+  }) {
+    this.textColor = textColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
+    this.backgroundColor = backgroundColor ??
         TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
-    this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
-    this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
   }
 
   @override

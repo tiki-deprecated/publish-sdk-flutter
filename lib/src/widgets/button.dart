@@ -17,19 +17,29 @@ class Button extends StatelessWidget {
   late final String? fontFamily;
   late final String? fontPackage;
 
-  Button(this.text, this.onTap)
-      : fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
-        fontPackage = TikiSdk.instance.activeTheme.getFontPackage,
-        textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor,
-        borderColor = TikiSdk.instance.activeTheme.getAccentColor,
-        backgroundColor = const Color(0xFFFFFFFF);
+  Button(this.text, this.onTap, {
+    Color? backgroundColor,
+    Color? borderColor,
+    Color? textColor,
+    String? fontFamily,
+    String? fontPackage,
+  }) : fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily,
+        fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage,
+        textColor = textColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor,
+        borderColor = borderColor ?? TikiSdk.instance.activeTheme.getAccentColor,
+        backgroundColor = backgroundColor ?? const Color(0xFFFFFFFF);
 
-  Button.solid(this.text, this.onTap)
-      : fontFamily = TikiSdk.instance.activeTheme.getFontFamily,
-        fontPackage = TikiSdk.instance.activeTheme.getFontPackage,
-        textColor = TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
-        backgroundColor = TikiSdk.instance.activeTheme.getAccentColor,
-        borderColor = TikiSdk.instance.activeTheme.getAccentColor;
+  Button.solid(this.text, this.onTap, {
+    Color? backgroundColor,
+    Color? borderColor,
+    Color? textColor,
+    String? fontFamily,
+    String? fontPackage,
+  }) : fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily,
+        fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage,
+        textColor = textColor ?? TikiSdk.instance.activeTheme.getPrimaryBackgroundColor,
+        backgroundColor = backgroundColor ?? TikiSdk.instance.activeTheme.getAccentColor,
+        borderColor = borderColor ?? TikiSdk.instance.activeTheme.getAccentColor;
 
   @override
   Widget build(BuildContext context) => GestureDetector(

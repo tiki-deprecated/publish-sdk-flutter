@@ -21,13 +21,19 @@ class Terms extends StatelessWidget {
   late final String? fontFamily;
   late final String? fontPackage;
 
-  Terms(this.text) {
-    this.buttonColor = TikiSdk.instance.activeTheme.getAccentColor;
-    this.textColor = TikiSdk.instance.activeTheme.getPrimaryTextColor;
+  Terms(this.text,{
+    Color? buttonColor,
+    Color? textColor,
+    Color? backgroundColor,
+    String? fontFamily,
+    String? fontPackage,
+  }) {
+    this.buttonColor = buttonColor ?? TikiSdk.instance.activeTheme.getAccentColor;
+    this.textColor = textColor ?? TikiSdk.instance.activeTheme.getPrimaryTextColor;
     this.backgroundColor =
-        TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
-    this.fontFamily = TikiSdk.instance.activeTheme.getFontFamily;
-    this.fontPackage = TikiSdk.instance.activeTheme.getFontPackage;
+backgroundColor ??         TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
   }
 
   @override

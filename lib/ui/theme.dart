@@ -46,17 +46,21 @@ import '../tiki_sdk.dart';
 class Theme {
   Color _primaryTextColor;
   Color _primaryBackgroundColor;
+  Color _secondaryTextColor;
   Color _secondaryBackgroundColor;
   Color _accentColor;
-  String? _fontFamily;
-  String? _fontPackage;
+  String _fontFamily;
+  String _fontPackage;
 
   /// Builds a default TikiTheme.
   Theme()
-      : _primaryTextColor = const Color(0xFF1C1C1C),
+      : _primaryTextColor = const Color(0xFF1C0000),
+        _secondaryTextColor = const Color(0xFF0b0000).withAlpha(153),
         _primaryBackgroundColor = const Color(0xFFFFFFFF),
         _secondaryBackgroundColor = const Color(0xFFF6F6F6),
-        _accentColor = const Color(0xFF00B277);
+        _accentColor = const Color(0xFF00B277),
+        _fontPackage = "tiki_sdk_flutter",
+        _fontFamily = "SpaceGrotesk";
 
   /// Primary text color. Used in the default text items.
   Color get getPrimaryTextColor => _primaryTextColor;
@@ -64,7 +68,7 @@ class Theme {
   /// Secondary text color. Used in specific text items.
   ///
   /// Defaults to [primaryTextColor] with 60% alpha transparency.
-  Color get getSecondaryTextColor => _primaryTextColor.withAlpha(153);
+  Color get getSecondaryTextColor => _secondaryTextColor;
 
   /// Primary background color. The default color for backgrounds.
   Color get getPrimaryBackgroundColor => _primaryBackgroundColor;
@@ -78,10 +82,10 @@ class Theme {
   /// The default font family for all texts.
   ///
   /// This should be set in the assets section of pubspec.yaml.
-  String? get getFontFamily => _fontFamily;
+  String get getFontFamily => _fontFamily;
 
   /// The package to which the font asset belongs.
-  String? get getFontPackage => _fontPackage;
+  String get getFontPackage => _fontPackage;
 
   /// Sets the [_primaryTextColor]
   Theme primaryTextColor(Color primaryTextColor) {

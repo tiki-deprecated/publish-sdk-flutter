@@ -11,8 +11,17 @@ import 'package:tiki_sdk_flutter/tiki_sdk.dart';
 class MarkdownViewer extends StatelessWidget {
   final String mdText;
   final double fontSize;
-  final Color backgroundColor;
-  const MarkdownViewer(this.mdText, {super.key, this.fontSize = 16, this.backgroundColor = const Color(0xFFFFFFFF)});
+  late final Color backgroundColor;
+  late final String fontFamily;
+  late final String fontPackage;
+
+  MarkdownViewer(this.mdText, {super.key,
+    this.fontSize = 16,
+    Color? backgroundColor, String? fontFamily, String? fontPackage}){
+    this.backgroundColor = backgroundColor ?? TikiSdk.instance.activeTheme.getPrimaryBackgroundColor;
+    this.fontFamily = fontFamily ?? TikiSdk.instance.activeTheme.getFontFamily;
+    this.fontPackage = fontPackage ?? TikiSdk.instance.activeTheme.getFontPackage;
+  }
 
   @override
   Widget build(BuildContext context) => Container(
@@ -24,6 +33,6 @@ class MarkdownViewer extends StatelessWidget {
           textTheme: TextTheme(
               bodyMedium: TextStyle(
                   fontSize: fontSize,
-                  fontFamily: TikiSdk.instance.activeTheme.getFontFamily,
-                  package: TikiSdk.instance.activeTheme.getFontPackage))))));
+                  fontFamily: fontFamily,
+                  package: fontPackage))))));
 }

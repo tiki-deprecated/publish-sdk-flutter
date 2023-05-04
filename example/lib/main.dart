@@ -8,7 +8,7 @@ const String publishingId = "e12f5b7b-6b48-4503-8b39-28e4995b5f88";
 void main() async {
   await TikiSdk.config()
       .theme
-        .fontFamily("SpaceGrotesk")
+        .accentColor(Colors.purple)
         .and()
       .offer
         .reward(Image.asset("lib/ui/assets/images/offer_sample.png"))
