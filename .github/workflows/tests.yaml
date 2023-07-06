@@ -10,7 +10,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
+  Android:
+    strategy:
+      matrix:
+        device:
+          - "pixel_xl"
+      fail-fast: false
+    runs-on: macOS-latest
+
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: 'main'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.7.12'
+
+      - name: "Run offline tests"
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          profile: ${{ matrix.device }}
+          api-level: 29
+          script: flutter test integration_test
+
+  iOS:
     runs-on: macos-latest
     steps:
       - name: 'Checkout'
@@ -22,7 +49,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: '3.7.7'
+          flutter-version: '3.7.12'
 
       - name: Start iOS Simulator
         run: |
@@ -39,4 +66,5 @@ jobs:
 
       - name: Run iOS Integration Tests
         run: flutter test integration_test
-      
+
+
