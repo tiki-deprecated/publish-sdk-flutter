@@ -142,8 +142,11 @@ class OfferPrompt extends StatelessWidget {
 
   String _permissionsNames() {
     if (permissions.length == 1) {
-      String snakeName = permissions.first.toString().split(".")[1];
-      return snakeName.split("_").join(" ").toLowerCase();
+      String snakeName = permissions.first.toString().split(("."))[1];
+      return snakeName.replaceAllMapped(
+          RegExp(r'([A-Z])'),
+              (match) => ' ${match.group(0)}'
+      ).toLowerCase();
     }
     return "permissions";
   }
